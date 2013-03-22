@@ -1,0 +1,4 @@
+name: BungeeSuite
+main : com.mcdimensions.BungeeSuite.BungeeSuite
+version: 0.7
+author: Bloodsplat
