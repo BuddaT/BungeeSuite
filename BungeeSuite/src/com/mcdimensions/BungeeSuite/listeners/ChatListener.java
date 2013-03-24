@@ -27,18 +27,19 @@ public class ChatListener implements Listener {
 
 	@Subscribe
 	public void playerTalk(ChatEvent event) {
-		if(event.isCommand()){
+		if (event.isCommand() || event.isCancelled()) {
 			return;
 		}
 		if (!(event.getSender() instanceof ProxiedPlayer))
 			return;
 		event.setCancelled(true);
 		ProxiedPlayer player = (ProxiedPlayer) event.getSender();
-		if(plugin.allMuted && !player.hasPermission("BungeeSuite.admin"))return;
+		if (plugin.allMuted && !player.hasPermission("BungeeSuite.admin"))
+			return;
 		ChatPlayer cp = plugin.getChatPlayer(player.getName());
 		if (!cp.isMute()) {
 			ChatChannel cur = cp.getCurrent();
-			if(cur.getName().equalsIgnoreCase("Global")){
+			if (cur.getName().equalsIgnoreCase("Global")) {
 				cur.sendGlobalMessage(cp, event.getMessage());
 				return;
 			}
@@ -50,7 +51,7 @@ public class ChatListener implements Listener {
 	@Subscribe
 	public void login(LoginEvent event) throws SQLException {
 		String player = event.getConnection().getName();
-		if(plugin.getUtilities().playerExists(player)){
+		if (plugin.getUtilities().playerExists(player)) {
 			plugin.getUtilities().getChatPlayer(player);
 		}
 	}
@@ -58,48 +59,66 @@ public class ChatListener implements Listener {
 	@Subscribe
 	public void changeServer(ServerConnectedEvent event) {
 		ChatPlayer cp = null;
-		while(cp==null){
+		if (cp == null) {
+			String player = event.getPlayer().getPendingConnection().getName();
+			String connection = event.getPlayer().getPendingConnection()
+					.getAddress().getAddress().toString();
+			try {
+				if (!plugin.getUtilities().playerExists(player)) {
+					plugin.getUtilities().createPlayer(player, connection);
+				} else {
+					plugin.getUtilities().updateIP(player, connection);
+				}
+
+				if (plugin.getUtilities().playerExists(player)) {
+					plugin.getUtilities().getChatPlayer(player);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 			cp = plugin.getChatPlayer(event.getPlayer().getName());
+
 		}
 		ChatChannel cc = cp.getCurrent();
-		
+
 		ChatChannel oldServerchan = plugin.getChannel(cp.getCurrentServer());
-		ChatChannel newServerchan = plugin.getChannel(event.getServer().getInfo().getName());
-		if(oldServerchan!=null){
-		oldServerchan.removeMember(cp.getName());//remove player from old
+		ChatChannel newServerchan = plugin.getChannel(event.getServer()
+				.getInfo().getName());
+		if (oldServerchan != null) {
+			oldServerchan.removeMember(cp.getName());// remove player from old
 		}
-		newServerchan.addMember(cp);//add to new
+		newServerchan.addMember(cp);// add to new
 		cp.addChannel(newServerchan.getName());
 		cp.setCurrentServer(event.getServer().getInfo().getName());
-		if(cc==null){
+		if (cc == null) {
 			cp.setCurrentSilent(newServerchan);
-		}else
-		if(cc.equals(oldServerchan)){//swap if current = old or null
+		} else if (cc.equals(oldServerchan)) {// swap if current = old or null
 			cp.setCurrentSilent(newServerchan);
 		}
-		
+
 	}
 
 	@Subscribe
 	public void playerLeave(PlayerDisconnectEvent event) {
-		if(plugin.OnlinePlayers.containsKey(event.getPlayer().getName())){
-		ChatPlayer cp = plugin.getChatPlayer(event.getPlayer().getName());
-		if(cp==null)return;
-		//remove from all channels
-		for(String data:cp.getChannels()){
-			ChatChannel cc = plugin.getChannel(data);
-			cc.offlineMember(cp);
-		}
-		plugin.getChannel(cp.getCurrentServer()).removeMember(cp.getName());
-		if(plugin.chatSpying.contains(cp)){
-			plugin.chatSpying.remove(cp);
-		}
-		plugin.OnlinePlayers.remove(event.getPlayer().getName());
-	}
-		else{
+		if (plugin.OnlinePlayers.containsKey(event.getPlayer().getName())) {
+			ChatPlayer cp = plugin.getChatPlayer(event.getPlayer().getName());
+			if (cp == null)
+				return;
+			// remove from all channels
+			for (String data : cp.getChannels()) {
+				ChatChannel cc = plugin.getChannel(data);
+				cc.offlineMember(cp);
+			}
+			plugin.getChannel(cp.getCurrentServer()).removeMember(cp.getName());
+			if (plugin.chatSpying.contains(cp)) {
+				plugin.chatSpying.remove(cp);
+			}
+			plugin.OnlinePlayers.remove(event.getPlayer().getName());
+		} else {
 			return;
 		}
 	}
 
 }
-
