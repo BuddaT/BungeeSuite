@@ -393,7 +393,6 @@ public class Utilities {
 			cal =Calendar.getInstance(); 
 					 cal.setTime(date);
 			}
-			plugin.cl.Color(res.getString("PlayerName") +" "+ cal.getTime()+"");
 			plugin.PlayerBans.put(res.getString("PlayerName"),cal);
 		}
 		ResultSet ips = sql.sqlQuery("SELECT * FROM BungeeBannedIPs");

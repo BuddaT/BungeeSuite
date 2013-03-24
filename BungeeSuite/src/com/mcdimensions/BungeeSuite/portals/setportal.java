@@ -30,9 +30,9 @@ public class setportal extends Command {
 			ByteArrayOutputStream b = new ByteArrayOutputStream();
 			DataOutputStream out = new DataOutputStream(b);
 			String p = player.getName();
-			String Name = arg1[1];
-			String Type = arg1[2]; // server/warp
-			String Dest = arg1[3]; // desination
+			String Name = arg1[0];
+			String Type = arg1[1]; // server/warp
+			String Dest = arg1[2]; // desination
 			try {
 				out.writeUTF("CreatePortal");
 			} catch (IOException e1) {

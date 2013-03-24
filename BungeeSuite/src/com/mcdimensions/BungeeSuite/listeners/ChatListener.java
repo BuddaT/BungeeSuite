@@ -84,6 +84,7 @@ public class ChatListener implements Listener {
 	public void playerLeave(PlayerDisconnectEvent event) {
 		if(plugin.OnlinePlayers.containsKey(event.getPlayer().getName())){
 		ChatPlayer cp = plugin.getChatPlayer(event.getPlayer().getName());
+		if(cp==null)return;
 		//remove from all channels
 		for(String data:cp.getChannels()){
 			ChatChannel cc = plugin.getChannel(data);
@@ -95,6 +96,9 @@ public class ChatListener implements Listener {
 		}
 		plugin.OnlinePlayers.remove(event.getPlayer().getName());
 	}
+		else{
+			return;
+		}
 	}
 
 }
