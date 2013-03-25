@@ -112,8 +112,8 @@ public class ChatListener implements Listener {
 				cc.offlineMember(cp);
 			}
 			plugin.getChannel(cp.getCurrentServer()).removeMember(cp.getName());
-			if (plugin.chatSpying.contains(cp)) {
-				plugin.chatSpying.remove(cp);
+			if (plugin.chatSpying.contains(cp.getName())) {
+				plugin.chatSpying.remove(cp.getName());
 			}
 			plugin.OnlinePlayers.remove(event.getPlayer().getName());
 		} else {
