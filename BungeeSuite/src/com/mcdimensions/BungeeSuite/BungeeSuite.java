@@ -353,7 +353,7 @@ public class BungeeSuite extends Plugin {
 
 	private void loadVariables() throws SQLException {
 		proxy = ProxyServer.getInstance();
-		sql = new SQL(url, database, username, password);
+		sql = new SQL(url,port, database, username, password);
 		utils = new Utilities(this);
 		this.allMuted = false;
 	}

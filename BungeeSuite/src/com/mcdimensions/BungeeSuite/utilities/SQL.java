@@ -9,15 +9,16 @@ import net.md_5.bungee.api.ProxyServer;
 
 public class SQL extends SQLOperations {
 
-	private String host, database, username, password;
+	private String host, database, username, password, port;
 	private Connection connection;
 	private File databaseFile;
 
-	public SQL(String host, String database, String username, String password) {
+	public SQL(String host,String port, String database, String username, String password) {
 		this.host = host;
 		this.database = database;
 		this.username = username;
 		this.password = password;
+		this.port = port;
 	}
 
 	/**
@@ -51,7 +52,7 @@ public class SQL extends SQLOperations {
 
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
-				connection = DriverManager.getConnection("jdbc:mysql://" + host + "/"+database, username, password);
+				connection = DriverManager.getConnection("jdbc:mysql://" + host +":" + port + "/"+database, username, password);
 				return true;
 			} catch (ClassNotFoundException ex) {
 				 System.out.println("SQL is unable to conect");
