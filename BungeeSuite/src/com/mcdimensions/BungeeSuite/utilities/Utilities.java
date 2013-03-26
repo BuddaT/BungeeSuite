@@ -266,10 +266,10 @@ public class Utilities {
 		}else{
 			sql.standardQuery("INSERT INTO BungeePlayers (PlayerName, DisplayName, Current, LastOnline, IPAddress) VALUES ('"+player+"','"+player+"',NULL, CURDATE(), '"+connection+"')");
 		}
-		sql.closeConnection();
 		if(plugin.chat){
 			getChatPlayer(player);
 		}
+		sql.closeConnection();
 	}
 	public void setCurrentChannel(String player, String channel){
 		sql.initialise();
@@ -472,7 +472,6 @@ public class Utilities {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		sql.closeConnection();
 		ChatChannel newchan = new ChatChannel(ChannelName, ChannelFormat,owner, server);
 		plugin.chatChannels.put(newchan.getName(), newchan);
 		ChatPlayer cp = plugin.getChatPlayer(owner);
@@ -480,6 +479,7 @@ public class Utilities {
 		cp.addChannel(newchan.getName());
 		newchan.addMember(cp);
 		cp.setCurrent(newchan);
+		sql.closeConnection();
 	}
 	
 	
@@ -502,10 +502,10 @@ public class Utilities {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		sql.closeConnection();
 		//may need to go through and change any players with it as their current.
 		plugin.getChatPlayer(plugin.chatChannels.get(channel).getOwner()).subtractChannelsOwned();
 		plugin.chatChannels.remove(channel);
+		sql.closeConnection();
 	}
 
 	public void updateTables() {
@@ -541,7 +541,6 @@ public class Utilities {
 		sql.standardQuery("INSERT INTO BungeeSignFormats(F_ID,ColoredMOTD, MOTDOnline, MOTDOffline, PlayerCountOnline,  PlayerCountOnlineClick, PlayerCountOffline, PlayerCountOfflineClick, PortalFormatOnline, PortalFormatOffline, PortalFormatOfflineClick) VALUES(1,"+plugin.motdColored+", '"+plugin.motdFormatOnline+"', '"+plugin.motdFormatOffline+"', '"+plugin.playerCountFormatOnline+"', '"+plugin.playerCountFormatOnlineClick+"', '"+plugin.playerCountFormatOffline+"', '"+plugin.playerCountFormatOfflineClick+"', '"+plugin.portalFormatOnline+"', '"+plugin.portalFormatOffline+"', '"+plugin.portalFormatOfflineClick+"')");
 		}
 		sql.closeConnection();
-		
 	}
 
 	public void selectDatabase() throws SQLException {
@@ -583,7 +582,6 @@ public class Utilities {
 		sql.initialise();
 		boolean check = sql.existanceQuery("SELECT Name FROM BungeePortals Where Name = '"+string+"' ");
 		sql.closeConnection();
-			
 		return check;
 	}
 
@@ -723,8 +721,8 @@ public class Utilities {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		sql.closeConnection();
 		plugin.chatSpying.add(chatPlayer.getName());
+		sql.closeConnection();
 	}
 
 	public void removeChatSpy(ChatPlayer chatPlayer) {
@@ -735,9 +733,8 @@ public class Utilities {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		sql.closeConnection();
 		plugin.chatSpying.remove(chatPlayer.getName());
-		
+		sql.closeConnection();
 	}
 
 	public void playerSendServer(String name) {

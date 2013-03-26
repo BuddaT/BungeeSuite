@@ -30,13 +30,20 @@ public class ChatListener implements Listener {
 		if (event.isCommand() || event.isCancelled()) {
 			return;
 		}
-		if (!(event.getSender() instanceof ProxiedPlayer))
-			return;
-		event.setCancelled(true);
+		if (!(event.getSender() instanceof ProxiedPlayer))return;
 		ProxiedPlayer player = (ProxiedPlayer) event.getSender();
-		if (plugin.allMuted && !player.hasPermission("BungeeSuite.admin"))
-			return;
+		String serverName = player.getServer().getInfo().getName();
 		ChatPlayer cp = plugin.getChatPlayer(player.getName());
+		if(cp.getCurrent().getName().equalsIgnoreCase(serverName)&& plugin.ignoreServers.contains(serverName)){
+			if(!cp.isMute() && !plugin.allMuted){
+				event.setCancelled(true);
+			}
+			return;	
+		}
+		event.setCancelled(true);
+		if (plugin.allMuted && !player.hasPermission("BungeeSuite.admin")){
+			return;
+		}
 		if (!cp.isMute()) {
 			ChatChannel cur = cp.getCurrent();
 			if (cur.getName().equalsIgnoreCase("Global")) {

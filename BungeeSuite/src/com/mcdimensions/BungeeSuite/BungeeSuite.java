@@ -126,7 +126,7 @@ public class BungeeSuite extends Plugin {
 	public String portalFormatOnline;
 	public String portalFormatOffline;
 	public String portalFormatOfflineClick;
-	public HashSet<String> chatSpying;
+	public HashSet<String> chatSpying, ignoreServers;
 	public BungeeSuite instance;
 	
 	public void onLoad(){
@@ -409,6 +409,11 @@ public class BungeeSuite extends Plugin {
 			globalDefault = config.getBoolean("BungeeSuite.Chat.globalDefault", true);
 			globalToggleable= config.getBoolean("BungeeSuite.Chat.GlobalIsToggleable", true);
 			maxCustomChannels = config.getInt("BungeeSuite.Chat.MaxCustomChannels", 1);
+			ignoreServers = new HashSet<String>();
+			String ignore[] = config.getString("BungeeSuite.Chat.IgnoreServerChat", "Towny,Heroes").split(",");
+			for(String data:ignore){
+				ignoreServers.add(data);
+			}
 			serverNames = new HashMap<String,String>();
 			String [] sn = config.getString("BungeeSuite.Chat.ReplaceServers", "Spawn-S,Creative-C").split(",");
 			for(String data: sn){
