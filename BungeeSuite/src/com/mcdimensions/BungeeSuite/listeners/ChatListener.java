@@ -106,6 +106,7 @@ public class ChatListener implements Listener {
 
 	@Subscribe
 	public void playerLeave(PlayerDisconnectEvent event) {
+		if(event.getPlayer()==null)return;
 		if (plugin.OnlinePlayers.containsKey(event.getPlayer().getName())) {
 			ChatPlayer cp = plugin.getChatPlayer(event.getPlayer().getName());
 			if (cp == null)
