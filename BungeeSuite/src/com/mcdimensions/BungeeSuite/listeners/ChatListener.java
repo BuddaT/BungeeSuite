@@ -75,9 +75,6 @@ public class ChatListener implements Listener {
 					plugin.getUtilities().createPlayer(player, connection);
 				} else {
 					plugin.getUtilities().updateIP(player, connection);
-				}
-
-				if (plugin.getUtilities().playerExists(player)) {
 					plugin.getUtilities().getChatPlayer(player);
 				}
 			} catch (SQLException e) {
