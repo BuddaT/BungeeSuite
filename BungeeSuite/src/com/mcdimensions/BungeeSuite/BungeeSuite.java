@@ -135,7 +135,7 @@ public class BungeeSuite extends Plugin {
 
 	public void onEnable() {
 		cl = new ColorLog(ProxyServer.getInstance());
-		cl.Color("&2------------Enabling BungeeSuite v0.7------------");
+		cl.Color("&2------------Enabling BungeeSuite------------");
 		cl.Color("&2 -Loading config");
 		loadConfig();
 		cl.Color("&2 -Initialising Variables");
