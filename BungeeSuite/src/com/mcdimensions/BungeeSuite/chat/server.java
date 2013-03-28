@@ -30,8 +30,12 @@ public class server extends Command {
 		for(String data: arg1){
 			message+= data+" ";
 		}
+		String server = ((ProxiedPlayer) arg0).getServer().getInfo().getName();
 		ChatPlayer cp= plugin.getChatPlayer(arg0.getName());
 		ChatChannel cc = plugin.getChannel(cp.getPlayer().getServer().getInfo().getName());
+		if(plugin.ignoreServers.contains(server)){
+			return;	
+		}
 		cc.sendMessage(cp, message);
 		if(!cp.getCurrent().equals(cc)){
 			cp.setCurrent(cc);

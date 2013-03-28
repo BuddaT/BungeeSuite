@@ -3,6 +3,7 @@ package com.mcdimensions.BungeeSuite.listeners;
 import java.sql.SQLException;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import com.google.common.eventbus.Subscribe;
 import com.mcdimensions.BungeeSuite.BungeeSuite;
@@ -29,13 +30,14 @@ public class ChatListener implements Listener {
 	public void playerTalk(ChatEvent event) {
 		if (event.isCommand() || event.isCancelled()) {
 			return;
+			
 		}
 		if (!(event.getSender() instanceof ProxiedPlayer))return;
 		ProxiedPlayer player = (ProxiedPlayer) event.getSender();
 		String serverName = player.getServer().getInfo().getName();
 		ChatPlayer cp = plugin.getChatPlayer(player.getName());
 		if(cp.getCurrent().getName().equalsIgnoreCase(serverName)&& plugin.ignoreServers.contains(serverName)){
-			if(!cp.isMute() && !plugin.allMuted){
+			if(cp.isMute() || plugin.allMuted){
 				event.setCancelled(true);
 			}
 			return;	
@@ -55,28 +57,18 @@ public class ChatListener implements Listener {
 		}
 	}
 	@Subscribe
-	public void changeServer(ServerConnectedEvent event) {
-		ChatPlayer cp = null;
-		cp = plugin.getChatPlayer(event.getPlayer().getName());
-		if (cp == null) {
-			String player = event.getPlayer().getPendingConnection().getName();
-			String connection = event.getPlayer().getPendingConnection()
-					.getAddress().getAddress().toString();
-			try {
-				if (!plugin.getUtilities().playerExists(player)) {
-					plugin.getUtilities().createPlayer(player, connection);
-				} else {
-					plugin.getUtilities().updateIP(player, connection);
-					plugin.getUtilities().getChatPlayer(player);
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+	public void changeServer(ServerConnectedEvent event) throws SQLException {
+		if (!plugin.OnlinePlayers.containsKey(event.getPlayer().getName())) {
+			String player = event.getPlayer().getName();
+			String connection =event.getPlayer().getAddress().getAddress().toString();
+			if(!plugin.getUtilities().playerExists(player)){
+				plugin.getUtilities().createPlayer(player, connection);
 			}
-
-			cp = plugin.getChatPlayer(event.getPlayer().getName());
-
+		if(!plugin.OnlinePlayers.containsKey(event.getPlayer().getName())){
+			plugin.getUtilities().getChatPlayer(event.getPlayer().getName());
 		}
+		}
+		ChatPlayer cp = plugin.getChatPlayer(event.getPlayer().getName());
 		ChatChannel cc = cp.getCurrent();
 
 		ChatChannel oldServerchan = plugin.getChannel(cp.getCurrentServer());
