@@ -51,7 +51,7 @@ import com.mcdimensions.BungeeSuite.listeners.BanListener;
 import com.mcdimensions.BungeeSuite.listeners.ChatListener;
 import com.mcdimensions.BungeeSuite.listeners.LoginMessages;
 import com.mcdimensions.BungeeSuite.listeners.PluginMessageListener;
-import com.mcdimensions.BungeeSuite.listeners.ServerLogin;
+import com.mcdimensions.BungeeSuite.listeners.ServerLoginLogout;
 import com.mcdimensions.BungeeSuite.listeners.TpListener;
 import com.mcdimensions.BungeeSuite.listeners.WarpListener;
 import com.mcdimensions.BungeeSuite.portals.Portals;
@@ -319,7 +319,7 @@ public class BungeeSuite extends Plugin {
 		proxy.getPluginManager().registerListener(this,new PluginMessageListener(this));
 		proxy.registerChannel("BungeeSuite");
 		proxy.registerChannel("BungeeSuiteMC");
-		proxy.getPluginManager().registerListener(this,new ServerLogin(this));	
+		proxy.getPluginManager().registerListener(this,new ServerLoginLogout(this));	
 		if(loginMessages){
 			proxy.getPluginManager().registerListener(this,new LoginMessages(this));	
 		}

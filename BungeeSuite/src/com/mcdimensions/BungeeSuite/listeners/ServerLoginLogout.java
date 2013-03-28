@@ -16,10 +16,10 @@ import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.ServerConnectedEvent;
 import net.md_5.bungee.api.plugin.Listener;
 
-public class ServerLogin implements Listener {
+public class ServerLoginLogout implements Listener {
 	BungeeSuite plugin;
 	
-	public ServerLogin(BungeeSuite bungeeSuite){
+	public ServerLoginLogout(BungeeSuite bungeeSuite){
 		this.plugin= bungeeSuite;
 	}
 	
@@ -34,12 +34,21 @@ public class ServerLogin implements Listener {
 			}else{
 				plugin.getUtilities().updateIP(player, connection);
 			}
+			if(!plugin.OnlinePlayers.containsKey(player)){
 				plugin.getUtilities().getChatPlayer(player);
+			}
 		}
 	
 	@Subscribe
 	public void logout(PlayerDisconnectEvent event) throws SQLException {
-		if(event.getPlayer().getName()==null)return;
+		if(event.getPlayer().getName()==null){
+			for(String data:plugin.OnlinePlayers.keySet()){
+				if(plugin.getProxy().getPlayer(data)==null){
+					plugin.OnlinePlayers.remove(data);
+					return;
+				}
+			}
+		}
 		plugin.getUtilities().updateLastSeen(event.getPlayer().getName());
 		if (plugin.OnlinePlayers.containsKey(event.getPlayer().getName())) {
 			ChatPlayer cp = plugin.getChatPlayer(event.getPlayer().getName());
