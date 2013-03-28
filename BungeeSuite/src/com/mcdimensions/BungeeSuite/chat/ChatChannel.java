@@ -178,6 +178,7 @@ public class ChatChannel {
 			} else {
 				output = output.replace("%prefix", "");
 			}	
+			output = output.replace("%suffix", "");
 		}
 		output = output.replace("%title", "");
 		if (p.hasPermission("BungeeSuite.mod")
