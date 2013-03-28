@@ -497,6 +497,7 @@ public class BungeeSuite extends Plugin {
 				warpsc= config.getString("BungeeSuite.Commands.warps", "warps");
 	}
 	
+	
 
 	public ConfigurationAdapter getConfig() {
 		return config;

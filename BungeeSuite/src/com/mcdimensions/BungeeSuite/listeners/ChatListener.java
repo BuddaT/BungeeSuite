@@ -54,18 +54,10 @@ public class ChatListener implements Listener {
 			return;
 		}
 	}
-
-	@Subscribe
-	public void login(LoginEvent event) throws SQLException {
-		String player = event.getConnection().getName();
-		if (plugin.getUtilities().playerExists(player)) {
-			plugin.getUtilities().getChatPlayer(player);
-		}
-	}
-
 	@Subscribe
 	public void changeServer(ServerConnectedEvent event) {
 		ChatPlayer cp = null;
+		cp = plugin.getChatPlayer(event.getPlayer().getName());
 		if (cp == null) {
 			String player = event.getPlayer().getPendingConnection().getName();
 			String connection = event.getPlayer().getPendingConnection()
@@ -102,28 +94,6 @@ public class ChatListener implements Listener {
 			cp.setCurrentSilent(newServerchan);
 		}
 
-	}
-
-	@Subscribe
-	public void playerLeave(PlayerDisconnectEvent event) {
-		if(event.getPlayer()==null)return;
-		if (plugin.OnlinePlayers.containsKey(event.getPlayer().getName())) {
-			ChatPlayer cp = plugin.getChatPlayer(event.getPlayer().getName());
-			if (cp == null)
-				return;
-			// remove from all channels
-			for (String data : cp.getChannels()) {
-				ChatChannel cc = plugin.getChannel(data);
-				cc.offlineMember(cp);
-			}
-			plugin.getChannel(cp.getCurrentServer()).removeMember(cp.getName());
-			if (plugin.chatSpying.contains(cp.getName())) {
-				plugin.chatSpying.remove(cp.getName());
-			}
-			plugin.OnlinePlayers.remove(event.getPlayer().getName());
-		} else {
-			return;
-		}
 	}
 
 }
