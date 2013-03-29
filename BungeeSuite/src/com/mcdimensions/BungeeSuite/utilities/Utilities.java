@@ -113,7 +113,9 @@ public class Utilities {
 		sql.standardQuery("INSERT INTO BungeeSignType (Type) VALUES('MOTD');");
 	    System.out.println("Table 'BungeeSignType' created!");
 		}
-		sql.standardQuery("UPDATE BungeeSignType SET Type = 'Portal' WHERE Type = 'Teleport';");
+		if(!sql.existanceQuery("SELECT Type BungeeSignType WHERE Type ='Portal'")){ 
+			sql.standardQuery("INSERT INTO BungeeSignType (Type) VALUES('Portal');");
+	}
 		if(!sql.doesTableExist("BungeeSignLocations")){
 		    System.out.println("Table 'BungeeSignLocations' does not exist! Creating table...");
 		    sql.standardQuery("CREATE TABLE BungeeSignLocations (L_ID int NOT NULL AUTO_INCREMENT, Type VARCHAR(50) NOT NULL, Server VARCHAR(50) NOT NULL, TargetServer VARCHAR(50) NOT NULL, World VARCHAR(50) NOT NULL, X int NOT NULL,  Y int NOT NULL, Z int NOT NULL, FOREIGN KEY(Type) REFERENCES BungeeSignType(Type) ON DELETE CASCADE, FOREIGN KEY(Server) REFERENCES BungeeServers(ServerName) ON DELETE CASCADE,  FOREIGN KEY(TargetServer) REFERENCES BungeeServers(ServerName) ON DELETE CASCADE, PRIMARY KEY (L_ID))ENGINE=INNODB;");
