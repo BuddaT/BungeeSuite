@@ -38,6 +38,7 @@ public class ChatPlayer {
 		this.channelsOwned = channelsOwned;
 		plugin = (BungeeSuite) ProxyServer.getInstance().getPluginManager().getPlugin("BungeeSuite");
 		channels = new HashSet<String>();
+		updateDisplayName();
 	}
 	public void addChannel(String channel){
 		channels.add(channel);
@@ -61,6 +62,7 @@ public class ChatPlayer {
 		this.displayName = nick;
 		plugin.getUtilities().setNickName(name, nick);
 		this.getPlayer().setDisplayName(nick);
+		updateDisplayName();
 	}
 	public ChatChannel getCurrent() {
 		return current;
