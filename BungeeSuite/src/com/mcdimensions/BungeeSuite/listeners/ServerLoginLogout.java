@@ -8,6 +8,7 @@ import com.mcdimensions.BungeeSuite.chat.ChatChannel;
 import com.mcdimensions.BungeeSuite.chat.ChatPlayer;
 import net.md_5.bungee.api.event.LoginEvent;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
+import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 
 public class ServerLoginLogout implements Listener {
@@ -38,7 +39,8 @@ public class ServerLoginLogout implements Listener {
 	
 	@Subscribe
 	public void logout(PlayerDisconnectEvent event) throws SQLException {
-		if(event.getPlayer().getName()==null){
+		String name = event.getPlayer().getName();
+		if(name==null){
 			for(String data:plugin.OnlinePlayers.keySet()){
 				if(plugin.getProxy().getPlayer(data)==null){
 					plugin.OnlinePlayers.remove(data);
@@ -46,11 +48,12 @@ public class ServerLoginLogout implements Listener {
 				}
 			}
 		}
-		plugin.getUtilities().updateLastSeen(event.getPlayer().getName());
-		if (plugin.OnlinePlayers.containsKey(event.getPlayer().getName())) {
-			ChatPlayer cp = plugin.getChatPlayer(event.getPlayer().getName());
-			if (cp == null)
+		plugin.getUtilities().updateLastSeen(name);
+		if (plugin.OnlinePlayers.containsKey(name)) {
+			ChatPlayer cp = plugin.getChatPlayer(name);
+			if (cp == null){
 				return;
+			}
 			// remove from all channels
 			for (String data : cp.getChannels()) {
 				ChatChannel cc = plugin.getChannel(data);
@@ -62,6 +65,12 @@ public class ServerLoginLogout implements Listener {
 			}
 			plugin.OnlinePlayers.remove(event.getPlayer().getName());
 		}
+	}
+	
+	public void loggedin(PostLoginEvent event){
+		if(event.getPlayer()==null)return;
+		ChatPlayer cp = plugin.getChatPlayer(event.getPlayer().getName());
+		cp.updateDisplayName();
 	}
 	
 	

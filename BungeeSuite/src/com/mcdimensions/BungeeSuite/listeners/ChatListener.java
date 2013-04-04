@@ -23,20 +23,22 @@ public class ChatListener implements Listener {
 	public void playerTalk(ChatEvent event) {
 		if (event.isCommand() || event.isCancelled()) {
 			return;
-			
+
 		}
-		if (!(event.getSender() instanceof ProxiedPlayer))return;
+		if (!(event.getSender() instanceof ProxiedPlayer))
+			return;
 		ProxiedPlayer player = (ProxiedPlayer) event.getSender();
 		String serverName = player.getServer().getInfo().getName();
 		ChatPlayer cp = plugin.getChatPlayer(player.getName());
-		if(cp.getCurrent().getName().equalsIgnoreCase(serverName)&& plugin.ignoreServers.contains(serverName)){
-			if(cp.isMute() || plugin.allMuted){
+		if (cp.getCurrent().getName().equalsIgnoreCase(serverName)
+				&& plugin.ignoreServers.contains(serverName)) {
+			if (cp.isMute() || plugin.allMuted) {
 				event.setCancelled(true);
 			}
-			return;	
+			return;
 		}
 		event.setCancelled(true);
-		if (plugin.allMuted && !player.hasPermission("BungeeSuite.admin")){
+		if (plugin.allMuted && !player.hasPermission("BungeeSuite.admin")) {
 			return;
 		}
 		if (!cp.isMute()) {
@@ -49,17 +51,20 @@ public class ChatListener implements Listener {
 			return;
 		}
 	}
+
 	@Subscribe
 	public void changeServer(ServerConnectedEvent event) throws SQLException {
 		if (!plugin.OnlinePlayers.containsKey(event.getPlayer().getName())) {
 			String player = event.getPlayer().getName();
-			String connection =event.getPlayer().getAddress().getAddress().toString();
-			if(!plugin.getUtilities().playerExists(player)){
+			String connection = event.getPlayer().getAddress().getAddress()
+					.toString();
+			if (!plugin.getUtilities().playerExists(player)) {
 				plugin.getUtilities().createPlayer(player, connection);
 			}
-		if(!plugin.OnlinePlayers.containsKey(event.getPlayer().getName())){
-			plugin.getUtilities().getChatPlayer(event.getPlayer().getName());
-		}
+			if (!plugin.OnlinePlayers.containsKey(event.getPlayer().getName())) {
+				plugin.getUtilities()
+						.getChatPlayer(event.getPlayer().getName());
+			}
 		}
 		ChatPlayer cp = plugin.getChatPlayer(event.getPlayer().getName());
 		ChatChannel cc = cp.getCurrent();

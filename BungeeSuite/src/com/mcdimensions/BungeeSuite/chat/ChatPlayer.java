@@ -38,7 +38,6 @@ public class ChatPlayer {
 		this.channelsOwned = channelsOwned;
 		plugin = (BungeeSuite) ProxyServer.getInstance().getPluginManager().getPlugin("BungeeSuite");
 		channels = new HashSet<String>();
-		updateDisplayName();
 	}
 	public void addChannel(String channel){
 		channels.add(channel);

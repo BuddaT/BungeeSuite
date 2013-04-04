@@ -9,7 +9,7 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
-import net.md_5.bungee.api.event.LoginEvent;
+import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.plugin.Listener;
 
@@ -47,9 +47,9 @@ public class LoginMessages implements Listener {
 	}
 	
 	@Subscribe
-	public void login(LoginEvent event) throws SQLException {
+	public void login(PostLoginEvent event) throws SQLException {
 		for(ProxiedPlayer data:ProxyServer.getInstance().getPlayers()){
-			data.sendMessage(ChatColor.YELLOW+event.getConnection().getName()+" joined the server.");
+			data.sendMessage(ChatColor.YELLOW+event.getPlayer().getName()+" joined the server.");
 		}
 		}
 	
