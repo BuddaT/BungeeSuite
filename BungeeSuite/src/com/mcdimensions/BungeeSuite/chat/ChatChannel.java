@@ -114,6 +114,7 @@ public class ChatChannel {
 	}
 	public void reformat(String format){
 		this.channelFormat = format;
+		plugin.ChannelConfig.setString("BungeeSuite.Chat.Channels."+getName(), format);
 		plugin.getUtilities().reformatChannel(channelName,format);
 	}
 	public void kickPlayer(String player){
