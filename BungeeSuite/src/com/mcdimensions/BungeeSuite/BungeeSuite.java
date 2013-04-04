@@ -83,7 +83,7 @@ import net.md_5.bungee.api.plugin.Plugin;
 public class BungeeSuite extends Plugin {
 	ProxyServer proxy;
 	SQL sql;
-	ConfigurationAdapter config;
+	Config config;
 	//Messages
 	public String DEFAULT_BAN_PLAYER, PLAYER_TELEPORTED_TO,TELEPORTED_PLAYER_TO_TARGET, TELEPORTS_NOT_ENABLED, TELEPORT_REQUEST_HERE, TELEPORT_REQUEST_TO,WARP_SPAWN_NOT_EXIST, WARP_NOT_EXIST, WARP_DELETE_CONFIRM, WARP_CREATE_CONFIRM, PORTAL_DELETE_CONFIRM, PORTAL_NOT_EXIST, DEFAULT_IPBAN_PLAYER, TEMP_BAN_BROADCAST, BAN_MESSAGE_BROADCAST, IP_NOT_EXIST, IP_UNBANNED, NO_PERMISSION, PLAYER_REPLY_NONE, PLAYER_NICKNAME_CHANGE, PLAYER_NICKNAMED, PLAYER_ALL_MUTED, PLAYER_ALL_UNMUTED, PLAYER_MUTE, PLAYER_MUTED, PLAYER_UNMUTE, PLAYER_UNMUTED, PLAYER_NOT_EXIST, PLAYER_NOT_ONLINE, PLAYER_UNBANNED, PLAYER_INVITED, PLAYER_INVITE, PLAYER_SENDING_SERVER, PLAYER_NOT_BANNED, DEFAULT_KICK_PLAYER, DEFAULT_KICK_BROADCAST, UNBAN_PLAYER, CHANNEL_INVITE_NOPERM, CHANNEL_NOT_INVITED, CHANNEL_NOT_LEAVE_SERVER, CHANNEL_TOGGLE_PERMISSION, CHANNEL_NOT_LEAVE_OWNER, CHANNEL_IS_MEMBER, CHANNEL_NOT_MEMBER, CHANNEL_NO_PERMISSION, CHANNEL_NOT_EXIST, CHANNEL_CREATE_CONFIRM, CHANNEL_DELETE_CONFIRM, CHANNEL_PLAYER_JOINED, CHANNEL_WELCOME, CHANNEL_KICK_PLAYER, CHANNEL_PLAYER_LEAVE, CHANNEL_TOO_MANY, BROADCAST_MESSAGE, CHATSPY_TOGGLED;
 	//PREFIXES
@@ -284,7 +284,6 @@ public class BungeeSuite extends Plugin {
 		chatChannels = new HashMap<String,ChatChannel>();
 		chatSpying = new HashSet<String>();
 		utils.loadChannels();
-		config =ProxyServer.getInstance().getConfigurationAdapter();
 		for(ChatChannel data:chatChannels.values()){
 			String format = config.getString("BungeeSuite.Chat.Channels."+data.getName(), data.getFormat());
 //			if(!format.equals(data.getFormat())){ //TODO WHEN CAN WRITE TO CONFIG.
@@ -440,8 +439,8 @@ public class BungeeSuite extends Plugin {
 
 
 	private void loadConfig() {
-			config =ProxyServer.getInstance().getConfigurationAdapter();
-			config.getString("BungeeSuite.SQL.Username", "username");
+		 	String configpath= "/plugins/BungeeSuite/config.yml";
+		 	config=new Config(configpath);
 			username = config.getString("BungeeSuite.SQL.Username", "root");
 			password = config.getString("BungeeSuite.SQL.Password", "password");
 			database = config.getString("BungeeSuite.SQL.Database", "minecraft");
@@ -567,7 +566,7 @@ public class BungeeSuite extends Plugin {
 	
 	
 
-	public ConfigurationAdapter getConfig() {
+	public Config getConfig() {
 		return config;
 	}
 
