@@ -17,7 +17,7 @@ public class tell extends Command {
 	@Override
 	public void execute(CommandSender arg0, String[] arg1) {
 		if(arg1.length<2){
-			arg0.sendMessage(ChatColor.RED+"/tell (player) (message)");
+			arg0.sendMessage(ChatColor.RED+"/"+plugin.tell+" (player) (message)");
 			return;
 		}
 		ProxiedPlayer player  = plugin.getUtilities().getClosestPlayer(arg1[0]);
@@ -32,7 +32,7 @@ public class tell extends Command {
 			cp.sendPrivate(message,arg0.getName());
 			arg0.sendMessage(ChatColor.GOLD+"[me->"+cp.getName()+"]"+ChatColor.WHITE+message);
 		}else{
-			arg0.sendMessage(ChatColor.RED+"That player is not online!");
+			arg0.sendMessage(plugin.PLAYER_NOT_ONLINE);
 		}
 	}
 

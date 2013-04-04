@@ -1,6 +1,5 @@
 package com.mcdimensions.BungeeSuite.chat;
 
-import java.sql.SQLException;
 import java.util.HashSet;
 
 import com.mcdimensions.BungeeSuite.BungeeSuite;
@@ -55,6 +54,12 @@ public class ChatChannel {
 	public void removeMember(String player) {
 		members.remove(player);
 		plugin.getUtilities().removeMemberChannel(player, this.getName());
+		if(plugin.channelMessages){
+			String jmessage = plugin.CHANNEL_PLAYER_LEAVE;
+			jmessage = jmessage.replace("%player", player);
+			jmessage = jmessage.replace("%channel", this.getName());
+			sendChannelMessage(jmessage);
+		}
 	}
 	public void offlineMember(ChatPlayer player){
 		members.remove(player.getName());
@@ -79,10 +84,15 @@ public class ChatChannel {
 		plugin.getUtilities().removeInvite(player, channelName);
 		this.uninvitePlayer(player);
 		if(plugin.channelMessages){
-			sendChannelMessage(ChatColor.GRAY+player+" Has joined the channel "+ channelName);
+			String jmessage = plugin.CHANNEL_PLAYER_JOINED;
+			jmessage = jmessage.replace("%player", player);
+			jmessage = jmessage.replace("%channel", this.getName());
+			sendChannelMessage(jmessage);
 			cp.setCurrent(this);
 		}
-		cp.sendMessage(ChatColor.DARK_GREEN+"Welcome to channel "+ ChatColor.DARK_AQUA+this.channelName);
+		String wmsg = plugin.CHANNEL_WELCOME;
+		wmsg = wmsg.replace("%channel", this.channelName);
+		cp.sendMessage(wmsg);
 	}
 	private void sendChannelMessage(String message) {
 		for(String data: members){
@@ -109,7 +119,10 @@ public class ChatChannel {
 	public void kickPlayer(String player){
 		ProxiedPlayer pp =plugin.getProxy().getPlayer(player);
 		if(pp!=null){
-			pp.sendMessage(ChatColor.RED+"You have been kicked from channel "+ channelName);
+			String kmsg = plugin.CHANNEL_KICK_PLAYER;
+			kmsg = kmsg.replace("%channel", channelName);
+			kmsg = kmsg.replace("%player", player);
+			pp.sendMessage(kmsg);
 			members.remove(plugin.getChatPlayer(player));
 			return;
 		}else{
@@ -168,13 +181,13 @@ public class ChatChannel {
 			output = output.replace("%suffix",player.getSuffix());
 		}else{//permissions prefixes
 			if (p.hasPermission("BungeeSuite.owner")) {
-				output = output.replace("%prefix", "&4[Owner]");
+				output = output.replace("%prefix", plugin.prefix.get("owner"));
 			} else if (p.hasPermission("BungeeSuite.admin")) {
-				output = output.replace("%prefix", "&4[Admin]");
+				output = output.replace("%prefix", plugin.prefix.get("admin"));
 			} else if (p.hasPermission("BungeeSuite.mod")) {
-				output = output.replace("%prefix", "&9[Mod]");
+				output = output.replace("%prefix", plugin.prefix.get("mod"));
 			} else if (p.hasPermission("BungeeSuite.tmod")) {
-				output = output.replace("%prefix", "&5[TMod]");
+				output = output.replace("%prefix", plugin.prefix.get("tmod"));
 			} else {
 				output = output.replace("%prefix", "");
 			}	
@@ -269,7 +282,9 @@ public class ChatChannel {
 
 	public void setOwner(ChatPlayer player) {
 		this.owner = player.getName();
-		player.sendMessage(ChatColor.DARK_GREEN+"You are now the owner of the channel "+ channelName);
+		String cmsg = plugin.CHANNEL_CREATE_CONFIRM;
+		cmsg = cmsg.replace("%channel", channelName);
+		player.sendMessage(cmsg);
 		plugin.getUtilities().setChannelOwner(channelName, player.getName());
 	}
 

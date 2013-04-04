@@ -20,13 +20,15 @@ public class Portals extends Command {
 
 	@Override
 	public void execute(CommandSender arg0, String[] arg1) {
-		if(!arg0.hasPermission("BungeeSuite.admin"))return;
+		if(!arg0.hasPermission("BungeeSuite.admin")){
+			arg0.sendMessage(plugin.NO_PERMISSION);
+			return;
+		}
 		String message = ChatColor.DARK_AQUA+"Portals: "+ChatColor.WHITE;
 		ArrayList<String> portals = null;
 		try {
 			portals = plugin.getUtilities().getPortals();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

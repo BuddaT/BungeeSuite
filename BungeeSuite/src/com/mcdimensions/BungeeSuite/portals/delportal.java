@@ -23,10 +23,12 @@ public class delportal extends Command {
 
 	@Override
 	public void execute(CommandSender arg0, String[] arg1) {
-		if (!arg0.hasPermission("BungeeSuite.admin"))
+		if (!arg0.hasPermission("BungeeSuite.admin")){
+			arg0.sendMessage(plugin.NO_PERMISSION);
 			return;
+		}
 		if (arg1.length < 1) {
-			arg0.sendMessage(ChatColor.RED + "/delportal (Name)");
+			arg0.sendMessage(ChatColor.RED + "/"+plugin.delportal+ " (Name)");
 			return;
 		}
 		try {
@@ -37,9 +39,9 @@ public class delportal extends Command {
 				out.writeUTF("DeletePortal");//sent to bukkit so it can remove from memory
 				out.writeUTF(arg1[0]);
 				server.sendData("BungeeSuiteMC", b.toByteArray());
-				arg0.sendMessage(ChatColor.DARK_GREEN+"Portal deleted");
+				arg0.sendMessage(plugin.PORTAL_DELETE_CONFIRM);
 			}else{
-				arg0.sendMessage(ChatColor.RED+"That portal does not exist");
+				arg0.sendMessage(plugin.PORTAL_NOT_EXIST);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

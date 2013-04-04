@@ -16,15 +16,20 @@ public class kick extends Command {
 
 	@Override
 	public void execute(CommandSender arg0, String[] arg1) {
-		if(!arg0.hasPermission("BungeeSuite.mod"))return;
+		if(!arg0.hasPermission("BungeeSuite.mod")){
+			arg0.sendMessage(plugin.NO_PERMISSION);
+			return;
+		}
 		if(arg1.length<1){
-			arg0.sendMessage(ChatColor.RED+"/Kick (PlayerName)");
+			arg0.sendMessage(ChatColor.RED+"/"+plugin.kick+" (PlayerName)");
 			return;
 		}
 		String name = arg1[0];
 		
 		ProxiedPlayer player = plugin.getUtilities().getClosestPlayer(name);
-		String Message = "You have been kicked by "+arg0.getName();
+		String kmessage = plugin.DEFAULT_KICK_PLAYER;
+		kmessage.replace("%sender", arg0.getName());
+		String Message = kmessage;
 		if(player!=null){
 			if(arg1.length>1){
 				int count = 0;
@@ -38,9 +43,13 @@ public class kick extends Command {
 				}
 			}
 			player.disconnect(Message);
-			plugin.getUtilities().sendBroadcast(ChatColor.DARK_GREEN+"["+player.getDisplayName()+"]"+ChatColor.GOLD+" has been kicked from the server");
+			String k2message = plugin.DEFAULT_KICK_BROADCAST;
+			k2message.replace("%sender", arg0.getName());
+			k2message.replace("%player", player.getDisplayName());
+			k2message.replace("%message", Message);
+			plugin.getUtilities().sendBroadcast(k2message);
 		}else{
-			arg0.sendMessage(ChatColor.RED+"That player is not online");
+			arg0.sendMessage(plugin.PLAYER_NOT_ONLINE);
 		}
 
 	}

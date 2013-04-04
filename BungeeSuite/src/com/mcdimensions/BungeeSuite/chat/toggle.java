@@ -4,8 +4,6 @@ import java.sql.SQLException;
 import java.util.HashSet;
 
 import com.mcdimensions.BungeeSuite.BungeeSuite;
-
-import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 
@@ -23,7 +21,6 @@ public class toggle extends Command {
 			try {
 				channels = plugin.getUtilities().getPlayersChannels(arg0.getName());
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			ChatPlayer cp = plugin.getChatPlayer(arg0.getName());
@@ -56,13 +53,12 @@ public class toggle extends Command {
 				if(cc.containsMember(cp.getName())){//player is member
 					cp.setCurrent(cc);
 				}else{//unable to toggle to this channel
-					arg0.sendMessage(ChatColor.RED+"Unable to toggle to this channel");
+					arg0.sendMessage(plugin.CHANNEL_TOGGLE_PERMISSION);
 				}
 			}else{//channel does not exist
-				arg0.sendMessage(ChatColor.RED+"Channel does not exist");
+				arg0.sendMessage(plugin.CHANNEL_NOT_EXIST);
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} catch (SQLException e) { 
 			e.printStackTrace();
 		}
 	}

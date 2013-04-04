@@ -1,7 +1,5 @@
 package com.mcdimensions.BungeeSuite.chat;
 
-import java.sql.SQLException;
-
 import com.mcdimensions.BungeeSuite.BungeeSuite;
 
 import net.md_5.bungee.api.ChatColor;
@@ -19,9 +17,12 @@ public class mute extends Command {
 	
 	@Override
 	public void execute(CommandSender arg0, String[] arg1) {
-		if(!arg0.hasPermission("BungeeSuite.mod") || !arg0.hasPermission("BungeeSuite.admin"))return;
+		if(!arg0.hasPermission("BungeeSuite.mod") || !arg0.hasPermission("BungeeSuite.admin")){
+			arg0.sendMessage(plugin.NO_PERMISSION);
+			return;
+		}
 		if(arg1.length<1){
-			arg0.sendMessage(ChatColor.RED+"/mute (player)");
+			arg0.sendMessage(ChatColor.RED+"/"+plugin.mute+" (player)");
 			return;
 		}
 		ProxiedPlayer player = plugin.getUtilities().getClosestPlayer(arg1[0]);
@@ -29,15 +30,15 @@ public class mute extends Command {
 			ChatPlayer cp = plugin.getChatPlayer(player.getName());
 			cp.mute();
 			if(cp.isMute()){
-			player.sendMessage(ChatColor.RED+"You have been muted");
-			arg0.sendMessage(ChatColor.DARK_GREEN+"Player muted!");
+			player.sendMessage(plugin.PLAYER_MUTE);
+			arg0.sendMessage(plugin.PLAYER_MUTED);
 			}else{
-				player.sendMessage(ChatColor.DARK_GREEN+"You have been unmuted");
-				arg0.sendMessage(ChatColor.DARK_GREEN+"Player unmuted!");
+				player.sendMessage(plugin.PLAYER_UNMUTE);
+				arg0.sendMessage(plugin.PLAYER_UNMUTED);
 			}
 			return;
 		}else{
-			arg0.sendMessage(ChatColor.RED+"That player does not exist!");
+			arg0.sendMessage(plugin.PLAYER_NOT_EXIST);
 			return;
 		}
 	}

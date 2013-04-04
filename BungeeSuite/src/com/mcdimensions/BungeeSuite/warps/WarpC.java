@@ -29,7 +29,7 @@ public class WarpC extends Command {
 	@Override
 	public void execute(CommandSender arg0, String[] arg1) {
 		if(arg1.length<1){
-			arg0.sendMessage(ChatColor.RED+"/warp (name)");
+			arg0.sendMessage(ChatColor.RED+"/"+plugin.warp+" (name)");
 			return;
 		}
 		else if(plugin.warpList.containsKey(arg1[0])){
@@ -43,6 +43,8 @@ public class WarpC extends Command {
 				if(plugin.getUtilities().warpExists(arg1[0])){
 					Warp warp  = plugin.getUtilities().loadWarp(arg1[0]);
 					warp.warpPlayer((ProxiedPlayer) arg0);
+				}else{
+					arg0.sendMessage(plugin.WARP_NOT_EXIST);
 				}
 			} catch (SQLException | IOException e) {
 				e.printStackTrace();

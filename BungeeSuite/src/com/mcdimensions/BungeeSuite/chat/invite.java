@@ -28,18 +28,29 @@ public class invite extends Command {
 				if(pp!=null){//if player is online
 				cur.invitePlayer(pp.getName());
 				if(cur.containsMember(cp.getName())){
-					arg0.sendMessage(ChatColor.RED+"That player is already in this channel");
+					String msg = plugin.CHANNEL_IS_MEMBER;
+					msg = msg.replace("%player", pp.getName());
+					msg = msg.replace("%channel", cur.getName());
+					arg0.sendMessage(msg);
 					return;
 				}
-				pp.sendMessage(ChatColor.DARK_AQUA+"You have been invited to the "+ cur.getName()+ " channel. Type /accept "+ cur.getName()+ " to join.");
-				arg0.sendMessage(ChatColor.DARK_GREEN+pp.getDisplayName()+" Invited to current channel");
+				String pmsg = plugin.PLAYER_INVITE;
+				pmsg = pmsg.replace("%channel", cur.getName());
+				pmsg = pmsg.replace("%sender", arg0.getName());
+				pp.sendMessage(pmsg);
+				String imsg = plugin.PLAYER_INVITED;
+				imsg = imsg.replace("%player", pp.getName());
+				imsg = imsg.replace("%channel", cur.getName());
+				arg0.sendMessage(imsg);
 				return;
 				}else{//player offline or does not exist
-					arg0.sendMessage(ChatColor.RED+"That player is not online");
+					arg0.sendMessage(plugin.PLAYER_NOT_ONLINE);
 					return;
 				}
 			}else{//no permission to invite to current channel
-				arg0.sendMessage(ChatColor.RED+"You do not have permission to invite players to your current channel");
+				String pmsg = plugin.CHANNEL_INVITE_NOPERM;
+				pmsg = pmsg.replace("%channel", cur.getName());
+				arg0.sendMessage(pmsg);
 				return;
 			}
 		}else if(arg1.length==2){//invite to a specific channel
@@ -49,26 +60,39 @@ public class invite extends Command {
 					if(cc.getOwner().equalsIgnoreCase(arg0.getName())|| arg0.hasPermission("BungeeSuite.admin")){//has permission
 						ProxiedPlayer pp = plugin.getUtilities().getClosestPlayer(arg1[0]);
 						if(pp!=null){//player is online
+							if(cc.containsMember(pp.getName())){
+								String msg = plugin.CHANNEL_IS_MEMBER;
+								msg = msg.replace("%player", pp.getName());
+								msg = msg.replace("%channel", cc.getName());
+								arg0.sendMessage(msg);
+								return;
+							}
 							cc.invitePlayer(pp.getName());
-							pp.sendMessage(ChatColor.DARK_AQUA+"You have been invited to the "+ cc.getName()+ " channel. Type /join "+ cc.getName()+ " to join.");
-							arg0.sendMessage(ChatColor.DARK_GREEN+pp.getDisplayName()+" Invited to channel "+ cc.getName());
+							String pmsg = plugin.PLAYER_INVITE;
+							pmsg = pmsg.replace("%channel", cc.getName());
+							pmsg = pmsg.replace("%sender", arg0.getName());
+							pp.sendMessage(pmsg);
+							String imsg = plugin.PLAYER_INVITED;
+							imsg = imsg.replace("%player", pp.getName());
+							imsg = imsg.replace("%channel", cc.getName());
+							arg0.sendMessage(imsg);
 							return;
 						}else{//player not online
-							arg0.sendMessage(ChatColor.RED+"That player is not online");
+							arg0.sendMessage(plugin.PLAYER_NOT_ONLINE);
 						}
 					}else{//no permission
-						arg0.sendMessage(ChatColor.RED+"You do not have permission to invite players to "+ cc.getName());
+						arg0.sendMessage(plugin.CHANNEL_INVITE_NOPERM);
 						return;
 					}
 				}else{//channel doesnt exist
-					arg0.sendMessage(ChatColor.RED+"Channel does not exist");
+					arg0.sendMessage(plugin.CHANNEL_NOT_EXIST);
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}else{
-			arg0.sendMessage(ChatColor.RED+"/invite(player) *(channel)");
+			arg0.sendMessage(ChatColor.RED+"/"+plugin.invite+" (player) *(channel)");
 		}
 
 	}

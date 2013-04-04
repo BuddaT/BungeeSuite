@@ -34,7 +34,6 @@ public class s extends Command {
 		ChatPlayer cp= plugin.getChatPlayer(arg0.getName());
 		ChatChannel cc = plugin.getChannel(cp.getPlayer().getServer().getInfo().getName());
 		if(plugin.ignoreServers.contains(server)){
-			//use plugin messages to send the message if really needed.. may be impossible.
 			return;	
 		}
 		cc.sendMessage(cp, message);

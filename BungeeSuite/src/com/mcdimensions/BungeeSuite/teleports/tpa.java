@@ -13,13 +13,12 @@ public class tpa extends Command {
 	public tpa(BungeeSuite bungeeSuite) {
 		super(bungeeSuite.tpa);
 		plugin = bungeeSuite;
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
 	public void execute(CommandSender arg0, String[] args) {
 		if(args.length<1){
-			arg0.sendMessage(ChatColor.RED+"/tpa (playername)");
+			arg0.sendMessage(ChatColor.RED+"/"+plugin.tpa+" (playername)");
 			return;
 		}
 		ProxiedPlayer player = (ProxiedPlayer) arg0;

@@ -14,15 +14,21 @@ import net.md_5.bungee.api.plugin.Command;
 
 public class setWarp extends Command {
 
+	private BungeeSuite plugin;
+
 	public setWarp(BungeeSuite bungeeSuite) {
 		super(bungeeSuite.setwarp);
+		plugin = bungeeSuite;
 	}
 
 	@Override
 	public void execute(CommandSender arg0, String[] arg1) {
-		if(!arg0.hasPermission("BungeeSuite.admin"))return;
+		if(!arg0.hasPermission("BungeeSuite.admin")){
+			arg0.sendMessage(plugin.NO_PERMISSION);
+			return;
+		}
 			if(arg1.length<1){
-				arg0.sendMessage(ChatColor.RED+"/setwarp (name) *(private)");
+				arg0.sendMessage(ChatColor.RED+"/"+plugin.setwarp+" (name) *(private)");
 				return;
 			}
 			String name = arg1[0];

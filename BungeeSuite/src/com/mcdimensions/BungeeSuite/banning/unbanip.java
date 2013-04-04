@@ -18,22 +18,25 @@ public class unbanip extends Command {
 	
 	@Override
 	public void execute(CommandSender arg0, String[] arg1) {
-		if(!arg0.hasPermission("BungeeSuite.mod"))return;
+		if(!arg0.hasPermission("BungeeSuite.mod")){
+			arg0.sendMessage(plugin.NO_PERMISSION);
+			return;
+		}
 		if(arg1.length<1){
-			arg0.sendMessage(ChatColor.RED+"/UnbanIP (IP)");
+			arg0.sendMessage(ChatColor.RED+"/"+plugin.unbanip+" (IP)");
 			return;
 		}
 		String name  = arg1[0];
 		if(plugin.IPbans.contains(name)){
 			try {
 				plugin.getUtilities().unbanIP(name);
-				arg0.sendMessage(ChatColor.DARK_GREEN+"IP unbanned!");
+				arg0.sendMessage(plugin.IP_UNBANNED);
 				return;
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}else{
-			arg0.sendMessage(ChatColor.RED+"IP was not banned!");
+			arg0.sendMessage(plugin.IP_NOT_EXIST);
 		}
 	}
 

@@ -19,9 +19,12 @@ public class unban extends Command {
 	
 	@Override
 	public void execute(CommandSender arg0, String[] arg1) {
-		if(!arg0.hasPermission("BungeeSuite.mod"))return;
+		if(!arg0.hasPermission("BungeeSuite.mod")){
+			arg0.sendMessage(plugin.NO_PERMISSION);
+			return;
+		}
 		if(arg1.length<1){
-			arg0.sendMessage(ChatColor.RED+"/Unban (PlayerName)");
+			arg0.sendMessage(ChatColor.RED+"/"+plugin.unban+" (PlayerName)");
 			return;
 		}
 		String name  = arg1[0];
@@ -29,13 +32,15 @@ public class unban extends Command {
 			if(plugin.getUtilities().isBanned(name)){
 				try {
 					plugin.getUtilities().unbanPlayer(name);
-					arg0.sendMessage(ChatColor.DARK_GREEN+"Player unbanned!");
+					String bmessage = plugin.PLAYER_UNBANNED;
+					bmessage= bmessage.replace("%player", arg1[0]);
+					arg0.sendMessage(bmessage);
 					return;
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}else{
-				arg0.sendMessage(ChatColor.RED+"Player was not banned!");
+				arg0.sendMessage(plugin.PLAYER_NOT_BANNED);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

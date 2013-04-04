@@ -19,30 +19,29 @@ public class createchannel extends Command {
 	public void execute(CommandSender arg0, String[] arg1) {
 		if (!(arg0.hasPermission("BungeeSuite.createchannel")|| arg0
 				.hasPermission("BungeeSuite.admin"))) {
-			arg0.sendMessage(ChatColor.RED
-					+ "You do not have permission to create channels");
+			arg0.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
 		if(plugin.getChatPlayer(arg0.getName()).getChannelsOwned()>=plugin.maxCustomChannels && !arg0.hasPermission("BungeeSuite.admin")){
-			arg0.sendMessage(ChatColor.RED+"You own too many channels already");
+			arg0.sendMessage(plugin.CHANNEL_TOO_MANY);
 			return;
 		}
 		if (arg1.length == 1) {
 			String name = arg1[0];
 			plugin.getUtilities().createChannel(name,
 					plugin.defaultCustomChannelFormat, false, arg0.getName());
-			arg0.sendMessage(ChatColor.DARK_GREEN + "Channel created");
+			arg0.sendMessage(plugin.CHANNEL_CREATE_CONFIRM);
 			return;
 		} else if (arg1.length == 2) {
 			String name = arg1[0];
 			String format = arg1[1];
 			plugin.getUtilities().createChannel(name, format, false,
 					arg0.getName());
-			arg0.sendMessage(ChatColor.DARK_GREEN + "Channel created");
+			arg0.sendMessage(plugin.CHANNEL_CREATE_CONFIRM);
 			return;
 		} else
 			arg0.sendMessage(ChatColor.RED
-					+ "/createchannel (channel name) *(channel format)");
+					+ "/"+plugin.createchannel+" (channel name) *(channel format)");
 	}
 
 }

@@ -32,6 +32,8 @@ public class spawn extends Command {
 				if(plugin.getUtilities().warpExists("Spawn")){
 					Warp warp  = plugin.getUtilities().loadWarp("Spawn");
 					warp.warpPlayer((ProxiedPlayer) arg0);
+				}else{
+					arg0.sendMessage(plugin.WARP_SPAWN_NOT_EXIST);
 				}
 			} catch (SQLException | IOException e) {
 				e.printStackTrace();

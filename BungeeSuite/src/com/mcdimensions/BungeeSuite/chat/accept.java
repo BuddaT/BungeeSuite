@@ -19,7 +19,7 @@ public class accept extends Command {
 	@Override
 	public void execute(CommandSender arg0, String[] arg1) {
 		if(arg1.length!=1){
-			arg0.sendMessage(ChatColor.RED+"/Accept (Channel name)");
+			arg0.sendMessage(ChatColor.RED+"/"+plugin.accept+" (Channel name)");
 			return;
 		}
 		String channelName = arg1[0];
@@ -31,13 +31,12 @@ public class accept extends Command {
 					cc.acceptInvite(playerName);
 					return;
 				}else{
-					arg0.sendMessage(ChatColor.RED+"You do not have permission to join this channel");
+					arg0.sendMessage(plugin.CHANNEL_NO_PERMISSION);
 				}
 			}else{//channel doesnt exist
-				arg0.sendMessage(ChatColor.RED+"That channel does not exist");
+				arg0.sendMessage(plugin.CHANNEL_NOT_EXIST);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

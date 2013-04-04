@@ -20,7 +20,6 @@ public class warplist extends Command {
 		try {
 			list = plugin.getUtilities().getWarpList(arg0);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		arg0.sendMessage(list[0]);

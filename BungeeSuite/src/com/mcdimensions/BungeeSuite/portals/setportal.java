@@ -20,10 +20,12 @@ public class setportal extends Command {
 
 	@Override
 	public void execute(CommandSender arg0, String[] arg1) {
-		if (!arg0.hasPermission("BungeeSuite.admin"))
+		if (!arg0.hasPermission("BungeeSuite.admin")){
+			arg0.sendMessage(plugin.NO_PERMISSION);
 			return;
+		}
 		if (arg1.length < 3) {
-			arg0.sendMessage(ChatColor.RED + "/setportal (Name) (type) (Dest)");
+			arg0.sendMessage(ChatColor.RED + "/"+plugin.setportal+" (Name) (type) (Dest)");
 			return;
 		}
 			ProxiedPlayer player = (ProxiedPlayer) arg0;
@@ -36,31 +38,26 @@ public class setportal extends Command {
 			try {
 				out.writeUTF("CreatePortal");
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			try {
 				out.writeUTF(p);
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			try {
 				out.writeUTF(Name);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			try {
 				out.writeUTF(Type);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			try {
 				out.writeUTF(Dest);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 

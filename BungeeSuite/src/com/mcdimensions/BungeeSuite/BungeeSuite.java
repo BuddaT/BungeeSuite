@@ -47,13 +47,12 @@ import com.mcdimensions.BungeeSuite.chat.toggle;
 import com.mcdimensions.BungeeSuite.chat.s;
 import com.mcdimensions.BungeeSuite.chat.whisper;
 import com.mcdimensions.BungeeSuite.chat.server;
+import com.mcdimensions.BungeeSuite.config.Config;
 import com.mcdimensions.BungeeSuite.listeners.BanListener;
 import com.mcdimensions.BungeeSuite.listeners.ChatListener;
 import com.mcdimensions.BungeeSuite.listeners.LoginMessages;
 import com.mcdimensions.BungeeSuite.listeners.PluginMessageListener;
 import com.mcdimensions.BungeeSuite.listeners.ServerLoginLogout;
-import com.mcdimensions.BungeeSuite.listeners.TpListener;
-import com.mcdimensions.BungeeSuite.listeners.WarpListener;
 import com.mcdimensions.BungeeSuite.portals.Portals;
 import com.mcdimensions.BungeeSuite.portals.delportal;
 import com.mcdimensions.BungeeSuite.portals.listPortals;
@@ -75,6 +74,7 @@ import com.mcdimensions.BungeeSuite.warps.spawn;
 import com.mcdimensions.BungeeSuite.warps.warplist;
 import com.mcdimensions.BungeeSuite.warps.warps;
 
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ConfigurationAdapter;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -84,6 +84,10 @@ public class BungeeSuite extends Plugin {
 	ProxyServer proxy;
 	SQL sql;
 	ConfigurationAdapter config;
+	//Messages
+	public String DEFAULT_BAN_PLAYER, PLAYER_TELEPORTED_TO,TELEPORTED_PLAYER_TO_TARGET, TELEPORTS_NOT_ENABLED, TELEPORT_REQUEST_HERE, TELEPORT_REQUEST_TO,WARP_SPAWN_NOT_EXIST, WARP_NOT_EXIST, WARP_DELETE_CONFIRM, WARP_CREATE_CONFIRM, PORTAL_DELETE_CONFIRM, PORTAL_NOT_EXIST, DEFAULT_IPBAN_PLAYER, TEMP_BAN_BROADCAST, BAN_MESSAGE_BROADCAST, IP_NOT_EXIST, IP_UNBANNED, NO_PERMISSION, PLAYER_REPLY_NONE, PLAYER_NICKNAME_CHANGE, PLAYER_NICKNAMED, PLAYER_ALL_MUTED, PLAYER_ALL_UNMUTED, PLAYER_MUTE, PLAYER_MUTED, PLAYER_UNMUTE, PLAYER_UNMUTED, PLAYER_NOT_EXIST, PLAYER_NOT_ONLINE, PLAYER_UNBANNED, PLAYER_INVITED, PLAYER_INVITE, PLAYER_SENDING_SERVER, PLAYER_NOT_BANNED, DEFAULT_KICK_PLAYER, DEFAULT_KICK_BROADCAST, UNBAN_PLAYER, CHANNEL_INVITE_NOPERM, CHANNEL_NOT_INVITED, CHANNEL_NOT_LEAVE_SERVER, CHANNEL_TOGGLE_PERMISSION, CHANNEL_NOT_LEAVE_OWNER, CHANNEL_IS_MEMBER, CHANNEL_NOT_MEMBER, CHANNEL_NO_PERMISSION, CHANNEL_NOT_EXIST, CHANNEL_CREATE_CONFIRM, CHANNEL_DELETE_CONFIRM, CHANNEL_PLAYER_JOINED, CHANNEL_WELCOME, CHANNEL_KICK_PLAYER, CHANNEL_PLAYER_LEAVE, CHANNEL_TOO_MANY, BROADCAST_MESSAGE, CHATSPY_TOGGLED;
+	//PREFIXES
+	public HashMap<String, String> prefix;
 	//MySQL
 	public String url, database, port, username, password;
 	//Commands
@@ -193,10 +197,74 @@ public class BungeeSuite extends Plugin {
 				e.printStackTrace();
 			}
 		}
+			cl.Color("&2 -Loading Messages");
+			loadMessages();
+		
 		if(gamemode){
 //			cl.Color("GREEN -Loading Bans");
 			loadGamemode();
 		}
+	}
+
+	private void loadMessages() {
+		 String localepath= "/plugins/BungeeSuite/locale.yml";
+		Config locale=new Config(localepath);
+		NO_PERMISSION = locale.getString("NO_PERMISSION", ChatColor.RED+"You do not have permission to use that command");
+		CHATSPY_TOGGLED = locale.getString("CHATSPY_TOGGLED", ChatColor.DARK_GREEN+"Chatspy toggled");
+		BROADCAST_MESSAGE = locale.getString("BROADCAST_MESSAGE", ChatColor.AQUA+"[BROADCAST]:"+ChatColor.GREEN+" %message");
+		PLAYER_NOT_EXIST = locale.getString("PLAYER_NOT_EXIST", ChatColor.RED+"That player does not exist");
+		PLAYER_NOT_ONLINE = locale.getString("PLAYER_NOT_ONLINE", ChatColor.RED+"That player is not online");
+		DEFAULT_BAN_PLAYER = locale.getString("DEFAULT_BAN_PLAYER", "You have been banned!");
+		DEFAULT_IPBAN_PLAYER = locale.getString("DEFAULT_IPBAN_PLAYER", ChatColor.GOLD+"[%player]"+ChatColor.DARK_GREEN+ " has been ip banned from the server");
+		TEMP_BAN_BROADCAST = locale.getString("TEMP_BAN_BROADCAST", ChatColor.GOLD+"[%player]"+ChatColor.DARK_GREEN+ "has been temporarily banned by"+ChatColor.GOLD+" %sender"+ChatColor.DARK_GREEN+" for %days:days %hours:hours %minutes:minutes");
+		BAN_MESSAGE_BROADCAST =locale.getString("BAN_MESSAGE_BROADCAST", ChatColor.GOLD+"[%player]"+ChatColor.DARK_GREEN+" has been banned from the server by %sender, reason: %message");
+		IP_NOT_EXIST = locale.getString("IP_NOT_EXIST", ChatColor.RED+"That IP does not exist");
+		PLAYER_UNBANNED= locale.getString("PLAYER_UNBANNED", ChatColor.DARK_GREEN+ "%player has been unbanned!");
+		IP_UNBANNED = locale.getString("IP_UNBANNED", ChatColor.DARK_GREEN+"IP has been unbanned");
+		PLAYER_NOT_BANNED = locale.getString("PLAYER_NOT_BANNED", ChatColor.RED+"That player is not banned");
+		DEFAULT_KICK_PLAYER = locale.getString("DEFAULT_KICK_PLAYER", ChatColor.RED+"You have been kicked from the server by %sender");
+		DEFAULT_KICK_BROADCAST = locale.getString("DEFAULT_KICK_BROADCAST", ChatColor.AQUA+"[%player]"+ChatColor.GOLD+" has been kicked from the server by %sender for: %message");
+		TELEPORTED_PLAYER_TO_TARGET = locale.getString("TELEPORTED_PLAYER_TO_TARGET", ChatColor.DARK_GREEN+"You have been teleported to %player");
+		PLAYER_TELEPORTED_TO = locale.getString("PLAYER_TELEPORTED_TO", ChatColor.DARK_GREEN+"%sender has teleported to you");
+		TELEPORT_REQUEST_HERE = locale.getString("TELEPORT_REQUEST_HERE", ChatColor.LIGHT_PURPLE+"%player has requested you teleport to them");
+		TELEPORT_REQUEST_TO = locale.getString("TELEPORT_REQUEST_TO", ChatColor.LIGHT_PURPLE+"%player has requested to teleport to you");
+		TELEPORTS_NOT_ENABLED = locale.getString("TELEPORTS_NOT_ENABLED", ChatColor.RED+"Teleports are not enabled for this world");
+		WARP_SPAWN_NOT_EXIST = locale.getString("WARP_SPAWN_NOT_EXIST", ChatColor.RED+"The warp \"Spawn\" has not been created yet, please ask your admin to set the \"Spawn\" warp");
+		WARP_NOT_EXIST= locale.getString("WARP_NOT_EXIST", ChatColor.RED+"That warp does not exist");
+		WARP_DELETE_CONFIRM= locale.getString("WARP_DELETE_CONFIRM", ChatColor.DARK_GREEN+"Warp deleted");
+		PORTAL_DELETE_CONFIRM = locale.getString("PORTAL_DELETE_CONFIRM", ChatColor.DARK_GREEN+"Portal deleted");
+		PORTAL_NOT_EXIST = locale.getString("PORTAL_NOT_EXIST", ChatColor.RED+"That portal does not exist");
+		PLAYER_REPLY_NONE = locale.getString("PLAYER_REPLY_NONE", ChatColor.RED+"You have no players to reply to");
+		PLAYER_NICKNAME_CHANGE = locale.getString("PLAYER_NICKNAME_CHANGE", ChatColor.GOLD+"Your nickname has been changed to "+ChatColor.DARK_GREEN+ "%nickname"+ ChatColor.GOLD+" by %sender");
+		PLAYER_NICKNAMED = locale.getString("PLAYER_NICKNAMED", ChatColor.DARK_GREEN+"%player's nickname has been changed to %nickname");
+		PLAYER_ALL_MUTED = locale.getString("PLAYER_ALL_MUTED", ChatColor.RED+"All players have been temporarily muted");
+		PLAYER_ALL_UNMUTED = locale.getString("PLAYER_ALL_UNMUTED", ChatColor.DARK_GREEN+"All players have been unmuted!");
+		PLAYER_MUTE = locale.getString("PLAYER_MUTE", ChatColor.RED+"You have been muted!");
+		PLAYER_MUTED = locale.getString("PLAYER_MUTED", ChatColor.RED+"Player has been muted");
+		PLAYER_UNMUTE = locale.getString("PLAYER_UNMUTE", ChatColor.DARK_GREEN+"You have been unmuted!");
+		PLAYER_UNMUTED = locale.getString("PLAYER_UNMUTED", ChatColor.DARK_GREEN+"Player has been unmuted!");
+		PLAYER_INVITED = locale.getString("PLAYER_INVITED", ChatColor.DARK_GREEN+"%player has been invited to join the channel %channel");
+		PLAYER_INVITE = locale.getString("PLAYER_INVITE", ChatColor.DARK_GREEN+"You have been invited by %sender to join the channel %channel");
+		PLAYER_SENDING_SERVER = locale.getString("PLAYER_SENDING_SERVER", ChatColor.DARK_GREEN+"Toggled display of server");
+		CHANNEL_INVITE_NOPERM = locale.getString("CHANNEL_INVITE_NOPERM", ChatColor.RED+"You do not have permission to invite players to the channel "+ChatColor.AQUA+"%channel");
+		CHANNEL_NOT_INVITED = locale.getString("CHANNEL_NOT_INVITED", ChatColor.RED+"You are not invited to join the channel "+ChatColor.AQUA+"%channel");
+		CHANNEL_NOT_LEAVE_SERVER = locale.getString("CHANNEL_NOT_LEAVE_SERVER", ChatColor.RED+"You are unable to leave this channel as it is a server channel");
+		CHANNEL_TOGGLE_PERMISSION = locale.getString("CHANNEL_TOGGLE_PERMISSION", ChatColor.RED+"You do not have permission to toggle to this channel");
+		CHANNEL_NOT_LEAVE_OWNER = locale.getString("CHANNEL_NOT_LEAVE_OWNER", ChatColor.RED+"You are unable to leave the channel %channel as you are the owner");
+		CHANNEL_IS_MEMBER = locale.getString("CHANNEL_IS_MEMBER", ChatColor.RED+"%player is already a member of the channel %channel");
+		CHANNEL_NOT_MEMBER = locale.getString("CHANNEL_NOT_MEMBER", ChatColor.RED+"That player is not a member of the channel");
+		CHANNEL_NO_PERMISSION = locale.getString("CHANNEL_NO_PERMISSION", ChatColor.RED+"You do not have permission to edit this channel");
+		CHANNEL_NOT_EXIST = locale.getString("CHANNEL_NOT_EXIST", ChatColor.RED+"That channel does not exist!");
+		CHANNEL_CREATE_CONFIRM = locale.getString("CHANNEL_CREATE_CONFIRM", ChatColor.DARK_GREEN+"Channel %channel created!");
+		CHANNEL_DELETE_CONFIRM = locale.getString("CHANNEL_DELETE_CONFIRM", ChatColor.DARK_GREEN+"Channel deleted!");
+		CHANNEL_PLAYER_JOINED = locale.getString("CHANNEL_PLAYER_JOINED", ChatColor.GRAY+"%player has joined the channel %channel");
+		CHANNEL_WELCOME = locale.getString("CHANNEL_WELCOME", ChatColor.GRAY+"Welcome to the channel %channel");
+		CHANNEL_KICK_PLAYER = locale.getString("CHANNEL_KICK_PLAYER", ChatColor.RED+"You have been kicked from the channel %channel");
+		CHANNEL_PLAYER_LEAVE = locale.getString("CHANNEL_PLAYER_LEAVE", ChatColor.GRAY+"%player has left the channel %channel");
+		CHANNEL_TOO_MANY = locale.getString("CHANNEL_TOO_MANY", ChatColor.RED +" Player owns to many channels");
+		
+		
+		
 	}
 
 	private void loadGamemode() {
@@ -324,10 +392,10 @@ public class BungeeSuite extends Plugin {
 			proxy.getPluginManager().registerListener(this,new LoginMessages(this));	
 		}
 		if(warps){
-			proxy.getPluginManager().registerListener(this,new WarpListener(this));
+//			proxy.getPluginManager().registerListener(this,new WarpListener(this));
 		}
 		if(teleports){
-			proxy.getPluginManager().registerListener(this,new TpListener(this));
+//			proxy.getPluginManager().registerListener(this,new TpListener(this));
 		}
 		if(chat){
 			proxy.getPluginManager().registerListener(this,new ChatListener(this));

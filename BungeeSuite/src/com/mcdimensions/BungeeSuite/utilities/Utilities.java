@@ -197,7 +197,16 @@ public class Utilities {
 			    // Can never happen
 			}
 			originalPlayer.getServer().sendData("BungeeSuiteMC", b.toByteArray());
-			originalPlayer.sendMessage(ChatColor.DARK_GREEN+"Teleported to " + targetPlayer.getName());
+			String tmsg = plugin.TELEPORTED_PLAYER_TO_TARGET;
+			tmsg = tmsg.replace("%player", targetPlayer.getName());
+			tmsg = tmsg.replace("%sender", originalPlayer.getName());
+			originalPlayer.sendMessage(tmsg);
+			if(!originalPlayer.hasPermission("BungeeSuite.mod")){
+			String pmsg = plugin.PLAYER_TELEPORTED_TO;
+			pmsg = pmsg.replace("%player", targetPlayer.getName());
+			pmsg = pmsg.replace("%sender", originalPlayer.getName());
+			targetPlayer.sendMessage(pmsg);
+			}
 			return;
 		}
 		
@@ -205,13 +214,17 @@ public class Utilities {
 
 	public void sendTpRequest(ProxiedPlayer player, ProxiedPlayer targetPlayer) {
 		plugin.tpaList.put(targetPlayer, player);
-		targetPlayer.sendMessage(ChatColor.GREEN+player.getDisplayName()+" has requested to teleport to you type /tpaccept to accept or /tpdeny to deny");	
+		String tmsg = plugin.TELEPORT_REQUEST_TO;
+		tmsg = tmsg.replace("%player", player.getDisplayName());
+		targetPlayer.sendMessage(tmsg);	
 		return;
 	}
 
 	public void sendTpHereRequest(ProxiedPlayer player, ProxiedPlayer targetPlayer) {
 		plugin.tpHereList.put(player, targetPlayer);
-		player.sendMessage(ChatColor.GREEN+targetPlayer.getDisplayName()+" has requested you teleport to them  type /tpaccept to accept or /tpdeny to deny");	
+		String tmsg = plugin.TELEPORT_REQUEST_HERE;
+		tmsg = tmsg.replace("%player", targetPlayer.getDisplayName());
+		player.sendMessage(tmsg);	
 		return;
 	}
 

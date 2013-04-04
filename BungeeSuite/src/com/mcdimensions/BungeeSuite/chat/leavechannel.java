@@ -6,7 +6,6 @@ import com.mcdimensions.BungeeSuite.BungeeSuite;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
 public class leavechannel extends Command {
@@ -23,10 +22,12 @@ public class leavechannel extends Command {
 			ChatPlayer cp = plugin.getChatPlayer(arg0.getName());
 			ChatChannel cc= cp.getCurrent();
 			if(cc.isServerChannel()){
-				cp.sendMessage(ChatColor.RED+"Can not leave this channel");
+				cp.sendMessage(plugin.CHANNEL_NOT_LEAVE_SERVER);
 				return;
 			}else if(cc.getOwner().equalsIgnoreCase(cp.getName())){
-			cp.sendMessage(ChatColor.RED+"You can not leave this channel as you are the owner use /delete (channel) instead");	
+				String cmsg = plugin.CHANNEL_NOT_LEAVE_OWNER;
+				cmsg = cmsg.replace("%channel", cc.getName());
+			cp.sendMessage(cmsg);	
 			}
 				else{
 				cc.removeMember(cp.getName());
@@ -48,7 +49,7 @@ public class leavechannel extends Command {
 					ChatChannel cc = plugin.getChannel(channelName);
 					ChatPlayer cp = plugin.getChatPlayer(arg0.getName());
 					if(cc.isServerChannel()){
-						cp.sendMessage(ChatColor.RED+"Can not leave this channel");
+						cp.sendMessage(plugin.CHANNEL_NOT_LEAVE_SERVER);
 						return;
 					}
 					ChatChannel cur = cp.getCurrent();
@@ -63,14 +64,14 @@ public class leavechannel extends Command {
 						cp.removeChannel(cc.getName());
 					}
 				}else{
-					arg0.sendMessage(ChatColor.RED+"That channel does not exist");
+					arg0.sendMessage(plugin.CHANNEL_NOT_EXIST);
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}else{
-			arg0.sendMessage(ChatColor.RED+"/leave (*ChannelName)");
+			arg0.sendMessage(ChatColor.RED+"/"+plugin.leavechannel+ " (*ChannelName)");
 			return;
 		}
 

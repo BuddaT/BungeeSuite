@@ -1,10 +1,7 @@
 package com.mcdimensions.BungeeSuite.banning;
 
 import java.sql.SQLException;
-import java.util.Calendar;
-
 import com.mcdimensions.BungeeSuite.BungeeSuite;
-
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
@@ -20,16 +17,19 @@ public class tban extends Command {
 	
 	@Override
 	public void execute(CommandSender arg0, String[] arg1) {
-		if(!arg0.hasPermission("BungeeSuite.mod"))return;
+		if(!arg0.hasPermission("BungeeSuite.mod")){
+			arg0.sendMessage(plugin.NO_PERMISSION);
+			return;
+		}
 		if(arg1.length<1){
-			arg0.sendMessage(ChatColor.RED+"/TempBan (PlayerName) (d:days h:hours m:minutes)");
+			arg0.sendMessage(ChatColor.RED+"/"+plugin.tban+" (PlayerName) (d:days h:hours m:minutes)");
 			return;
 		}
 		try {
 			if(plugin.getUtilities().playerExists(arg1[0])){
 				String player = arg1[0];
 				if(arg1.length==1){
-					arg0.sendMessage("Must define a ban time /tempban (playername) (d:days h:hours m:minutes)");
+					arg0.sendMessage(ChatColor.RED+"Must define a ban time /tempban (playername) (d:days h:hours m:minutes)");
 					return;
 				}
 				int minuteIncrease = 0;
@@ -50,14 +50,20 @@ public class tban extends Command {
 						minuteIncrease += Integer.parseInt(arg1[i].substring(2, arg1[i].length()));
 					}
 					} catch(NumberFormatException e){
-						arg0.sendMessage(ChatColor.RED+"An incorrect value was used to the time /tempban (playername) (d:days h:hours, m: minutes)");
+						arg0.sendMessage(ChatColor.RED+"An incorrect value was used for the time. /tempban (playername) (d:days h:hours, m: minutes)");
 						return;
 					}
 				}
 				plugin.getUtilities().tempBanPlayer(player, minuteIncrease, hourIncrease, dateIncrease);
-				plugin.getUtilities().sendBroadcast(ChatColor.DARK_GREEN+"["+arg1[0]+"]"+ChatColor.GOLD+" has been temporarilly banned from the server for "+dateIncrease+":days "+hourIncrease+":hours "+ minuteIncrease+":minutes");
+				String tmessage = plugin.TEMP_BAN_BROADCAST;
+				tmessage = tmessage.replace("%player", arg1[0]);
+				tmessage = tmessage.replace("%sender", arg0.getName());
+				tmessage = tmessage.replace("%days", dateIncrease+"");
+				tmessage = tmessage.replace("%hours", hourIncrease+"");
+				tmessage= tmessage.replace("%minutes", minuteIncrease+"");
+				plugin.getUtilities().sendBroadcast(tmessage);
 			}else{
-				arg0.sendMessage(ChatColor.RED+"That player does not exist");
+				arg0.sendMessage(plugin.PLAYER_NOT_EXIST);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

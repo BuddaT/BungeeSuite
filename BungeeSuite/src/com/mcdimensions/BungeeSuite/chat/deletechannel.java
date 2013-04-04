@@ -22,33 +22,34 @@ public class deletechannel extends Command {
 			ChatChannel current = cp.getCurrent();
 			if(arg0.getName().equalsIgnoreCase(current.getOwner())|| arg0.hasPermission("BungeeSuite.admin")){
 				plugin.getUtilities().deleteChannel(current.getName());
-				arg0.sendMessage(ChatColor.DARK_GREEN+"Channel deleted");
+				arg0.sendMessage(plugin.CHANNEL_DELETE_CONFIRM);
 				return;
+				
+				
 			}else{
-				arg0.sendMessage(ChatColor.RED+"You do not have permission to delete this channel");
+				arg0.sendMessage(plugin.CHANNEL_NO_PERMISSION);
 				return;
 			}
 		}else if(arg1.length==1){//other
-			ChatPlayer cp = plugin.getChatPlayer(arg0.getName());
+//			ChatPlayer cp = plugin.getChatPlayer(arg0.getName());
 			ChatChannel cc = plugin.getChannel(arg1[0]);
 			try {
 				if(!plugin.getUtilities().chatChannelExists(arg1[0])){
-					arg0.sendMessage(ChatColor.RED+"This channel does not  exist");
+					arg0.sendMessage(plugin.CHANNEL_NOT_EXIST);
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			if(cc!=null && (arg0.getName().equalsIgnoreCase(cc.getOwner())|| arg0.hasPermission("BungeeSuite.admin"))){
 				plugin.getUtilities().deleteChannel(cc.getName());
-				arg0.sendMessage(ChatColor.DARK_GREEN+"Channel deleted");
+				arg0.sendMessage(plugin.CHANNEL_DELETE_CONFIRM);
 				return;
 			}else{
-				arg0.sendMessage(ChatColor.RED+"You do not have permission to delete this channel");
+				arg0.sendMessage(plugin.CHANNEL_NO_PERMISSION);
 				return;
 			}
 		}else{//wrong
-			arg0.sendMessage(ChatColor.RED+"/DeleteChannel *(Channel Name)");
+			arg0.sendMessage(ChatColor.RED+"/"+plugin.deletechannel+" *(Channel Name)");
 			return;
 		}
 		

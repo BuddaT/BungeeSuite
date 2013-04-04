@@ -18,18 +18,21 @@ public class delWarp extends Command {
 
 	@Override
 	public void execute(CommandSender arg0, String[] arg1) {
-		if(!arg0.hasPermission("BungeeSuite.admin"))return;
+		if(!arg0.hasPermission("BungeeSuite.admin")){
+			arg0.sendMessage(plugin.NO_PERMISSION);
+			return;
+		}
 		if(arg1.length<1){
-			arg0.sendMessage(ChatColor.RED+"/delwarp (warp name)");
+			arg0.sendMessage(ChatColor.RED+"/"+plugin.delwarp+" (warp name)");
 			return;
 		}
 		try {
 			if(plugin.getUtilities().warpExists(arg1[0])){
 				plugin.getUtilities().deleteWarp(arg1[0]);
-				arg0.sendMessage(ChatColor.DARK_GREEN+"Warp deleted!");
+				arg0.sendMessage(plugin.WARP_DELETE_CONFIRM);
 				return;
 			}else{
-				arg0.sendMessage(ChatColor.RED+"Warp deos not exist!");
+				arg0.sendMessage(plugin.WARP_NOT_EXIST);
 				return;
 			}
 		} catch (SQLException e) {

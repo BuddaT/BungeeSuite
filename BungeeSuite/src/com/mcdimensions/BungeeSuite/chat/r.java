@@ -4,7 +4,6 @@ import com.mcdimensions.BungeeSuite.BungeeSuite;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
 public class r extends Command {
@@ -17,7 +16,7 @@ public class r extends Command {
 	@Override
 	public void execute(CommandSender arg0, String[] arg1) {
 		if(arg1.length<1){
-			arg0.sendMessage(ChatColor.RED+"/r (message)");
+			arg0.sendMessage(ChatColor.RED+"/"+plugin.r+ " (message)");
 			return;
 		}
 		ChatPlayer cp =plugin.getChatPlayer(arg0.getName());
@@ -33,10 +32,10 @@ public class r extends Command {
 			arg0.sendMessage(ChatColor.GOLD+"[me->"+rp.getName()+"]"+ChatColor.WHITE+message);
 			return;
 		}else{
-			arg0.sendMessage(ChatColor.RED+"That player is no longer online");
+			arg0.sendMessage(plugin.PLAYER_NOT_ONLINE);
 		}
 		}else{
-			arg0.sendMessage(ChatColor.RED+"You have no one to reply to");
+			arg0.sendMessage(plugin.PLAYER_REPLY_NONE);
 		}
 	}
 

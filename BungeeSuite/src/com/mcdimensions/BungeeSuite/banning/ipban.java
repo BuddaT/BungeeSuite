@@ -21,9 +21,12 @@ public class ipban extends Command {
 	
 	@Override
 	public void execute(CommandSender arg0, String[] arg1) {
-		if(!arg0.hasPermission("BungeeSuite.mod"))return;
+		if(!arg0.hasPermission("BungeeSuite.mod")){
+			arg0.sendMessage(plugin.NO_PERMISSION);
+			return;
+		}
 		if(arg1.length<1){
-			arg0.sendMessage(ChatColor.RED+"/Ipban (PlayerName/IP)");
+			arg0.sendMessage(ChatColor.RED+"/"+plugin.ipban+" (PlayerName/IP)");
 			return;
 		}
 		try {
@@ -38,7 +41,9 @@ public class ipban extends Command {
 				}
 				try {
 					plugin.getUtilities().IPBanPlayer(ip);
-					plugin.getUtilities().sendBroadcast(ChatColor.DARK_GREEN+"["+ip+"]"+ChatColor.GOLD+" has been IPBanned from the server");
+					String imessage = plugin.DEFAULT_IPBAN_PLAYER;
+					imessage = imessage.replace("%player", ip);
+					plugin.getUtilities().sendBroadcast(imessage);
 				} catch (SQLException | UnknownHostException e) {
 					e.printStackTrace();
 				}
@@ -46,7 +51,9 @@ public class ipban extends Command {
 				//if IP was typed in
 				//TODO may need to add a '/' to the start
 				plugin.getUtilities().IPBanPlayer(arg1[0]);
-				plugin.getUtilities().sendBroadcast(ChatColor.DARK_GREEN+"["+arg1[0]+"]"+ChatColor.GOLD+" has been IPBanned from the server");
+				String imessage = plugin.DEFAULT_IPBAN_PLAYER;
+				imessage = imessage.replace("%player", arg1[0]);
+				plugin.getUtilities().sendBroadcast(imessage);
 			}
 		} catch (SQLException | UnknownHostException e) {
 			// TODO Auto-generated catch block
