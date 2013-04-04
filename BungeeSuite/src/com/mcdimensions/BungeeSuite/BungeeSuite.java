@@ -83,7 +83,7 @@ import net.md_5.bungee.api.plugin.Plugin;
 public class BungeeSuite extends Plugin {
 	ProxyServer proxy;
 	SQL sql;
-	public Config config, ChannelConfig;
+	public Config config, ChannelConfig, locale;
 	//Messages
 	public String DEFAULT_BAN_PLAYER, PLAYER_TELEPORTED_TO,TELEPORTED_PLAYER_TO_TARGET, TELEPORTS_NOT_ENABLED, TELEPORT_REQUEST_HERE, TELEPORT_REQUEST_TO,WARP_SPAWN_NOT_EXIST, WARP_NOT_EXIST, WARP_DELETE_CONFIRM, WARP_CREATE_CONFIRM, PORTAL_DELETE_CONFIRM, PORTAL_NOT_EXIST, DEFAULT_IPBAN_PLAYER, TEMP_BAN_BROADCAST, BAN_MESSAGE_BROADCAST, IP_NOT_EXIST, IP_UNBANNED, NO_PERMISSION, PLAYER_REPLY_NONE, PLAYER_NICKNAME_CHANGE, PLAYER_NICKNAMED, PLAYER_ALL_MUTED, PLAYER_ALL_UNMUTED, PLAYER_MUTE, PLAYER_MUTED, PLAYER_UNMUTE, PLAYER_UNMUTED, PLAYER_NOT_EXIST, PLAYER_NOT_ONLINE, PLAYER_UNBANNED, PLAYER_INVITED, PLAYER_INVITE, PLAYER_SENDING_SERVER, PLAYER_NOT_BANNED, DEFAULT_KICK_PLAYER, DEFAULT_KICK_BROADCAST, UNBAN_PLAYER, CHANNEL_INVITE_NOPERM, CHANNEL_NOT_INVITED, CHANNEL_NOT_LEAVE_SERVER, CHANNEL_TOGGLE_PERMISSION, CHANNEL_NOT_LEAVE_OWNER, CHANNEL_IS_MEMBER, CHANNEL_NOT_MEMBER, CHANNEL_NO_PERMISSION, CHANNEL_NOT_EXIST, CHANNEL_CREATE_CONFIRM, CHANNEL_DELETE_CONFIRM, CHANNEL_PLAYER_JOINED, CHANNEL_WELCOME, CHANNEL_KICK_PLAYER, CHANNEL_PLAYER_LEAVE, CHANNEL_TOO_MANY, BROADCAST_MESSAGE, CHATSPY_TOGGLED;
 	//PREFIXES
@@ -91,6 +91,7 @@ public class BungeeSuite extends Plugin {
 	//MySQL
 	public String url, database, port, username, password;
 	//Commands
+		public String bungeeSuiteCommand;
 		//banning
 		public String ban,ipban,kick,kickall,pardon,tban,tempban,unban,unbanip;
 		//chat
@@ -208,7 +209,7 @@ public class BungeeSuite extends Plugin {
 
 	private void loadMessages() {
 		 String localepath= "/plugins/BungeeSuite/locale.yml";
-		Config locale=new Config(localepath);
+		locale=new Config(localepath);
 		NO_PERMISSION = locale.getString("NO_PERMISSION", ChatColor.RED+"You do not have permission to use that command");
 		CHATSPY_TOGGLED = locale.getString("CHATSPY_TOGGLED", ChatColor.DARK_GREEN+"Chatspy toggled");
 		BROADCAST_MESSAGE = locale.getString("BROADCAST_MESSAGE", ChatColor.AQUA+"[BROADCAST]:"+ChatColor.GREEN+" %message");
@@ -262,7 +263,7 @@ public class BungeeSuite extends Plugin {
 		CHANNEL_KICK_PLAYER = locale.getString("CHANNEL_KICK_PLAYER", ChatColor.RED+"You have been kicked from the channel %channel");
 		CHANNEL_PLAYER_LEAVE = locale.getString("CHANNEL_PLAYER_LEAVE", ChatColor.GRAY+"%player has left the channel %channel");
 		CHANNEL_TOO_MANY = locale.getString("CHANNEL_TOO_MANY", ChatColor.RED +" Player owns to many channels");
-		
+		locale.save();
 		
 		
 	}
@@ -292,6 +293,7 @@ public class BungeeSuite extends Plugin {
 				getUtilities().reformatChannel(data.getName(), format);
 			}
 		}
+		ChannelConfig.save();
 	}
 
 	private void loadTeleports() {
@@ -314,7 +316,7 @@ public class BungeeSuite extends Plugin {
 	}
 
 	private void registerCommands() {
-		
+		ProxyServer.getInstance().getPluginManager().registerCommand(this,new bungeeSuiteCommand(this));
 		if(portals){
 			ProxyServer.getInstance().getPluginManager().registerCommand(this,new setportal(this));
 			ProxyServer.getInstance().getPluginManager().registerCommand(this,new delportal(this));
@@ -500,6 +502,7 @@ public class BungeeSuite extends Plugin {
 			//other
 			banning = config.getBoolean("BungeeSuite.Banning", true);
 			//commands
+				bungeeSuiteCommand = config.getString("BungeeSuite.Commands.bungeesuite", "bs");
 				//banning
 				ban = config.getString("BungeeSuite.Commands.ban", "ban");
 				ipban = config.getString("BungeeSuite.Commands.ipban", "ipban");
@@ -564,6 +567,7 @@ public class BungeeSuite extends Plugin {
 				warp = config.getString("BungeeSuite.Commands.warp", "warp");
 				warplist = config.getString("BungeeSuite.Commands.warplist", "warplist");
 				warpsc= config.getString("BungeeSuite.Commands.warps", "warps");
+				config.save();
 	}
 	
 	
@@ -589,6 +593,13 @@ public class BungeeSuite extends Plugin {
 
 	public ChatChannel getChannel(String string) {
 		return this.chatChannels.get(string);
+		
+	}
+
+	public void reload() {
+		config.load();
+		ChannelConfig.load();
+		locale.load();
 		
 	}
 
