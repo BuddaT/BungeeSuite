@@ -18,6 +18,7 @@ public class Config {
 	public Config (String path) 
 	{
 		this.path=System.getProperty("user.dir")+path;
+		createFile();
 		fconfig = YamlConfiguration.loadConfiguration(new File(System.getProperty("user.dir")+path));
 	}
 	
