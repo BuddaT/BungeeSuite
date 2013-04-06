@@ -21,9 +21,11 @@ public class ChatListener implements Listener {
 
 	@Subscribe
 	public void playerTalk(ChatEvent event) {
+		if(!plugin.chat){
+			return;
+		}
 		if (event.isCommand() || event.isCancelled()) {
 			return;
-
 		}
 		if (!(event.getSender() instanceof ProxiedPlayer))
 			return;

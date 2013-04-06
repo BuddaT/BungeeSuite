@@ -408,9 +408,8 @@ public class BungeeSuite extends Plugin {
 		if(teleports){
 //			proxy.getPluginManager().registerListener(this,new TpListener(this));
 		}
-		if(chat){
-			proxy.getPluginManager().registerListener(this,new ChatListener(this));
-		}
+			proxy.getPluginManager().registerListener(this,new ChatListener(this)); //removed chat check as temp to fix issues.
+		
 		if(banning){
 			proxy.getPluginManager().registerListener(this,new BanListener(this));
 		}
