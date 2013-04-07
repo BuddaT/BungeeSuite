@@ -261,7 +261,7 @@ public class Utilities {
 		sql.closeConnection();
 		if(!check){
 			sql.initialise();
-			sql.standardQuery("INSERT INTO BungeeChannels(ChannelName, ChannelFormat, isServerChannel) VALUES('Global', '&4[Global]"+plugin.defaultServerChannelFormat+"', TRUE);");
+			sql.standardQuery("INSERT INTO BungeeChannels(ChannelName, ChannelFormat, isServerChannel) VALUES('Global', '"+plugin.defaultServerChannelFormat+"', TRUE);");
 			sql.closeConnection();
 		}
 		for(String data: plugin.getProxy().getServers().keySet()){
