@@ -184,12 +184,12 @@ public class BungeeSuite extends Plugin {
 		}
 		if(chat){
 			cl.Color("&2 -Loading Chat");
+		}
 			try {
 				loadChat();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}
 		if(banning){
 			cl.Color("&2 -Loading Bans");
 			try {
