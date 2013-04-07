@@ -166,7 +166,7 @@ public class ChatChannel {
 		String output = "";
 		String format = getFormat();
 		ProxiedPlayer p = player.getPlayer();
-		if(p.hasPermission("BungeeSuite.nick") || p.hasPermission("BungeeSuite.mod")){
+		if(p.hasPermission("BungeeSuite.nick") || p.hasPermission("BungeeSuite.nickcolored") || p.hasPermission("BungeeSuite.mod")){
 		output = format.replace("%player", player.getDisplayName());
 		}else{
 			output = format.replace("%player", player.getName());

@@ -55,7 +55,12 @@ public class ChatPlayer {
 		return displayName;
 	}
 	public void updateDisplayName(){
+		if(this.getPlayer().hasPermission("BungeeSuite.nick") || this.getPlayer().hasPermission("BungeeSuite.nickcolored") || this.getPlayer().hasPermission("BungeeSuite.mod")){
 		this.getPlayer().setDisplayName(displayName);
+		}
+		else{
+			this.getPlayer().setDisplayName(name);
+		}
 	}
 	public void setDisplayName(String nick) throws SQLException{
 		this.displayName = nick;
