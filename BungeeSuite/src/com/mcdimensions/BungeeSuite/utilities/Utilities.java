@@ -235,7 +235,7 @@ public class Utilities {
 		    System.out.println("Table 'BungeeChannels' does not exist! Creating table...");
 		    sql.standardQuery("CREATE TABLE BungeeChannels (C_ID int NOT NULL AUTO_INCREMENT, ChannelName VARCHAR(50) NOT NULL UNIQUE, ChannelFormat VARCHAR(250) NOT NULL, isServerChannel BOOLEAN DEFAULT FALSE, Owner VARCHAR(50), CreatedDate DATE, PRIMARY KEY (C_ID))ENGINE=INNODB;");
 		    System.out.println("Table 'BungeeChannels' created!");
-		} 
+		}
 		if(!sql.doesTableExist("BungeePlayers")){
 			sql.initialise();
 			createSQLPlayerTable();
@@ -251,6 +251,11 @@ public class Utilities {
 		    System.out.println("Table 'BungeeMembers' does not exist! Creating table...");
 		    sql.standardQuery("CREATE TABLE BungeeMembers (ChannelName VARCHAR(50) NOT NULL, PlayerName VARCHAR(50) NOT NULL, FOREIGN KEY (ChannelName) REFERENCES BungeeChannels(ChannelName) ON DELETE CASCADE ON UPDATE CASCADE,FOREIGN KEY (PlayerName) REFERENCES BungeePlayers(PlayerName) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=INNODB");
 		    System.out.println("Table 'BungeeMembers' created!");
+		} 
+		if(!sql.doesTableExist("BungeeIgnores")){
+		    System.out.println("Table 'BungeeIgnores' does not exist! Creating table...");
+		    sql.standardQuery("CREATE TABLE BungeeIgnores (PlayerName VARCHAR(50) NOT NULL, Ignoring VARCHAR(50) NOT NULL, FOREIGN KEY (Ignoring) REFERENCES BungeePlayers(PlayerName) ON DELETE CASCADE ON UPDATE CASCADE,FOREIGN KEY (PlayerName) REFERENCES BungeePlayers(PlayerName) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=INNODB");
+		    System.out.println("Table 'BungeeIgnores' created!");
 		} 
 		sql.closeConnection();
 	}
@@ -341,12 +346,17 @@ public class Utilities {
 			ChatChannel channel = plugin.chatChannels.get(res.getString("Current"));
 			cp = new ChatPlayer(player, res.getString("DisplayName"), channel, res.getBoolean("ChatSpy"), res.getBoolean("SendServer"), res.getBoolean("Mute"), res.getInt("ChannelsOwned"), res.getBoolean("SendPrefix"), res.getBoolean("SendSuffix"));
 		}
-
+		//add channels to player
 		ResultSet res2 = sql.sqlQuery("SELECT * FROM BungeeMembers WHERE PlayerName = '"+player+"'");
 		while(res2.next()){
 			ChatChannel cc = plugin.getChannel(res2.getString("ChannelName"));
 			cc.onlineMember(cp);
 			cp.addChannel(cc.getName());
+		}
+		//add players ignored
+		ResultSet res3 = sql.sqlQuery("SELECT Ignoring FROM BungeeIgnores WHERE PlayerName = '"+player+"'");
+		while(res3.next()){
+			cp.addIgnore(res3.getString("Ignoring"));
 		}
 		plugin.OnlinePlayers.put(player, cp);
 		if(cp.isChatSpying()){
@@ -776,7 +786,48 @@ public class Utilities {
 		
 	}
 	
+	public HashSet<String> getIgnores(String player){
+		HashSet<String> ignorelist =  new HashSet<String>();
+		sql.initialise();
+		ResultSet res = null;
+		try {
+			res = sql.sqlQuery("SELECT Ignoring FROM BungeeIgnores WHERE PlayerName = '"+player+"'");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			while(res.next()){
+				ignorelist.add(res.getString("Ignoring"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		sql.closeConnection();
+		return ignorelist;
+	}
 
+	public void unignorePlayer(String name, String name2) {
+		sql.initialise();
+		try {
+			sql.standardQuery("DELETE FROM BungeeIgnores WHERE PlayerName= '"+name+"' AND Ignoring = '"+name2+"' ");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		sql.closeConnection();
+		plugin.getChatPlayer(name).removeIgnore(name2);
+		
+	}
+
+	public void ignorePlayer(String name, String name2) {
+		sql.initialise();
+		try {
+			sql.standardQuery("INSERT INTO BungeeIgnores (PlayerName, Ignoring) VALUES ('"+name+"', '"+name2+"')");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		sql.closeConnection();
+		plugin.getChatPlayer(name).addIgnore(name2);	
+	}
 	
 	
 }

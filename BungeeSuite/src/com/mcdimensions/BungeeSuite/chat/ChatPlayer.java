@@ -25,6 +25,7 @@ public class ChatPlayer {
 	BungeeSuite plugin;
 	private String replyPlayer;
 	private HashSet<String> channels;
+	private HashSet<String> ignores;
 
 	public ChatPlayer(String name, String displayName, ChatChannel current, boolean chatspying, boolean sendingServer, boolean mute, int channelsOwned, boolean sendingPrefix, boolean sendingSuffix) {
 		this.name = name;
@@ -38,6 +39,7 @@ public class ChatPlayer {
 		this.channelsOwned = channelsOwned;
 		plugin = (BungeeSuite) ProxyServer.getInstance().getPluginManager().getPlugin("BungeeSuite");
 		channels = new HashSet<String>();
+		ignores = new HashSet<String>();
 	}
 	public void addChannel(String channel){
 		channels.add(channel);
@@ -216,6 +218,19 @@ public class ChatPlayer {
 		this.current = channel;
 		plugin.getUtilities().setCurrentChannel(name,channel.getName());
 		
+	}
+	
+	public boolean ignoringPlayer(String player){
+		return ignores.contains(player);
+	}
+	public void addIgnore(String string) {
+		this.ignores.add(string);	
+	}
+	public void removeIgnore(String string) {
+		this.ignores.remove(string);	
+	}
+	public HashSet<String> getIgnores(){
+		return ignores;
 	}
 
 }

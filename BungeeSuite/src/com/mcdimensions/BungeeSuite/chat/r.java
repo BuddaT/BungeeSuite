@@ -23,6 +23,10 @@ public class r extends Command {
 		String player =cp.getReplyPlayer();
 		if(player!=null){
 		ChatPlayer rp =plugin.getChatPlayer(player);
+		if(rp.ignoringPlayer(arg0.getName())){
+			arg0.sendMessage(plugin.PLAYER_IGNORING);
+			return;
+		}
 		if(rp!=null){
 			String message="";
 			for(String data:arg1){

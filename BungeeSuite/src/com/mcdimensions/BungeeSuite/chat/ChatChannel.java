@@ -139,7 +139,9 @@ public class ChatChannel {
 		message = formatMessage(player, message);
 		for (String data : members) {
 			ChatPlayer cp = plugin.getChatPlayer(data);
+			if(!cp.ignoringPlayer(player.getName())|| cp.getPlayer().hasPermission("BungeeSuite.mod")){
 			cp.getPlayer().sendMessage(message);
+			}
 		}
 		for(String data:plugin.chatSpying){
 			if(!members.contains(data)){
@@ -154,8 +156,10 @@ public class ChatChannel {
 
 	public void sendGlobalMessage(ChatPlayer player, String message) {
 		message = formatMessage(player, message);
-		for (ProxiedPlayer data : plugin.getProxy().getPlayers()) {
+		for (ChatPlayer data : plugin.OnlinePlayers.values()) {
+			if(!data.ignoringPlayer(player.getName())|| data.getPlayer().hasPermission("BungeeSuite.mod")){
 			data.sendMessage(message);
+			}
 		}
 		if(plugin.logChat){
 			plugin.cl.Log(message);

@@ -26,6 +26,9 @@ public class PluginMessageListener implements Listener {
 		DataInputStream in = new DataInputStream(new ByteArrayInputStream(event.getData()));
 		String channel = in.readUTF();
 		if(channel.equalsIgnoreCase("warp")){
+			if(!plugin.warps){
+				return;
+			}
 			String warpname = in.readUTF();
 			String playername = in.readUTF();
 			if(plugin.warpList.containsKey(warpname)){
@@ -53,6 +56,9 @@ public class PluginMessageListener implements Listener {
 			if(plugin.warped.containsKey(playername)){
 				plugin.warped.get(playername).warpPlayer(plugin.getProxy().getPlayer(playername));
 				plugin.warped.remove(playername);
+				return;
+			}
+			if(!plugin.teleports){
 				return;
 			}
 			ProxiedPlayer player = plugin.getProxy().getPlayer(playername);

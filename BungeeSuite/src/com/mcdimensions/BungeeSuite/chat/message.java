@@ -23,6 +23,10 @@ public class message extends Command {
 		ProxiedPlayer player  = plugin.getUtilities().getClosestPlayer(arg1[0]);
 		if(player!=null){
 			ChatPlayer cp = plugin.getChatPlayer(player.getName());
+			if(cp.ignoringPlayer(arg0.getName())){
+				arg0.sendMessage(plugin.PLAYER_IGNORING);
+				return;
+			}
 			String message = "";
 			for(String data: arg1){
 				if(!data.equalsIgnoreCase(arg1[0])){
