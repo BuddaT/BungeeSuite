@@ -1,6 +1,6 @@
-package com.mcdimensions.BungeeSuite;
+package com.mcdimensions.BungeeSuite.chat;
 
-import com.mcdimensions.BungeeSuite.chat.ChatPlayer;
+import com.mcdimensions.BungeeSuite.BungeeSuite;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;

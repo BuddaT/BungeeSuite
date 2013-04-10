@@ -57,8 +57,8 @@ public class ChatPlayer {
 		return displayName;
 	}
 	public void updateDisplayName(){
-		if(this.getPlayer().hasPermission("BungeeSuite.nick") || this.getPlayer().hasPermission("BungeeSuite.nickcolored") || this.getPlayer().hasPermission("BungeeSuite.mod")){
-		this.getPlayer().setDisplayName(displayName);
+		if(this.getPlayer().hasPermission("BungeeSuite.nick") || this.getPlayer().hasPermission("BungeeSuite.nickcolored") || this.getPlayer().hasPermission("BungeeSuite.nickdisplay") || this.getPlayer().hasPermission("BungeeSuite.mod")){
+		this.getPlayer().setDisplayName(colorSub(displayName));
 		}
 		else{
 			this.getPlayer().setDisplayName(name);
@@ -202,7 +202,7 @@ public class ChatPlayer {
 	}
 	public void sendPrivate(String message, String name2) {
 		this.replyPlayer = name2;
-				this.getPlayer().sendMessage(ChatColor.GOLD+"["+name2+"->me]"+ChatColor.WHITE+message);
+				this.getPlayer().sendMessage(ChatColor.GOLD+"["+name2+"->me] "+ChatColor.WHITE+message);
 				for(String data:plugin.chatSpying){
 					ChatPlayer cp = plugin.getChatPlayer(data);
 					if(!cp.equals(this)){
@@ -232,5 +232,29 @@ public class ChatPlayer {
 	public HashSet<String> getIgnores(){
 		return ignores;
 	}
-
+	public String colorSub(String str) {
+		String output = "";
+		output = str.replace("&0", ChatColor.BLACK.toString());
+		output = output.replace("&1", ChatColor.DARK_BLUE.toString());
+		output = output.replace("&2", ChatColor.DARK_GREEN.toString());
+		output = output.replace("&3", ChatColor.DARK_AQUA.toString());
+		output = output.replace("&4", ChatColor.DARK_RED.toString());
+		output = output.replace("&5", ChatColor.DARK_PURPLE.toString());
+		output = output.replace("&6", ChatColor.GOLD.toString());
+		output = output.replace("&7", ChatColor.GRAY.toString());
+		output = output.replace("&8", ChatColor.DARK_GRAY.toString());
+		output = output.replace("&9", ChatColor.BLUE.toString());
+		output = output.replace("&a", ChatColor.GREEN.toString());
+		output = output.replace("&b", ChatColor.AQUA.toString());
+		output = output.replace("&c", ChatColor.RED.toString());
+		output = output.replace("&d", ChatColor.LIGHT_PURPLE.toString());
+		output = output.replace("&e", ChatColor.YELLOW.toString());
+		output = output.replace("&f", ChatColor.WHITE.toString());
+		output = output.replace("&k", ChatColor.MAGIC.toString());
+		output = output.replace("&l", ChatColor.BOLD.toString());
+		output = output.replace("&n", ChatColor.UNDERLINE.toString());
+		output = output.replace("&o", ChatColor.ITALIC.toString());
+		output = output.replace("&m", ChatColor.STRIKETHROUGH.toString());
+		return output;
+	}
 }

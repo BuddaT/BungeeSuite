@@ -1,12 +1,11 @@
-package com.mcdimensions.BungeeSuite;
+package com.mcdimensions.BungeeSuite.chat;
 
 import java.util.HashSet;
 
-import com.mcdimensions.BungeeSuite.chat.ChatPlayer;
+import com.mcdimensions.BungeeSuite.BungeeSuite;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
 public class ignoring extends Command {

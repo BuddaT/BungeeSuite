@@ -24,9 +24,8 @@ public class LoginMessages implements Listener {
 	public void login(ChatEvent event) throws SQLException {
 		if(event.getSender() instanceof ProxiedPlayer)return;
 		String message = event.getMessage();
-		if(message.length()<16)return;
-		String connected = message.substring(message.length()-16, message.length());
-		if(connected.equalsIgnoreCase("joined the game.")){
+		String connected = message;
+		if(connected.endsWith("joined the game.")){
 			event.setCancelled(true);
 		}else{
 			return;
@@ -37,9 +36,8 @@ public class LoginMessages implements Listener {
 	public void logout(ChatEvent event) throws SQLException {
 		if(event.getSender() instanceof ProxiedPlayer)return;
 		String message = event.getMessage();
-		if(message.length()<14)return;
-		String connected = message.substring(message.length()-14, message.length());
-		if(connected.equalsIgnoreCase("left the game.")){
+		String connected = message;
+		if(connected.endsWith("left the game.")){
 			event.setCancelled(true);
 		}else{
 			return;

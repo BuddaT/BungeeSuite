@@ -29,6 +29,8 @@ import com.mcdimensions.BungeeSuite.chat.deletechannel;
 import com.mcdimensions.BungeeSuite.chat.displayserver;
 import com.mcdimensions.BungeeSuite.chat.g;
 import com.mcdimensions.BungeeSuite.chat.global;
+import com.mcdimensions.BungeeSuite.chat.ignore;
+import com.mcdimensions.BungeeSuite.chat.ignoring;
 import com.mcdimensions.BungeeSuite.chat.invite;
 import com.mcdimensions.BungeeSuite.chat.join;
 import com.mcdimensions.BungeeSuite.chat.leave;
@@ -83,7 +85,7 @@ import net.md_5.bungee.api.plugin.Plugin;
 public class BungeeSuite extends Plugin {
 	ProxyServer proxy;
 	SQL sql;
-	public Config config, ChannelConfig, locale, prefixConfig;
+	public Config config, ChannelConfig, locale, prefixConfig, commands;
 	//Messages
 	public String PLAYER_IGNORING, PLAYER_IGNORED, PLAYER_UNIGNORED, DEFAULT_BAN_PLAYER, PLAYER_TELEPORTED_TO,TELEPORTED_PLAYER_TO_TARGET, TELEPORTS_NOT_ENABLED, TELEPORT_REQUEST_HERE, TELEPORT_REQUEST_TO,WARP_SPAWN_NOT_EXIST, WARP_NOT_EXIST, WARP_DELETE_CONFIRM, WARP_CREATE_CONFIRM, PORTAL_DELETE_CONFIRM, PORTAL_NOT_EXIST, DEFAULT_IPBAN_PLAYER, TEMP_BAN_BROADCAST, BAN_MESSAGE_BROADCAST, IP_NOT_EXIST, IP_UNBANNED, NO_PERMISSION, PLAYER_REPLY_NONE, PLAYER_NICKNAME_CHANGE, PLAYER_NICKNAMED, PLAYER_ALL_MUTED, PLAYER_ALL_UNMUTED, PLAYER_MUTE, PLAYER_MUTED, PLAYER_UNMUTE, PLAYER_UNMUTED, PLAYER_NOT_EXIST, PLAYER_NOT_ONLINE, PLAYER_UNBANNED, PLAYER_INVITED, PLAYER_INVITE, PLAYER_SENDING_SERVER, PLAYER_NOT_BANNED, DEFAULT_KICK_PLAYER, DEFAULT_KICK_BROADCAST, UNBAN_PLAYER, CHANNEL_INVITE_NOPERM, CHANNEL_NOT_INVITED, CHANNEL_NOT_LEAVE_SERVER, CHANNEL_TOGGLE_PERMISSION, CHANNEL_NOT_LEAVE_OWNER, CHANNEL_IS_MEMBER, CHANNEL_NOT_MEMBER, CHANNEL_NO_PERMISSION, CHANNEL_NOT_EXIST, CHANNEL_CREATE_CONFIRM, CHANNEL_DELETE_CONFIRM, CHANNEL_PLAYER_JOINED, CHANNEL_WELCOME, CHANNEL_KICK_PLAYER, CHANNEL_PLAYER_LEAVE, CHANNEL_TOO_MANY, BROADCAST_MESSAGE, CHATSPY_TOGGLED, NO_PERMISSION_COLOR;
 	//PREFIXES
@@ -514,77 +516,82 @@ public class BungeeSuite extends Plugin {
 			defaultServerChannelFormat = config.getString("BungeeSuite.Chat.defaultCustomChannelFormat", "&9[%cname]&f%player: &7%message");
 			//other
 			banning = config.getBoolean("BungeeSuite.Banning", true);
-			//commands
-				bungeeSuiteCommand = config.getString("BungeeSuite.Commands.bungeesuite", "bs");
-				//banning
-				ban = config.getString("BungeeSuite.Commands.ban", "ban");
-				ipban = config.getString("BungeeSuite.Commands.ipban", "ipban");
-				kick = config.getString("BungeeSuite.Commands.kick", "kick");
-				kickall = config.getString("BungeeSuite.Commands.kickall", "kickall");
-				pardon = config.getString("BungeeSuite.Commands.pardon", "pardon");
-				tban = config.getString("BungeeSuite.Commands.tban", "tban");
-				tempban = config.getString("BungeeSuite.Commands.tempban", "tempban");
-				unban = config.getString("BungeeSuite.Commands.unban","unban");
-				unbanip= config.getString("BungeeSuite.Commands.unbanip", "unbanip");
-				//chat
-				cignore = config.getString("BungeeSuite.Commands.ignore", "ignore");
-				ignoring = config.getString("BungeeSuite.Commands.ignoring", "ignoring");
-				broadcast = config.getString("BungeeSuite.Commands.broadcast", "broadcast");
-				g= config.getString("BungeeSuite.Commands.g", "g");
-				global = config.getString("BungeeSuite.Commands.global", "global");
-				w= config.getString("BungeeSuite.Commands.w", "world");
-				world = config.getString("BungeeSuite.Commands.world", "world");
-				s = config.getString("BungeeSuite.Commands.s", "s");
-				server = config.getString("BungeeSuite.Commands.server", "server");
-				mute = config.getString("BungeeSuite.Commands.mute", "mute");
-				muteall = config.getString("BungeeSuite.Commands.muteall", "muteall");
-				nick = config.getString("BungeeSuite.Commands.nick", "nick");
-				nickname = config.getString("BungeeSuite.Commands.nickname", "nickname");
-				msg = config.getString("BungeeSuite.Commands.msg", "msg");
-				message = config.getString("BungeeSuite.Commands.message", "message");
-				whisper = config.getString("BungeeSuite.Commands.whisper", "whisper");
-				r = config.getString("BungeeSuite.Commands.r", "r");
-				reply = config.getString("BungeeSuite.Commands.reply", "reply");
-				t= config.getString("BungeeSuite.Commands.t", "t");
-				tell = config.getString("BungeeSuite.Commands.tell", "tell");
-				toggle= config.getString("BungeeSuite.Commands.toggle","toggle");
-				invite=config.getString("BungeeSuite.Commands.invite", "invite");
-				accept=config.getString("BungeeSuite.Commands.accept", "accept");
-				join=config.getString("BungeeSuite.Commands.join", "join");
-				create=config.getString("BungeeSuite.Commands.create", "create");
-				createchannel=config.getString("BungeeSuite.Commands.createchannel", "createchannel");
-				channel= config.getString("BungeeSuite.Commands.channel", "channel");
-				c = config.getString("BungeeSuite.Commands.c", "c");
-				delete = config.getString("BungeeSuite.Commands.delete", "delete");
-				deletechannel = config.getString("BungeeSuite.Commands.deletechannel", "deletechannel");
-				leave = config.getString("BungeeSuite.Commands.leave","leave");
-				leavechannel = config.getString("BungeeSuite.Commands.leavechannel", "leavechannel");
-				server = config.getString("BungeeSuite.Commands.server", "server");
-				s = config.getString("BungeeSuite.Commands.s", "s");
-				chatspy = config.getString("BungeeSuite.Commands.chatspy", "chatspy");
-				displayserver = config.getString("BungeeSuite.Commands.displayserver", "displayserver");
-				//Portal
-				setportal = config.getString("BungeeSuite.Commands.setportal", "setportal");
-				delportal = config.getString("BungeeSuite.Commands.delportal", "delportal");
-				listportals = config.getString("BungeeSuite.Commands.listportals", "listportals");
-				portalsc = config.getString("BungeeSuite.Commands.portals", "portals");
-				//teleport
-				tp = config.getString("BungeeSuite.Commands.tp", "tp");
-				tpa = config.getString("BungeeSuite.Commands.tpa", "tpa");
-				tpaccept = config.getString("BungeeSuite.Commands.tpaccept", "tpaccept");
-				tpdeny = config.getString("BungeeSuite.Commands.tpdeny", "tpdeny");
-				tpahere = config.getString("BungeeSuite.Commands.tpahere", "tpahere");
-				tpall = config.getString("BungeeSuite.Commands.tpall", "tpall");
-				//warps
-				delwarp = config.getString("BungeeSuite.Commands.delwarp", "delwarp");
-				setwarp = config.getString("BungeeSuite.Commands.setwarp", "setwarp");
-				spawn = config.getString("BungeeSuite.Commands.spawn", "spawn");
-				warp = config.getString("BungeeSuite.Commands.warp", "warp");
-				warplist = config.getString("BungeeSuite.Commands.warplist", "warplist");
-				warpsc= config.getString("BungeeSuite.Commands.warps", "warps");
 				config.save();
+				setupCommandsConfig();
 	}
-	
+	public void setupCommandsConfig(){
+	 	String configpath= "/plugins/BungeeSuite/commands.yml";
+	 	commands=new Config(configpath);
+		//commands
+		bungeeSuiteCommand = commands.getString("BungeeSuite.Commands.bungeesuite", "bs");
+		//banning
+		ban = commands.getString("BungeeSuite.Commands.ban", "ban");
+		ipban = commands.getString("BungeeSuite.Commands.ipban", "ipban");
+		kick = commands.getString("BungeeSuite.Commands.kick", "kick");
+		kickall = commands.getString("BungeeSuite.Commands.kickall", "kickall");
+		pardon = commands.getString("BungeeSuite.Commands.pardon", "pardon");
+		tban = commands.getString("BungeeSuite.Commands.tban", "tban");
+		tempban = commands.getString("BungeeSuite.Commands.tempban", "tempban");
+		unban = commands.getString("BungeeSuite.Commands.unban","unban");
+		unbanip= commands.getString("BungeeSuite.Commands.unbanip", "unbanip");
+		//chat
+		cignore = commands.getString("BungeeSuite.Commands.ignore", "ignore");
+		ignoring = commands.getString("BungeeSuite.Commands.ignoring", "ignoring");
+		broadcast = commands.getString("BungeeSuite.Commands.broadcast", "broadcast");
+		g= commands.getString("BungeeSuite.Commands.g", "g");
+		global = commands.getString("BungeeSuite.Commands.global", "global");
+		w= commands.getString("BungeeSuite.Commands.w", "world");
+		world = commands.getString("BungeeSuite.Commands.world", "world");
+		s = commands.getString("BungeeSuite.Commands.s", "s");
+		server = commands.getString("BungeeSuite.Commands.server", "server");
+		mute = commands.getString("BungeeSuite.Commands.mute", "mute");
+		muteall = commands.getString("BungeeSuite.Commands.muteall", "muteall");
+		nick = commands.getString("BungeeSuite.Commands.nick", "nick");
+		nickname = commands.getString("BungeeSuite.Commands.nickname", "nickname");
+		msg = commands.getString("BungeeSuite.Commands.msg", "msg");
+		message = commands.getString("BungeeSuite.Commands.message", "message");
+		whisper = commands.getString("BungeeSuite.Commands.whisper", "whisper");
+		r = commands.getString("BungeeSuite.Commands.r", "r");
+		reply = commands.getString("BungeeSuite.Commands.reply", "reply");
+		t= commands.getString("BungeeSuite.Commands.t", "t");
+		tell = commands.getString("BungeeSuite.Commands.tell", "tell");
+		toggle= commands.getString("BungeeSuite.Commands.toggle","toggle");
+		invite=commands.getString("BungeeSuite.Commands.invite", "invite");
+		accept=commands.getString("BungeeSuite.Commands.accept", "accept");
+		join=commands.getString("BungeeSuite.Commands.join", "join");
+		create=commands.getString("BungeeSuite.Commands.create", "create");
+		createchannel=commands.getString("BungeeSuite.Commands.createchannel", "createchannel");
+		channel= commands.getString("BungeeSuite.Commands.channel", "channel");
+		c = commands.getString("BungeeSuite.Commands.c", "c");
+		delete = commands.getString("BungeeSuite.Commands.delete", "delete");
+		deletechannel = commands.getString("BungeeSuite.Commands.deletechannel", "deletechannel");
+		leave = commands.getString("BungeeSuite.Commands.leave","leave");
+		leavechannel = commands.getString("BungeeSuite.Commands.leavechannel", "leavechannel");
+		server = commands.getString("BungeeSuite.Commands.server", "server");
+		s = commands.getString("BungeeSuite.Commands.s", "s");
+		chatspy = commands.getString("BungeeSuite.Commands.chatspy", "chatspy");
+		displayserver = commands.getString("BungeeSuite.Commands.displayserver", "displayserver");
+		//Portal
+		setportal = commands.getString("BungeeSuite.Commands.setportal", "setportal");
+		delportal = commands.getString("BungeeSuite.Commands.delportal", "delportal");
+		listportals = commands.getString("BungeeSuite.Commands.listportals", "listportals");
+		portalsc = commands.getString("BungeeSuite.Commands.portals", "portals");
+		//teleport
+		tp = commands.getString("BungeeSuite.Commands.tp", "tp");
+		tpa = commands.getString("BungeeSuite.Commands.tpa", "tpa");
+		tpaccept = commands.getString("BungeeSuite.Commands.tpaccept", "tpaccept");
+		tpdeny = commands.getString("BungeeSuite.Commands.tpdeny", "tpdeny");
+		tpahere = commands.getString("BungeeSuite.Commands.tpahere", "tpahere");
+		tpall = commands.getString("BungeeSuite.Commands.tpall", "tpall");
+		//warps
+		delwarp = commands.getString("BungeeSuite.Commands.delwarp", "delwarp");
+		setwarp = commands.getString("BungeeSuite.Commands.setwarp", "setwarp");
+		spawn = commands.getString("BungeeSuite.Commands.spawn", "spawn");
+		warp = commands.getString("BungeeSuite.Commands.warp", "warp");
+		warplist = commands.getString("BungeeSuite.Commands.warplist", "warplist");
+		warpsc= commands.getString("BungeeSuite.Commands.warps", "warps");
+		commands.save();
+	}
 	
 
 	public Config getConfig() {
