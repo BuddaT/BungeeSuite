@@ -724,6 +724,9 @@ public class Utilities {
 		while(res.next()){
 			channels.add(plugin.getChannel(res.getString("ChannelName")));
 		}
+		if(plugin.globalToggleable && plugin.getProxy().getPlayer(name).hasPermission("BungeeSuite.global")){
+			channels.add(plugin.getChannel("Global"));
+		}
 		sql.closeConnection();
 		return channels;
 	}
