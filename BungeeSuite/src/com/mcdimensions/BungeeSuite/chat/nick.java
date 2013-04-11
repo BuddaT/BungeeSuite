@@ -36,7 +36,13 @@ public class nick extends Command {
 				nick = nick.substring(0, 16);
 			}
 			try {
-				plugin.getChatPlayer(arg0.getName()).setDisplayName(nick);
+				ChatPlayer cp = plugin.getChatPlayer(arg0.getName());
+						cp.setDisplayName(nick);
+				String pmsg = plugin.PLAYER_NICKNAME_CHANGE;
+				pmsg = pmsg.replace("%nickname", plugin.getUtilities().colorSub(nick));
+				pmsg = pmsg.replace("%player", cp.getName());
+				pmsg = pmsg.replace("%sender", arg0.getName());
+				cp.sendMessage(pmsg);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

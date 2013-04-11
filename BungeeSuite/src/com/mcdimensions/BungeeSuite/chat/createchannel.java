@@ -37,7 +37,9 @@ public class createchannel extends Command {
 			String format = arg1[1];
 			plugin.getUtilities().createChannel(name, format, false,
 					arg0.getName());
-			arg0.sendMessage(plugin.CHANNEL_CREATE_CONFIRM);
+			String chmsg = plugin.CHANNEL_CREATE_CONFIRM;
+			chmsg = chmsg.replace("%channel", name);
+			arg0.sendMessage(chmsg);
 			return;
 		} else
 			arg0.sendMessage(ChatColor.RED

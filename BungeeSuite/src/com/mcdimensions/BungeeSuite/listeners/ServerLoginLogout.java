@@ -1,6 +1,7 @@
 package com.mcdimensions.BungeeSuite.listeners;
 
 import java.sql.SQLException;
+import java.util.concurrent.TimeUnit;
 
 import com.google.common.eventbus.Subscribe;
 import com.mcdimensions.BungeeSuite.BungeeSuite;
@@ -10,6 +11,7 @@ import net.md_5.bungee.api.event.LoginEvent;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
+import net.md_5.bungee.api.scheduler.ScheduledTask;
 
 public class ServerLoginLogout implements Listener {
 	BungeeSuite plugin;
@@ -65,13 +67,15 @@ public class ServerLoginLogout implements Listener {
 			}
 			plugin.OnlinePlayers.remove(event.getPlayer().getName());
 		}
+	}	
+	@Subscribe
+	public void postlog(final PostLoginEvent event) {
+		Runnable UpdateDisplay = new Runnable(){
+			public void run() {
+			ChatPlayer cp = plugin.getChatPlayer(event.getPlayer().getName());
+			cp.updateDisplayName();
+			}
+		};
+		ScheduledTask task = plugin.getProxy().getScheduler().schedule(plugin, UpdateDisplay, 2L, TimeUnit.SECONDS);
 	}
-	
-	public void loggedin(PostLoginEvent event){
-		if(event.getPlayer()==null)return;
-		ChatPlayer cp = plugin.getChatPlayer(event.getPlayer().getName());
-		cp.updateDisplayName();
-	}
-	
-	
 }

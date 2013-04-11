@@ -85,7 +85,6 @@ public class ChatListener implements Listener {
 		} else if (cc.equals(oldServerchan)) {// swap if current = old or null
 			cp.setCurrentSilent(newServerchan);
 		}
-
 	}
 
 }
