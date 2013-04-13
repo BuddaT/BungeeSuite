@@ -17,19 +17,19 @@ public class ListWarpsCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
+	public void execute(CommandSender sender, String[] arg1) {
 		String[] list = null;
+		
 		try {
-			list = plugin.getUtilities().getWarpList(arg0);
+			list = plugin.getUtilities().getWarpList(sender);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		arg0.sendMessage(list[0]);
-		if (arg0.hasPermission("BungeeSuite.admin")) {
-			arg0.sendMessage(list[1]);
+		
+		sender.sendMessage(list[0]);
+		if (sender.hasPermission("BungeeSuite.admin")) {
+			sender.sendMessage(list[1]);
 		}
-		return;
-
 	}
 
 }

@@ -20,13 +20,13 @@ public class WarpCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
+	public void execute(CommandSender sender, String[] arg1) {
 		if (arg1.length < 1) {
-			arg0.sendMessage(ChatColor.RED + "/" + plugin.warp + " (name)");
+			sender.sendMessage(ChatColor.RED + "/" + plugin.warp + " (name)");
 			return;
 		} else if (plugin.warpList.containsKey(arg1[0])) {
 			try {
-				plugin.warpList.get(arg1[0]).warpPlayer((ProxiedPlayer) arg0);
+				plugin.warpList.get(arg1[0]).warpPlayer((ProxiedPlayer) sender);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -34,9 +34,9 @@ public class WarpCommand extends Command {
 			try {
 				if (plugin.getUtilities().warpExists(arg1[0])) {
 					Warp warp = plugin.getUtilities().loadWarp(arg1[0]);
-					warp.warpPlayer((ProxiedPlayer) arg0);
+					warp.warpPlayer((ProxiedPlayer) sender);
 				} else {
-					arg0.sendMessage(plugin.WARP_NOT_EXIST);
+					sender.sendMessage(plugin.WARP_NOT_EXIST);
 				}
 			} catch (SQLException | IOException e) {
 				e.printStackTrace();

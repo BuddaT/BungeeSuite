@@ -19,24 +19,25 @@ public class WarpSpawnCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
+	public void execute(CommandSender sender, String[] arg1) {
 		if (plugin.warpList.containsKey("Spawn")) {
 			try {
-				plugin.warpList.get("Spawn").warpPlayer((ProxiedPlayer) arg0);
+				plugin.warpList.get("Spawn").warpPlayer((ProxiedPlayer) sender);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		} else
+		} else {
 			try {
 				if (plugin.getUtilities().warpExists("Spawn")) {
 					Warp warp = plugin.getUtilities().loadWarp("Spawn");
-					warp.warpPlayer((ProxiedPlayer) arg0);
+					warp.warpPlayer((ProxiedPlayer) sender);
 				} else {
-					arg0.sendMessage(plugin.WARP_SPAWN_NOT_EXIST);
+					sender.sendMessage(plugin.WARP_SPAWN_NOT_EXIST);
 				}
 			} catch (SQLException | IOException e) {
 				e.printStackTrace();
 			}
+		}
 	}
 
 }

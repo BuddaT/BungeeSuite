@@ -3,7 +3,6 @@ package com.mcdimensions.BungeeSuite.warps;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 
 import com.mcdimensions.BungeeSuite.BungeeSuite;
 
@@ -22,37 +21,32 @@ public class SetWarpCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
-		if (!arg0.hasPermission("BungeeSuite.admin")) {
-			arg0.sendMessage(plugin.NO_PERMISSION);
+	public void execute(CommandSender sender, String[] arg1) {
+		if (!sender.hasPermission("BungeeSuite.admin")) {
+			sender.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
+		
 		if (arg1.length < 1) {
-			arg0.sendMessage(ChatColor.RED + "/" + plugin.setWarp
+			sender.sendMessage(ChatColor.RED + "/" + plugin.setWarp
 					+ " (name) *(private)");
 			return;
 		}
+		
 		String name = arg1[0];
 		// sends plugin message to BungeeSuiteBukkit to get player pos
-		ProxiedPlayer player = (ProxiedPlayer) arg0;
+		ProxiedPlayer player = (ProxiedPlayer) sender;
 		ByteArrayOutputStream b = new ByteArrayOutputStream();
 		DataOutputStream out = new DataOutputStream(b);
+		
 		try {
 			out.writeUTF("SetWarp");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			out.writeUTF(arg0.getName());
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		try {
+			out.writeUTF(sender.getName());
 			out.writeUTF(name);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		if (arg1.length > 1 && arg1[1].equalsIgnoreCase("private")) {
 			try {
 				out.writeBoolean(false);
@@ -66,6 +60,7 @@ public class SetWarpCommand extends Command {
 				e.printStackTrace();
 			}
 		}
+		
 		player.getServer().sendData("BungeeSuiteMC", b.toByteArray());
 	}
 
