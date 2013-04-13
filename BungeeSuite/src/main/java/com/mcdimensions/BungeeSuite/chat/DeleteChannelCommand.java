@@ -18,44 +18,35 @@ public class DeleteChannelCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
-		if (arg1.length == 0) {// current
-			ChatPlayer cp = plugin.getChatPlayer(arg0.getName());
+	public void execute(CommandSender sender, String[] arg1) {
+		if (arg1.length == 0) {
+			ChatPlayer cp = plugin.getChatPlayer(sender.getName());
 			ChatChannel current = cp.getCurrent();
 
-			if (arg0.getName().equalsIgnoreCase(current.getOwner())
-					|| arg0.hasPermission("BungeeSuite.admin")) {
+			if (sender.getName().equalsIgnoreCase(current.getOwner()) || sender.hasPermission("BungeeSuite.admin")) {
 				plugin.getUtilities().deleteChannel(current.getName());
-				arg0.sendMessage(plugin.CHANNEL_DELETE_CONFIRM);
-				return;
+				sender.sendMessage(plugin.CHANNEL_DELETE_CONFIRM);
 			} else {
-				arg0.sendMessage(plugin.CHANNEL_NO_PERMISSION);
-				return;
+				sender.sendMessage(plugin.CHANNEL_NO_PERMISSION);
 			}
-		} else if (arg1.length == 1) {// other
+		} else if (arg1.length == 1) {
 			ChatChannel cc = plugin.getChannel(arg1[0]);
 			try {
 				if (!plugin.getUtilities().chatChannelExists(arg1[0])) {
-					arg0.sendMessage(plugin.CHANNEL_NOT_EXIST);
+					sender.sendMessage(plugin.CHANNEL_NOT_EXIST);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 
-			if (cc != null
-					&& (arg0.getName().equalsIgnoreCase(cc.getOwner()) || arg0
-							.hasPermission("BungeeSuite.admin"))) {
+			if (cc != null && (sender.getName().equalsIgnoreCase(cc.getOwner()) || sender.hasPermission("BungeeSuite.admin"))) {
 				plugin.getUtilities().deleteChannel(cc.getName());
-				arg0.sendMessage(plugin.CHANNEL_DELETE_CONFIRM);
-				return;
+				sender.sendMessage(plugin.CHANNEL_DELETE_CONFIRM);
 			} else {
-				arg0.sendMessage(plugin.CHANNEL_NO_PERMISSION);
-				return;
+				sender.sendMessage(plugin.CHANNEL_NO_PERMISSION);
 			}
-		} else {// wrong
-			arg0.sendMessage(ChatColor.RED + "/" + plugin.deleteChannel
-					+ " *(Channel Name)");
-			return;
+		} else {
+			sender.sendMessage(ChatColor.RED + "/" + plugin.deleteChannel + " [channel]");
 		}
 	}
 

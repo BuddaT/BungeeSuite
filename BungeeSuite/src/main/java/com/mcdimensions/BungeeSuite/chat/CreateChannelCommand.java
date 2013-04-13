@@ -16,37 +16,33 @@ public class CreateChannelCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
-		if (!(arg0.hasPermission("BungeeSuite.createchannel") || arg0
-				.hasPermission("BungeeSuite.admin"))) {
-			arg0.sendMessage(plugin.NO_PERMISSION);
+	public void execute(CommandSender sender, String[] arg1) {
+		if (!(sender.hasPermission("BungeeSuite.createchannel") || sender.hasPermission("BungeeSuite.admin"))) {
+			sender.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
 
-		if (plugin.getChatPlayer(arg0.getName()).getChannelsOwned() >= plugin.maxCustomChannels
-				&& !arg0.hasPermission("BungeeSuite.admin")) {
-			arg0.sendMessage(plugin.CHANNEL_TOO_MANY);
+		if (plugin.getChatPlayer(sender.getName()).getChannelsOwned() >= plugin.maxCustomChannels
+				&& !sender.hasPermission("BungeeSuite.admin")) {
+			sender.sendMessage(plugin.CHANNEL_TOO_MANY);
 			return;
 		}
 
 		if (arg1.length == 1) {
 			String name = arg1[0];
-			plugin.getUtilities().createChannel(name,
-					plugin.defaultCustomChannelFormat, false, arg0.getName());
-			arg0.sendMessage(plugin.CHANNEL_CREATE_CONFIRM);
-			return;
+			plugin.getUtilities().createChannel(name, plugin.defaultCustomChannelFormat, false, sender.getName());
+			
+			sender.sendMessage(plugin.CHANNEL_CREATE_CONFIRM);
 		} else if (arg1.length == 2) {
 			String name = arg1[0];
 			String format = arg1[1];
-			plugin.getUtilities().createChannel(name, format, false,
-					arg0.getName());
+			plugin.getUtilities().createChannel(name, format, false, sender.getName());
+			
 			String chmsg = plugin.CHANNEL_CREATE_CONFIRM;
 			chmsg = chmsg.replace("%channel", name);
-			arg0.sendMessage(chmsg);
-			return;
+			sender.sendMessage(chmsg);
 		} else
-			arg0.sendMessage(ChatColor.RED + "/" + plugin.create
-					+ " (channel name) *(channel format)");
+			sender.sendMessage(ChatColor.RED + "/" + plugin.create + " (channel) [format]");
 	}
 
 }

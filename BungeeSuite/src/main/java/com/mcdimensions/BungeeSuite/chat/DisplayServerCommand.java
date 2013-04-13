@@ -14,16 +14,15 @@ public class DisplayServerCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
-		if (!(arg0.hasPermission("BungeeSuite.mod") || arg0
-				.hasPermission("BungeeSuite.admin"))) {
-			arg0.sendMessage(plugin.NO_PERMISSION);
+	public void execute(CommandSender sender, String[] arg1) {
+		if (!(sender.hasPermission("BungeeSuite.mod") || sender.hasPermission("BungeeSuite.admin"))) {
+			sender.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
 
-		ChatPlayer cp = plugin.getChatPlayer(arg0.getName());
+		ChatPlayer cp = plugin.getChatPlayer(sender.getName());
 		cp.sendServer();
-		arg0.sendMessage(plugin.PLAYER_SENDING_SERVER);
+		sender.sendMessage(plugin.PLAYER_SENDING_SERVER);
 	}
 
 }

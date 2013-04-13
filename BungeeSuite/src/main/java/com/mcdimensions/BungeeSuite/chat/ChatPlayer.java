@@ -191,6 +191,9 @@ public class ChatPlayer {
 		return replyPlayer;
 	}
 	public void sendMessage(String message){
+		if (this.getPlayer() == null)
+			return;
+		
 		this.getPlayer().sendMessage(message);
 	}
 	

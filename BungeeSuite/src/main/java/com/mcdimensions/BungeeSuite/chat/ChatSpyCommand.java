@@ -14,16 +14,15 @@ public class ChatSpyCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
-		if (!(arg0.hasPermission("BungeeSuite.admin") || arg0
-				.hasPermission("BungeeSuite.chatspy"))) {
-			arg0.sendMessage(plugin.NO_PERMISSION);
+	public void execute(CommandSender sender, String[] arg1) {
+		if (!(sender.hasPermission("BungeeSuite.admin") || sender.hasPermission("BungeeSuite.chatspy"))) {
+			sender.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
 
-		ChatPlayer cp = plugin.getChatPlayer(arg0.getName());
+		ChatPlayer cp = plugin.getChatPlayer(sender.getName());
 		cp.ChatSpy();
-		arg0.sendMessage(plugin.CHATSPY_TOGGLED);
+		sender.sendMessage(plugin.CHATSPY_TOGGLED);
 	}
 
 }
