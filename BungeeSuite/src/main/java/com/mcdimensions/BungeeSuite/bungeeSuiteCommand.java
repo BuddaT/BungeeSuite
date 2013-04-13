@@ -14,13 +14,13 @@ public class BungeeSuiteCommand extends Command {
 
 	@Override
 	public void execute(CommandSender arg0, String[] arg1) {
-		if(!arg0.hasPermission("BungeeSuite.admin")){
+		if (!arg0.hasPermission("BungeeSuite.admin")) {
 			arg0.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
-		
-		if(arg1.length==1){
-			if(arg1[0].equalsIgnoreCase("reload")){
+
+		if (arg1.length == 1) {
+			if (arg1[0].equalsIgnoreCase("reload")) {
 				plugin.reload();
 				arg0.sendMessage("All configs for BungeeSuite reloaded");
 			}

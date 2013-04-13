@@ -28,46 +28,41 @@ import com.mcdimensions.BungeeSuite.chat.IgnoringCommand;
 import com.mcdimensions.BungeeSuite.chat.InviteCommand;
 import com.mcdimensions.BungeeSuite.chat.JoinCommand;
 import com.mcdimensions.BungeeSuite.chat.LeaveChannelCommand;
-import com.mcdimensions.BungeeSuite.chat.message;
-import com.mcdimensions.BungeeSuite.chat.msg;
-import com.mcdimensions.BungeeSuite.chat.mute;
-import com.mcdimensions.BungeeSuite.chat.muteall;
-import com.mcdimensions.BungeeSuite.chat.nick;
-import com.mcdimensions.BungeeSuite.chat.nickname;
-import com.mcdimensions.BungeeSuite.chat.r;
-import com.mcdimensions.BungeeSuite.chat.reply;
-import com.mcdimensions.BungeeSuite.chat.t;
-import com.mcdimensions.BungeeSuite.chat.tell;
-import com.mcdimensions.BungeeSuite.chat.toggle;
-import com.mcdimensions.BungeeSuite.chat.s;
-import com.mcdimensions.BungeeSuite.chat.whisper;
-import com.mcdimensions.BungeeSuite.chat.server;
+import com.mcdimensions.BungeeSuite.chat.MessageCommand;
+import com.mcdimensions.BungeeSuite.chat.MuteCommand;
+import com.mcdimensions.BungeeSuite.chat.MuteAllCommand;
+import com.mcdimensions.BungeeSuite.chat.NicknameCommand;
+import com.mcdimensions.BungeeSuite.chat.ReplyCommand;
+import com.mcdimensions.BungeeSuite.chat.TellCommand;
+import com.mcdimensions.BungeeSuite.chat.ToggleCommand;
+import com.mcdimensions.BungeeSuite.chat.WhisperCommand;
+import com.mcdimensions.BungeeSuite.chat.ServerCommand;
 import com.mcdimensions.BungeeSuite.config.Config;
 import com.mcdimensions.BungeeSuite.listeners.BanListener;
 import com.mcdimensions.BungeeSuite.listeners.ChatListener;
 import com.mcdimensions.BungeeSuite.listeners.LoginMessages;
 import com.mcdimensions.BungeeSuite.listeners.PluginMessageListener;
 import com.mcdimensions.BungeeSuite.listeners.ServerLoginLogout;
-import com.mcdimensions.BungeeSuite.portals.Portals;
-import com.mcdimensions.BungeeSuite.portals.delportal;
-import com.mcdimensions.BungeeSuite.portals.listPortals;
-import com.mcdimensions.BungeeSuite.portals.setportal;
-import com.mcdimensions.BungeeSuite.teleports.tp;
-import com.mcdimensions.BungeeSuite.teleports.tpa;
-import com.mcdimensions.BungeeSuite.teleports.tpaccept;
-import com.mcdimensions.BungeeSuite.teleports.tpahere;
-import com.mcdimensions.BungeeSuite.teleports.tpall;
-import com.mcdimensions.BungeeSuite.teleports.tpdeny;
+import com.mcdimensions.BungeeSuite.portals.PortalsCommand;
+import com.mcdimensions.BungeeSuite.portals.DeletePortalCommand;
+import com.mcdimensions.BungeeSuite.portals.ListPortalsCommand;
+import com.mcdimensions.BungeeSuite.portals.SetPortalCommand;
+import com.mcdimensions.BungeeSuite.teleports.TPCommand;
+import com.mcdimensions.BungeeSuite.teleports.TPACommand;
+import com.mcdimensions.BungeeSuite.teleports.TPAcceptCommand;
+import com.mcdimensions.BungeeSuite.teleports.TPAHereCommand;
+import com.mcdimensions.BungeeSuite.teleports.TPAllCommand;
+import com.mcdimensions.BungeeSuite.teleports.TPDenyCommand;
 import com.mcdimensions.BungeeSuite.utilities.ColorLog;
 import com.mcdimensions.BungeeSuite.utilities.SQL;
 import com.mcdimensions.BungeeSuite.utilities.Utilities;
 import com.mcdimensions.BungeeSuite.warps.Warp;
-import com.mcdimensions.BungeeSuite.warps.WarpC;
-import com.mcdimensions.BungeeSuite.warps.delWarp;
-import com.mcdimensions.BungeeSuite.warps.setWarp;
-import com.mcdimensions.BungeeSuite.warps.spawn;
-import com.mcdimensions.BungeeSuite.warps.warplist;
-import com.mcdimensions.BungeeSuite.warps.warps;
+import com.mcdimensions.BungeeSuite.warps.WarpCommand;
+import com.mcdimensions.BungeeSuite.warps.DeleteWarpCommand;
+import com.mcdimensions.BungeeSuite.warps.SetWarpCommand;
+import com.mcdimensions.BungeeSuite.warps.WarpSpawnCommand;
+import com.mcdimensions.BungeeSuite.warps.ListWarpsCommand;
+import com.mcdimensions.BungeeSuite.warps.WarpsCommand;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
@@ -391,48 +386,43 @@ public class BungeeSuite extends Plugin {
 		ProxyServer.getInstance().getPluginManager().registerCommand(this, new BungeeSuiteCommand(this));
 		
 		if (portalsEnabled) {
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new setportal(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new delportal(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new listPortals(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new Portals(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new SetPortalCommand(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new DeletePortalCommand(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new ListPortalsCommand(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new PortalsCommand(this));
 		}
 		
 		if (warpsEnabled) {
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new warps(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new warplist(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new setWarp(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new delWarp(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new WarpC(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new WarpsCommand(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new ListWarpsCommand(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new SetWarpCommand(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new DeleteWarpCommand(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new WarpCommand(this));
 			if (spawnWarpEnabled)
-				ProxyServer.getInstance().getPluginManager().registerCommand(this, new spawn(this));
+				ProxyServer.getInstance().getPluginManager().registerCommand(this, new WarpSpawnCommand(this));
 		}
 		
 		if (teleportsEnabled) {
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new tp(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new tpahere(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new tpa(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new tpaccept(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new tpdeny(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new tpall(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new TPCommand(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new TPAHereCommand(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new TPACommand(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new TPAcceptCommand(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new TPDenyCommand(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new TPAllCommand(this));
 		}
 		
 		if (chatEnabled) {
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new GlobalCommand(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new s(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new server(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new mute(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new muteall(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new ServerCommand(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new MuteCommand(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new MuteAllCommand(this));
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new BroadcastCommand(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new nick(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new nickname(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new msg(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new message(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new r(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new reply(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new whisper(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new t(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new tell(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new toggle(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new NicknameCommand(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new MessageCommand(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new ReplyCommand(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new WhisperCommand(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new TellCommand(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new ToggleCommand(this));
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new AcceptCommand(this));
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new InviteCommand(this));
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new JoinCommand(this));

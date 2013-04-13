@@ -20,7 +20,8 @@ public class JoinCommand extends Command {
 	@Override
 	public void execute(CommandSender arg0, String[] arg1) {
 		if (arg1.length != 1) {
-			arg0.sendMessage(ChatColor.RED + "/" + plugin.join + " (Channel name)");
+			arg0.sendMessage(ChatColor.RED + "/" + plugin.join
+					+ " (Channel name)");
 			return;
 		}
 
@@ -29,7 +30,8 @@ public class JoinCommand extends Command {
 		try {
 			if (plugin.getUtilities().chatChannelExists(channelName)) {
 				ChatChannel cc = plugin.getChannel(channelName);
-				if (cc.isInvited(playerName) || arg0.hasPermission("BungeeSuite.admin")) { 
+				if (cc.isInvited(playerName)
+						|| arg0.hasPermission("BungeeSuite.admin")) {
 					cc.acceptInvite(playerName);
 					return;
 				} else {

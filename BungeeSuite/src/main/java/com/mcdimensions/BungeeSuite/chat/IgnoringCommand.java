@@ -19,10 +19,12 @@ public class IgnoringCommand extends Command {
 
 	@Override
 	public void execute(CommandSender arg0, String[] arg1) {
-		HashSet<String> list = plugin.getChatPlayer(arg0.getName()).getIgnores();
-		String message = ChatColor.DARK_AQUA+"Ignoring players: "+ ChatColor.RESET;
-		for(String data: list){
-			message+=data+", ";
+		HashSet<String> list = plugin.getChatPlayer(arg0.getName())
+				.getIgnores();
+		String message = ChatColor.DARK_AQUA + "Ignoring players: "
+				+ ChatColor.RESET;
+		for (String data : list) {
+			message += data + ", ";
 		}
 		arg0.sendMessage(message);
 	}

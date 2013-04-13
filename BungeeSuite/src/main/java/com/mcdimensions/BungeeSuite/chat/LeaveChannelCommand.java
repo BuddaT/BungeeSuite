@@ -9,7 +9,7 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 
 public class LeaveChannelCommand extends Command {
-	
+
 	BungeeSuite plugin;
 
 	public LeaveChannelCommand(BungeeSuite bungeeSuite) {

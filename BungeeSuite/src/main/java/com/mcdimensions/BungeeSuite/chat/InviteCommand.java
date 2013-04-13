@@ -25,8 +25,10 @@ public class InviteCommand extends Command {
 			ChatPlayer cp = plugin.getChatPlayer(name);
 			ChatChannel cur = cp.getCurrent();
 
-			if (cur.getOwner().equalsIgnoreCase(name) || arg0.hasPermission("BungeeSuite.admin")) {
-				ProxiedPlayer pp = plugin.getUtilities().getClosestPlayer(player);
+			if (cur.getOwner().equalsIgnoreCase(name)
+					|| arg0.hasPermission("BungeeSuite.admin")) {
+				ProxiedPlayer pp = plugin.getUtilities().getClosestPlayer(
+						player);
 				if (pp != null) {
 					cur.invitePlayer(pp.getName());
 					if (cur.containsMember(cp.getName())) {
@@ -36,17 +38,17 @@ public class InviteCommand extends Command {
 						arg0.sendMessage(msg);
 						return;
 					}
-					
+
 					String pmsg = plugin.PLAYER_INVITE;
 					pmsg = pmsg.replace("%channel", cur.getName());
 					pmsg = pmsg.replace("%sender", arg0.getName());
 					pp.sendMessage(pmsg);
-					
+
 					String imsg = plugin.PLAYER_INVITED;
 					imsg = imsg.replace("%player", pp.getName());
 					imsg = imsg.replace("%channel", cur.getName());
 					arg0.sendMessage(imsg);
-					
+
 					return;
 				} else {
 					arg0.sendMessage(plugin.PLAYER_NOT_ONLINE);
@@ -62,8 +64,10 @@ public class InviteCommand extends Command {
 			try {
 				if (plugin.getUtilities().chatChannelExists(arg1[1])) {
 					ChatChannel cc = plugin.getChannel(arg1[1]);
-					if (cc.getOwner().equalsIgnoreCase(arg0.getName()) || arg0.hasPermission("BungeeSuite.admin")) {
-						ProxiedPlayer pp = plugin.getUtilities().getClosestPlayer(arg1[0]);
+					if (cc.getOwner().equalsIgnoreCase(arg0.getName())
+							|| arg0.hasPermission("BungeeSuite.admin")) {
+						ProxiedPlayer pp = plugin.getUtilities()
+								.getClosestPlayer(arg1[0]);
 						if (pp != null) {
 							if (cc.containsMember(pp.getName())) {
 								String msg = plugin.CHANNEL_IS_MEMBER;
@@ -73,17 +77,17 @@ public class InviteCommand extends Command {
 								return;
 							}
 							cc.invitePlayer(pp.getName());
-							
+
 							String pmsg = plugin.PLAYER_INVITE;
 							pmsg = pmsg.replace("%channel", cc.getName());
 							pmsg = pmsg.replace("%sender", arg0.getName());
 							pp.sendMessage(pmsg);
-							
+
 							String imsg = plugin.PLAYER_INVITED;
 							imsg = imsg.replace("%player", pp.getName());
 							imsg = imsg.replace("%channel", cc.getName());
 							arg0.sendMessage(imsg);
-							
+
 							return;
 						} else {
 							arg0.sendMessage(plugin.PLAYER_NOT_ONLINE);
@@ -99,7 +103,8 @@ public class InviteCommand extends Command {
 				e.printStackTrace();
 			}
 		} else {
-			arg0.sendMessage(ChatColor.RED + "/" + plugin.invite + " (player) *(channel)");
+			arg0.sendMessage(ChatColor.RED + "/" + plugin.invite
+					+ " (player) *(channel)");
 		}
 	}
 

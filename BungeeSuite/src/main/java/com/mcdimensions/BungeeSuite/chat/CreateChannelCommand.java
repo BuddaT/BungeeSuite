@@ -17,17 +17,18 @@ public class CreateChannelCommand extends Command {
 
 	@Override
 	public void execute(CommandSender arg0, String[] arg1) {
-		if (!(arg0.hasPermission("BungeeSuite.createchannel")|| arg0
+		if (!(arg0.hasPermission("BungeeSuite.createchannel") || arg0
 				.hasPermission("BungeeSuite.admin"))) {
 			arg0.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
-		
-		if(plugin.getChatPlayer(arg0.getName()).getChannelsOwned()>=plugin.maxCustomChannels && !arg0.hasPermission("BungeeSuite.admin")){
+
+		if (plugin.getChatPlayer(arg0.getName()).getChannelsOwned() >= plugin.maxCustomChannels
+				&& !arg0.hasPermission("BungeeSuite.admin")) {
 			arg0.sendMessage(plugin.CHANNEL_TOO_MANY);
 			return;
 		}
-		
+
 		if (arg1.length == 1) {
 			String name = arg1[0];
 			plugin.getUtilities().createChannel(name,
@@ -44,8 +45,8 @@ public class CreateChannelCommand extends Command {
 			arg0.sendMessage(chmsg);
 			return;
 		} else
-			arg0.sendMessage(ChatColor.RED
-					+ "/"+plugin.create+" (channel name) *(channel format)");
+			arg0.sendMessage(ChatColor.RED + "/" + plugin.create
+					+ " (channel name) *(channel format)");
 	}
 
 }

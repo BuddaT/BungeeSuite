@@ -3,28 +3,24 @@ package com.mcdimensions.BungeeSuite.chat;
 import com.mcdimensions.BungeeSuite.BungeeSuite;
 
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
-public class GlobalCommand extends Command {
+public class ServerCommand extends Command {
 
 	BungeeSuite plugin;
 
-	public GlobalCommand(BungeeSuite bungeeSuite) {
-		super(bungeeSuite.global, null, bungeeSuite.g);
+	public ServerCommand(BungeeSuite bungeeSuite) {
+		super(bungeeSuite.server, null, bungeeSuite.s);
 		plugin = bungeeSuite;
 	}
 
 	@Override
 	public void execute(CommandSender arg0, String[] arg1) {
-		if (!(arg0.hasPermission("BungeeSuite.global") || arg0
-				.hasPermission("BungeeSuite.mod"))) {
-			arg0.sendMessage(plugin.NO_PERMISSION);
-			return;
-		}
-
 		if (arg1.length == 0) {
-			ChatChannel cc = plugin.getChannel("Global");
 			ChatPlayer cp = plugin.getChatPlayer(arg0.getName());
+			ChatChannel cc = plugin.getChannel(cp.getPlayer().getServer()
+					.getInfo().getName());
 			if (plugin.globalToggleable) {
 				if (!cp.getCurrent().equals(cc)) {
 					cp.setCurrent(cc);
@@ -32,19 +28,20 @@ public class GlobalCommand extends Command {
 			}
 			return;
 		}
-
 		String message = "";
 		for (String data : arg1) {
 			message += data + " ";
 		}
-
-		ChatChannel cc = plugin.getChannel("Global");
+		String server = ((ProxiedPlayer) arg0).getServer().getInfo().getName();
 		ChatPlayer cp = plugin.getChatPlayer(arg0.getName());
-		cc.sendGlobalMessage(cp, message);
-		if (plugin.globalToggleable) {
-			if (!cp.getCurrent().equals(cc)) {
-				cp.setCurrent(cc);
-			}
+		ChatChannel cc = plugin.getChannel(cp.getPlayer().getServer().getInfo()
+				.getName());
+		if (plugin.ignoreServers.contains(server)) {
+			return;
+		}
+		cc.sendMessage(cp, message);
+		if (!cp.getCurrent().equals(cc)) {
+			cp.setCurrent(cc);
 		}
 	}
 

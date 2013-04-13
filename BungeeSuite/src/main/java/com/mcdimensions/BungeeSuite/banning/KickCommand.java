@@ -8,9 +8,9 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
 public class KickCommand extends Command {
-	
+
 	BungeeSuite plugin;
-	
+
 	public KickCommand(BungeeSuite bungeeSuite) {
 		super(bungeeSuite.kick);
 		plugin = bungeeSuite;
@@ -18,32 +18,33 @@ public class KickCommand extends Command {
 
 	@Override
 	public void execute(CommandSender arg0, String[] arg1) {
-		if(!arg0.hasPermission("BungeeSuite.mod")){
+		if (!arg0.hasPermission("BungeeSuite.mod")) {
 			arg0.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
-		
-		if(arg1.length<1){
-			arg0.sendMessage(ChatColor.RED+"/"+plugin.kick+" (PlayerName)");
+
+		if (arg1.length < 1) {
+			arg0.sendMessage(ChatColor.RED + "/" + plugin.kick
+					+ " (PlayerName)");
 			return;
 		}
-		
+
 		String name = arg1[0];
-		
+
 		ProxiedPlayer player = plugin.getUtilities().getClosestPlayer(name);
 		String kmessage = plugin.DEFAULT_KICK_PLAYER;
 		kmessage.replace("%sender", arg0.getName());
 		String Message = kmessage;
-		
-		if(player!=null){
-			if(arg1.length>1){
+
+		if (player != null) {
+			if (arg1.length > 1) {
 				int count = 0;
-				for(String data: arg1){
-					if(count==0){
+				for (String data : arg1) {
+					if (count == 0) {
 						Message = "";
 						count++;
-					}else{
-						Message+=data+" ";
+					} else {
+						Message += data + " ";
 					}
 				}
 			}

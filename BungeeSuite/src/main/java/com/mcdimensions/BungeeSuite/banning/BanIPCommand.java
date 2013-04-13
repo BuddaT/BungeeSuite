@@ -12,30 +12,31 @@ import net.md_5.bungee.api.plugin.Command;
 public class BanIPCommand extends Command {
 
 	BungeeSuite plugin;
-	
+
 	public BanIPCommand(BungeeSuite bungeeSuite) {
 		super(bungeeSuite.ipban);
 		plugin = bungeeSuite;
 	}
-	
+
 	@Override
 	public void execute(CommandSender arg0, String[] arg1) {
-		if(!arg0.hasPermission("BungeeSuite.mod")){
+		if (!arg0.hasPermission("BungeeSuite.mod")) {
 			arg0.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
-		
-		if(arg1.length<1){
-			arg0.sendMessage(ChatColor.RED+"/"+plugin.ipban+" (PlayerName/IP)");
+
+		if (arg1.length < 1) {
+			arg0.sendMessage(ChatColor.RED + "/" + plugin.ipban
+					+ " (PlayerName/IP)");
 			return;
 		}
-		
+
 		try {
-			//if playername was inserted
-			if(plugin.getUtilities().playerExists(arg1[0])){
+			// if playername was inserted
+			if (plugin.getUtilities().playerExists(arg1[0])) {
 				String ip = null;
 				try {
-					//get players ip
+					// get players ip
 					ip = plugin.getUtilities().getIP(arg1[0]);
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -49,8 +50,8 @@ public class BanIPCommand extends Command {
 					e.printStackTrace();
 				}
 			} else {
-				//if IP was typed in
-				//TODO may need to add a '/' to the start
+				// if IP was typed in
+				// TODO may need to add a '/' to the start
 				plugin.getUtilities().IPBanPlayer(arg1[0]);
 				String imessage = plugin.DEFAULT_IPBAN_PLAYER;
 				imessage = imessage.replace("%player", arg1[0]);

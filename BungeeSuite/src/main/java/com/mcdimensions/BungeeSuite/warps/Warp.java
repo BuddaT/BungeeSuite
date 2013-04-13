@@ -10,9 +10,6 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-
-
-
 public class Warp {
 	private String name;
 	WarpLocation wl;
@@ -33,19 +30,20 @@ public class Warp {
 		if (CurrentServer.equals(TargetServer)) {
 			ByteArrayOutputStream b = new ByteArrayOutputStream();
 			DataOutputStream o = new DataOutputStream(b);
-			 
+
 			try {
-			    o.writeUTF("Warp");
-			    o.writeUTF(player.getName());
-			    o.writeUTF(wl.serialize()); // Target Server
+				o.writeUTF("Warp");
+				o.writeUTF(player.getName());
+				o.writeUTF(wl.serialize()); // Target Server
 			} catch (IOException e) {
-			    // Can never happen
+				// Can never happen
 			}
 			player.getServer().sendData("BungeeSuiteMC", b.toByteArray());
 			return true;
 		} else {
 			// teleport player to right server then send location once loaded
-			BungeeSuite plugin = (BungeeSuite) ProxyServer.getInstance().getPluginManager().getPlugin("BungeeSuite");
+			BungeeSuite plugin = (BungeeSuite) ProxyServer.getInstance()
+					.getPluginManager().getPlugin("BungeeSuite");
 			plugin.warped.put(player.getName(), this);
 			player.connect(TargetServer);
 			return false;
