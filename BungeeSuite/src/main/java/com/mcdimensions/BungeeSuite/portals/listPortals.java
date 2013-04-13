@@ -13,7 +13,7 @@ public class listPortals extends Command {
 	private BungeeSuite plugin;
 
 	public listPortals(BungeeSuite bungeeSuite) {
-		super(bungeeSuite.listportals);
+		super(bungeeSuite.listPortals);
 		this.plugin = bungeeSuite;
 	}
 

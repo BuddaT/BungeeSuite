@@ -287,7 +287,7 @@ public class Utilities {
 		}else{
 			sql.standardQuery("INSERT INTO BungeePlayers (PlayerName, DisplayName, Current, LastOnline, IPAddress) VALUES ('"+player+"','"+player+"',NULL, CURDATE(), '"+connection+"')");
 		}
-		if(plugin.chat){
+		if(plugin.chatEnabled){
 			getChatPlayer(player);
 		}
 		sql.closeConnection();
@@ -339,7 +339,7 @@ public class Utilities {
 	
 	public ChatPlayer getChatPlayer(String player) throws SQLException {
 		sql.initialise();
-		plugin.cl.Color("Loading "+ player);
+		plugin.cl.cLog("Loading "+ player);
 		ResultSet res = sql.sqlQuery("SELECT * FROM BungeePlayers WHERE PlayerName = '"+player+"'");
 		ChatPlayer cp = null;
 		while(res.next()){
@@ -358,7 +358,7 @@ public class Utilities {
 		while(res3.next()){
 			cp.addIgnore(res3.getString("Ignoring"));
 		}
-		plugin.OnlinePlayers.put(player, cp);
+		plugin.onlinePlayers.put(player, cp);
 		if(cp.isChatSpying()){
 			plugin.chatSpying.add(cp.getName());
 		}
@@ -419,7 +419,7 @@ public class Utilities {
 			cal =Calendar.getInstance(); 
 					 cal.setTime(date);
 			}
-			plugin.PlayerBans.put(res.getString("PlayerName"),cal);
+			plugin.playerBans.put(res.getString("PlayerName"),cal);
 		}
 		ResultSet ips = sql.sqlQuery("SELECT * FROM BungeeBannedIPs");
 		while(ips.next()){
@@ -437,7 +437,7 @@ public class Utilities {
 		cal.add(Calendar.HOUR, +hourIncrease);
 		cal.add(Calendar.DATE, +dateIncrease);
 		sql.standardQuery("INSERT INTO BungeeBans (PlayerName, TempBan, TempBanEndDate)VALUES ('"+name+"',TRUE, DATE_ADD(DATE_ADD(DATE_ADD(NOW(), INTERVAL "+minuteIncrease+" MINUTE), INTERVAL "+hourIncrease+" HOUR),INTERVAL "+dateIncrease+" DAY))");
-		plugin.PlayerBans.put(name, cal);
+		plugin.playerBans.put(name, cal);
 		ProxiedPlayer player = plugin.getProxy().getPlayer(name);
 		if(player!=null){
 			player.disconnect("You have been temporarily banned for "+dateIncrease+":days "+hourIncrease+":hours "+minuteIncrease+":minutes.");
@@ -447,7 +447,7 @@ public class Utilities {
 	public void banPlayer(String name, String message) throws SQLException{
 		sql.initialise();
 		sql.standardQuery("INSERT INTO BungeeBans (PlayerName, TempBan) VALUES ('"+name+"',FALSE)");
-		plugin.PlayerBans.put(name, null);
+		plugin.playerBans.put(name, null);
 		ProxiedPlayer player = plugin.getProxy().getPlayer(name);
 		if(player!=null){
 			player.disconnect(message);
@@ -468,7 +468,7 @@ public class Utilities {
 	public void unbanPlayer(String name) throws SQLException{
 		sql.initialise();
 		sql.standardQuery("DELETE FROM BungeeBans WHERE PlayerName = '"+name+"'");
-		plugin.PlayerBans.remove(name);
+		plugin.playerBans.remove(name);
 		sql.closeConnection();
 	}
 	public void unbanIP(String ip) throws SQLException{
@@ -481,7 +481,7 @@ public class Utilities {
 	}
 
 	public boolean isBanned(String name) throws SQLException {
-		return plugin.PlayerBans.containsKey(name);
+		return plugin.playerBans.containsKey(name);
 	}
 
 	public void sendBroadcast(String string) {

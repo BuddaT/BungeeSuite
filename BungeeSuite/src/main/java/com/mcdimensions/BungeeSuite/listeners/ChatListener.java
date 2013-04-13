@@ -21,7 +21,7 @@ public class ChatListener implements Listener {
 
 	@Subscribe
 	public void playerTalk(ChatEvent event) {
-		if(!plugin.chat){
+		if(!plugin.chatEnabled){
 			return;
 		}
 		if (event.isCommand() || event.isCancelled()) {
@@ -56,14 +56,14 @@ public class ChatListener implements Listener {
 
 	@Subscribe
 	public void changeServer(ServerConnectedEvent event) throws SQLException {
-		if (!plugin.OnlinePlayers.containsKey(event.getPlayer().getName())) {
+		if (!plugin.onlinePlayers.containsKey(event.getPlayer().getName())) {
 			String player = event.getPlayer().getName();
 			String connection = event.getPlayer().getAddress().getAddress()
 					.toString();
 			if (!plugin.getUtilities().playerExists(player)) {
 				plugin.getUtilities().createPlayer(player, connection);
 			}
-			if (!plugin.OnlinePlayers.containsKey(event.getPlayer().getName())) {
+			if (!plugin.onlinePlayers.containsKey(event.getPlayer().getName())) {
 				plugin.getUtilities()
 						.getChatPlayer(event.getPlayer().getName());
 			}

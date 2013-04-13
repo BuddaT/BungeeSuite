@@ -9,7 +9,7 @@ public class muteall extends Command {
 
 	BungeeSuite plugin;
 	public muteall(BungeeSuite bungeeSuite) {
-		super(bungeeSuite.muteall);
+		super(bungeeSuite.muteAll);
 		plugin = bungeeSuite;
 		
 	}

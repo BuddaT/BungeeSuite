@@ -24,8 +24,8 @@ public class BanListener implements Listener {
 			event.setCancelReason("Your IP is banned from this server, please appeal on the server website");
 			event.setCancelled(true);
 		}
-		if(plugin.PlayerBans.containsKey(event.getConnection().getName())){
-			Calendar date = plugin.PlayerBans.get(event.getConnection().getName());
+		if(plugin.playerBans.containsKey(event.getConnection().getName())){
+			Calendar date = plugin.playerBans.get(event.getConnection().getName());
 			Calendar now = Calendar.getInstance();
 			if(now.before(date)){
 				double hours =((((date.getTimeInMillis()-now.getTimeInMillis())/1000)/60)/60);
@@ -33,7 +33,7 @@ public class BanListener implements Listener {
 				event.setCancelled(true);
 				return;
 			}if(now.after(date)){
-				plugin.PlayerBans.remove(event.getConnection().getName());
+				plugin.playerBans.remove(event.getConnection().getName());
 				return;
 			}else{
 				event.setCancelReason("You are banned from this server, please appeal on the server website");

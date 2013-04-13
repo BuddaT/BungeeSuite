@@ -11,7 +11,7 @@ public class tpaccept extends Command {
 
 	BungeeSuite plugin;
 	public tpaccept(BungeeSuite bungeeSuite) {
-		super(bungeeSuite.tpaccept);
+		super(bungeeSuite.tpAccept);
 		plugin = bungeeSuite;
 		// TODO Auto-generated constructor stub
 	}

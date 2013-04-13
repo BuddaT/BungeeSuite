@@ -12,7 +12,7 @@ public class delWarp extends Command {
 
 	BungeeSuite plugin;
 	public delWarp(BungeeSuite bungeeSuite) {
-		super(bungeeSuite.delwarp);
+		super(bungeeSuite.delWarp);
 		this.plugin = bungeeSuite;
 	}
 
@@ -23,7 +23,7 @@ public class delWarp extends Command {
 			return;
 		}
 		if(arg1.length<1){
-			arg0.sendMessage(ChatColor.RED+"/"+plugin.delwarp+" (warp name)");
+			arg0.sendMessage(ChatColor.RED+"/"+plugin.delWarp+" (warp name)");
 			return;
 		}
 		try {

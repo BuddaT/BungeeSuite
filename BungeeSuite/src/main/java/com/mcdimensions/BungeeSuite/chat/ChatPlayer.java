@@ -212,7 +212,7 @@ public class ChatPlayer {
 					}
 		}
 				if(plugin.logChat){
-					plugin.cl.Color("&e["+name2+"->"+this.name+"] &f"+message);
+					plugin.cl.cLog("&e["+name2+"->"+this.name+"] &f"+message);
 				}
 		
 	}

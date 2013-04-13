@@ -11,7 +11,7 @@ public class tpdeny extends Command {
 
 	BungeeSuite plugin;
 	public tpdeny(BungeeSuite bungeeSuite) {
-		super(bungeeSuite.tpdeny);
+		super(bungeeSuite.tpDeny);
 		plugin = bungeeSuite;
 		// TODO Auto-generated constructor stub
 	}

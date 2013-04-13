@@ -27,7 +27,7 @@ public class PluginMessageListener implements Listener {
 		String channel = in.readUTF();
 		System.out.println(channel);
 		if(channel.equalsIgnoreCase("warp")){
-			if(!plugin.warps){
+			if(!plugin.warpsEnabled){
 				return;
 			}
 			String warpname = in.readUTF();
@@ -54,14 +54,14 @@ public class PluginMessageListener implements Listener {
 			plugin.getProxy().getPlayer(playername).sendMessage(message);
 		}else if(channel.equalsIgnoreCase("JoinEvent")){//may be able to remove
 			String playername = in.readUTF();
-			if(plugin.warps){
+			if(plugin.warpsEnabled){
 			if(plugin.warped.containsKey(playername)){
 				plugin.warped.get(playername).warpPlayer(plugin.getProxy().getPlayer(playername));
 				plugin.warped.remove(playername);
 				return;
 			}
 			}
-			if(!plugin.teleports){
+			if(!plugin.teleportsEnabled){
 				return;
 			}
 			ProxiedPlayer player = plugin.getProxy().getPlayer(playername);

@@ -62,8 +62,8 @@ public class nick extends Command {
 							arg0.sendMessage(plugin.PLAYER_NOT_ONLINE);
 							return;
 						}
-						if (plugin.OnlinePlayers.containsKey(cp.getName())) {
-							plugin.OnlinePlayers.get(cp.getName())
+						if (plugin.onlinePlayers.containsKey(cp.getName())) {
+							plugin.onlinePlayers.get(cp.getName())
 									.setDisplayName(nick);
 							plugin.getUtilities().setNickName(cp.getName(),
 									nick);

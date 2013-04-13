@@ -13,7 +13,7 @@ public class tpall extends Command {
 
 	BungeeSuite plugin;
 	public tpall(BungeeSuite bungeeSuite) {
-		super(bungeeSuite.tpall);
+		super(bungeeSuite.tpAll);
 		plugin = bungeeSuite;
 		// TODO Auto-generated constructor stub
 	}

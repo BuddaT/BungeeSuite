@@ -36,7 +36,7 @@ public class ColorLog {
 	}
 
 
-	public void Color(String string){
+	public void cLog(String string){
 		String out = "";
 		out = string.replace("&0", BLACK);
 		out = out.replace("&1", DARKBLUE);
@@ -57,7 +57,7 @@ public class ColorLog {
 		proxy.getLogger().info(out+=RESET);
 		
 	}
-	public void Log(String string){
+	public void log(String string){
 		String message=ChatColor.stripColor(string);
 		proxy.getLogger().info(message);
 		

@@ -3,11 +3,11 @@ package com.mcdimensions.BungeeSuite;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 
-public class bungeeSuiteCommand extends Command {
+public class BungeeSuiteCommand extends Command {
 
 	private BungeeSuite plugin;
 
-	public bungeeSuiteCommand(BungeeSuite bungeeSuite) {
+	public BungeeSuiteCommand(BungeeSuite bungeeSuite) {
 		super(bungeeSuite.bungeeSuiteCommand);
 		this.plugin = bungeeSuite;
 	}
@@ -18,6 +18,7 @@ public class bungeeSuiteCommand extends Command {
 			arg0.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
+		
 		if(arg1.length==1){
 			if(arg1[0].equalsIgnoreCase("reload")){
 				plugin.reload();

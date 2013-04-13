@@ -17,7 +17,7 @@ public class delportal extends Command {
 	private BungeeSuite plugin;
 
 	public delportal(BungeeSuite bungeeSuite) {
-		super(bungeeSuite.delportal);
+		super(bungeeSuite.delPortal);
 		plugin = bungeeSuite;
 	}
 
@@ -28,7 +28,7 @@ public class delportal extends Command {
 			return;
 		}
 		if (arg1.length < 1) {
-			arg0.sendMessage(ChatColor.RED + "/"+plugin.delportal+ " (Name)");
+			arg0.sendMessage(ChatColor.RED + "/"+plugin.delPortal+ " (Name)");
 			return;
 		}
 		try {

@@ -11,7 +11,7 @@ public class tpahere extends Command {
 
 	BungeeSuite plugin;
 	public tpahere(BungeeSuite bungeeSuite) {
-		super(bungeeSuite.tpahere);
+		super(bungeeSuite.tpaHere);
 		plugin = bungeeSuite;
 	}
 	

@@ -14,7 +14,7 @@ import net.md_5.bungee.api.plugin.Command;
 public class setportal extends Command {
 	BungeeSuite plugin;
 	public setportal(BungeeSuite bungeeSuite) {
-		super(bungeeSuite.setportal);
+		super(bungeeSuite.setPortal);
 		plugin = bungeeSuite;
 	}
 
@@ -25,7 +25,7 @@ public class setportal extends Command {
 			return;
 		}
 		if (arg1.length < 3) {
-			arg0.sendMessage(ChatColor.RED + "/"+plugin.setportal+" (Name) (type) (Dest)");
+			arg0.sendMessage(ChatColor.RED + "/"+plugin.setPortal+" (Name) (type) (Dest)");
 			return;
 		}
 			ProxiedPlayer player = (ProxiedPlayer) arg0;

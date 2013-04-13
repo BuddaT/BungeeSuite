@@ -114,8 +114,8 @@ public class ChatChannel {
 	}
 	public void reformat(String format){
 		this.channelFormat = format;
-		plugin.ChannelConfig.setString("BungeeSuite.Chat.Channels."+getName(), format);
-		plugin.ChannelConfig.save();
+		plugin.channelConfig.setString("BungeeSuite.Chat.Channels."+getName(), format);
+		plugin.channelConfig.save();
 		plugin.getUtilities().reformatChannel(channelName,format);
 	}
 	public void kickPlayer(String player){
@@ -150,19 +150,19 @@ public class ChatChannel {
 			}
 		}
 		if(plugin.logChat){
-			plugin.cl.Log(message);
+			plugin.cl.log(message);
 		}
 	}
 
 	public void sendGlobalMessage(ChatPlayer player, String message) {
 		message = formatMessage(player, message);
-		for (ChatPlayer data : plugin.OnlinePlayers.values()) {
+		for (ChatPlayer data : plugin.onlinePlayers.values()) {
 			if(!data.ignoringPlayer(player.getName())|| data.getPlayer().hasPermission("BungeeSuite.mod")){
 			data.sendMessage(message);
 			}
 		}
 		if(plugin.logChat){
-			plugin.cl.Log(message);
+			plugin.cl.log(message);
 		}
 	}
 

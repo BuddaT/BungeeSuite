@@ -10,7 +10,7 @@ import net.md_5.bungee.api.plugin.Command;
 public class warplist extends Command {
 	BungeeSuite plugin;
 	public warplist(BungeeSuite bungeeSuite) {
-		super(bungeeSuite.warplist);
+		super(bungeeSuite.warpsList);
 		plugin = bungeeSuite;
 	}
 

@@ -34,7 +34,7 @@ public class ServerLoginLogout implements Listener {
 			}else{
 				plugin.getUtilities().updateIP(player, connection);
 			}
-			if(!plugin.OnlinePlayers.containsKey(player)){
+			if(!plugin.onlinePlayers.containsKey(player)){
 				plugin.getUtilities().getChatPlayer(player);
 			}
 		}
@@ -43,15 +43,15 @@ public class ServerLoginLogout implements Listener {
 	public void logout(PlayerDisconnectEvent event) throws SQLException {
 		String name = event.getPlayer().getName();
 		if(name==null){
-			for(String data:plugin.OnlinePlayers.keySet()){
+			for(String data:plugin.onlinePlayers.keySet()){
 				if(plugin.getProxy().getPlayer(data)==null){
-					plugin.OnlinePlayers.remove(data);
+					plugin.onlinePlayers.remove(data);
 					return;
 				}
 			}
 		}
 		plugin.getUtilities().updateLastSeen(name);
-		if (plugin.OnlinePlayers.containsKey(name)) {
+		if (plugin.onlinePlayers.containsKey(name)) {
 			ChatPlayer cp = plugin.getChatPlayer(name);
 			if (cp == null){
 				return;
@@ -65,7 +65,7 @@ public class ServerLoginLogout implements Listener {
 			if (plugin.chatSpying.contains(cp.getName())) {
 				plugin.chatSpying.remove(cp.getName());
 			}
-			plugin.OnlinePlayers.remove(event.getPlayer().getName());
+			plugin.onlinePlayers.remove(event.getPlayer().getName());
 		}
 	}	
 	@Subscribe

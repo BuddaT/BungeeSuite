@@ -17,7 +17,7 @@ public class setWarp extends Command {
 	private BungeeSuite plugin;
 
 	public setWarp(BungeeSuite bungeeSuite) {
-		super(bungeeSuite.setwarp);
+		super(bungeeSuite.setWarp);
 		plugin = bungeeSuite;
 	}
 
@@ -28,7 +28,7 @@ public class setWarp extends Command {
 			return;
 		}
 			if(arg1.length<1){
-				arg0.sendMessage(ChatColor.RED+"/"+plugin.setwarp+" (name) *(private)");
+				arg0.sendMessage(ChatColor.RED+"/"+plugin.setWarp+" (name) *(private)");
 				return;
 			}
 			String name = arg1[0];
