@@ -23,7 +23,9 @@ public class ListPortalsCommand extends Command {
 			arg0.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
+		
 		String message = ChatColor.DARK_AQUA + "Portals: " + ChatColor.WHITE;
+		
 		try {
 			for (String data : plugin.getUtilities().getPortals()) {
 				message += data + ", ";

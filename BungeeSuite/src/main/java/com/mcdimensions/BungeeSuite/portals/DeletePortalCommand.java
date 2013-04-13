@@ -27,29 +27,29 @@ public class DeletePortalCommand extends Command {
 			arg0.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
+		
 		if (arg1.length < 1) {
 			arg0.sendMessage(ChatColor.RED + "/" + plugin.delPortal + " (Name)");
 			return;
 		}
+		
 		try {
 			if (plugin.getUtilities().portalExists(arg1[0])) {
-				ServerInfo server = plugin.getProxy().getServerInfo(
-						plugin.getUtilities().getPortalsServer(arg1[0]));
+				ServerInfo server = plugin.getProxy().getServerInfo(plugin.getUtilities().getPortalsServer(arg1[0]));
 				ByteArrayOutputStream b = new ByteArrayOutputStream();
 				DataOutputStream out = new DataOutputStream(b);
-				out.writeUTF("DeletePortal");// sent to bukkit so it can remove
-												// from memory
+				
+				out.writeUTF("DeletePortal");
 				out.writeUTF(arg1[0]);
 				server.sendData("BungeeSuiteMC", b.toByteArray());
+				
 				arg0.sendMessage(plugin.PORTAL_DELETE_CONFIRM);
 			} else {
 				arg0.sendMessage(plugin.PORTAL_NOT_EXIST);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
