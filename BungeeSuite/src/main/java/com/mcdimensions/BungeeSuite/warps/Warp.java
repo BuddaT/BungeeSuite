@@ -11,12 +11,10 @@ import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class Warp {
-	private String name;
 	WarpLocation wl;
 	boolean visable;
 
 	public Warp(String name, WarpLocation wl, boolean vis) {
-		this.name = name;
 		this.wl = wl;
 		this.visable = vis;
 

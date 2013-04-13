@@ -1,11 +1,7 @@
 package com.mcdimensions.BungeeSuite.utilities;
 
-import java.util.logging.Level;
-
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
-
-import com.mcdimensions.BungeeSuite.BungeeSuite;
 
 public class ColorLog {
 	//still needs fixing basic for now

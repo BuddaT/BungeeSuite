@@ -1,7 +1,5 @@
 package com.mcdimensions.BungeeSuite.utilities;
 
-import java.io.File;
-import java.io.IOException;
 import java.sql.*;
 
 import net.md_5.bungee.api.ProxyServer;
@@ -11,7 +9,6 @@ public class SQL extends SQLOperations {
 
 	private String host, database, username, password, port;
 	private Connection connection;
-	private File databaseFile;
 
 	public SQL(String host,String port, String database, String username, String password) {
 		this.host = host;

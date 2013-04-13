@@ -1,7 +1,5 @@
 package com.mcdimensions.BungeeSuite.warps;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -32,7 +30,7 @@ public class WarpCommand extends Command {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		} else
+		} else {
 			try {
 				if (plugin.getUtilities().warpExists(arg1[0])) {
 					Warp warp = plugin.getUtilities().loadWarp(arg1[0]);
@@ -43,6 +41,6 @@ public class WarpCommand extends Command {
 			} catch (SQLException | IOException e) {
 				e.printStackTrace();
 			}
+		}
 	}
-
 }
