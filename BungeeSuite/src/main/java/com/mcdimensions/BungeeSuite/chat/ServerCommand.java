@@ -16,30 +16,33 @@ public class ServerCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
+	public void execute(CommandSender sender, String[] arg1) {
 		if (arg1.length == 0) {
-			ChatPlayer cp = plugin.getChatPlayer(arg0.getName());
-			ChatChannel cc = plugin.getChannel(cp.getPlayer().getServer()
-					.getInfo().getName());
-			if (plugin.globalToggleable) {
-				if (!cp.getCurrent().equals(cc)) {
+			ChatPlayer cp = plugin.getChatPlayer(sender.getName());
+			ChatChannel cc = plugin.getChannel(cp.getPlayer().getServer() .getInfo().getName());
+			
+			if (plugin.globalToggleable)
+				if (!cp.getCurrent().equals(cc))
 					cp.setCurrent(cc);
-				}
-			}
+
 			return;
 		}
+		
 		String message = "";
 		for (String data : arg1) {
 			message += data + " ";
 		}
-		String server = ((ProxiedPlayer) arg0).getServer().getInfo().getName();
-		ChatPlayer cp = plugin.getChatPlayer(arg0.getName());
-		ChatChannel cc = plugin.getChannel(cp.getPlayer().getServer().getInfo()
-				.getName());
+		
+		String server = ((ProxiedPlayer) sender).getServer().getInfo().getName();
+		ChatPlayer cp = plugin.getChatPlayer(sender.getName());
+		ChatChannel cc = plugin.getChannel(cp.getPlayer().getServer().getInfo().getName());
+		
 		if (plugin.ignoreServers.contains(server)) {
 			return;
 		}
+		
 		cc.sendMessage(cp, message);
+		
 		if (!cp.getCurrent().equals(cc)) {
 			cp.setCurrent(cc);
 		}

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
@@ -717,8 +718,8 @@ public class Utilities {
 		
 	}
 
-	public HashSet<ChatChannel> getPlayersChannels(String name) throws SQLException {
-		HashSet<ChatChannel> channels = new HashSet<ChatChannel>();
+	public ArrayList<ChatChannel> getPlayersChannels(String name) throws SQLException {
+		ArrayList<ChatChannel> channels = new ArrayList<ChatChannel>();
 		sql.initialise();
 		ResultSet res = sql.sqlQuery("SELECT ChannelName FROM BungeeMembers WHERE PlayerName = '"+name+"'");
 		while(res.next()){

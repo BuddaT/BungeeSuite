@@ -18,34 +18,31 @@ public class JoinCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
+	public void execute(CommandSender sender, String[] arg1) {
 		if (arg1.length != 1) {
-			arg0.sendMessage(ChatColor.RED + "/" + plugin.join
-					+ " (Channel name)");
+			sender.sendMessage(ChatColor.RED + "/" + plugin.join + " (channel)");
 			return;
 		}
 
 		String channelName = arg1[0];
-		String playerName = arg0.getName();
+		String playerName = sender.getName();
 		try {
 			if (plugin.getUtilities().chatChannelExists(channelName)) {
 				ChatChannel cc = plugin.getChannel(channelName);
-				if (cc.isInvited(playerName)
-						|| arg0.hasPermission("BungeeSuite.admin")) {
+				if (cc.isInvited(playerName) || sender.hasPermission("BungeeSuite.admin")) {
 					cc.acceptInvite(playerName);
 					return;
 				} else {
 					String jmsg = plugin.CHANNEL_NOT_INVITED;
 					jmsg = jmsg.replace("%channel", cc.getName());
-					arg0.sendMessage(jmsg);
+					sender.sendMessage(jmsg);
 				}
 			} else {
-				arg0.sendMessage(plugin.CHANNEL_NOT_EXIST);
+				sender.sendMessage(plugin.CHANNEL_NOT_EXIST);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 }

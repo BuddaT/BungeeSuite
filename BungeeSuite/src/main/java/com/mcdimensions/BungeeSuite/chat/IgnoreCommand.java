@@ -17,29 +17,25 @@ public class IgnoreCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
+	public void execute(CommandSender sender, String[] arg1) {
 		if (arg1.length < 1) {
-			arg0.sendMessage(ChatColor.RED + "/" + plugin.cignore + " (player)");
+			sender.sendMessage(ChatColor.RED + "/" + plugin.cignore + " (player)");
 			return;
 		}
 
 		ProxiedPlayer player = plugin.getUtilities().getClosestPlayer(arg1[0]);
 		if (player != null) {
-			ChatPlayer cp = plugin.getChatPlayer(arg0.getName());
+			ChatPlayer cp = plugin.getChatPlayer(sender.getName());
 
 			if (cp.ignoringPlayer(player.getName())) {
-				plugin.getUtilities().unignorePlayer(arg0.getName(),
-						player.getName());
-				arg0.sendMessage(plugin.PLAYER_UNIGNORED);
-				return;
+				plugin.getUtilities().unignorePlayer(sender.getName(), player.getName());
+				sender.sendMessage(plugin.PLAYER_UNIGNORED);
 			} else {
-				plugin.getUtilities().ignorePlayer(arg0.getName(),
-						player.getName());
-				arg0.sendMessage(plugin.PLAYER_IGNORED);
-				return;
+				plugin.getUtilities().ignorePlayer(sender.getName(), player.getName());
+				sender.sendMessage(plugin.PLAYER_IGNORED);
 			}
 		} else {
-			arg0.sendMessage(plugin.PLAYER_NOT_ONLINE);
+			sender.sendMessage(plugin.PLAYER_NOT_ONLINE);
 		}
 	}
 

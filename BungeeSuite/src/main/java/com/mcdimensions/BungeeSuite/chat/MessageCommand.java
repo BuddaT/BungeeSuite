@@ -12,36 +12,37 @@ public class MessageCommand extends Command {
 	BungeeSuite plugin;
 
 	public MessageCommand(BungeeSuite bungeeSuite) {
-		super(bungeeSuite.message, null, bungeeSuite.msg);
+		super(bungeeSuite.message, null, bungeeSuite.msg, bungeeSuite.whisper,
+				bungeeSuite.tell, bungeeSuite.t);
 		plugin = bungeeSuite;
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
+	public void execute(CommandSender sender, String[] arg1) {
 		if (arg1.length < 2) {
-			arg0.sendMessage(ChatColor.RED + "/" + plugin.message
-					+ " (player) (message)");
+			sender.sendMessage(ChatColor.RED + "/" + plugin.message + " (player) (message)");
 			return;
 		}
 
 		ProxiedPlayer player = plugin.getUtilities().getClosestPlayer(arg1[0]);
 		if (player != null) {
 			ChatPlayer cp = plugin.getChatPlayer(player.getName());
-			if (cp.ignoringPlayer(arg0.getName())) {
-				arg0.sendMessage(plugin.PLAYER_IGNORING);
-				return;
-			}
-			String message = "";
-			for (String data : arg1) {
-				if (!data.equalsIgnoreCase(arg1[0])) {
-					message += data + " ";
+			
+			if (cp.ignoringPlayer(sender.getName()))
+				sender.sendMessage(plugin.PLAYER_IGNORING);
+			else {
+				String message = "";
+				for (String data : arg1) {
+					if (!data.equalsIgnoreCase(arg1[0])) {
+						message += data + " ";
+					}
 				}
+				
+				cp.sendPrivate(message, sender.getName());
+				sender.sendMessage(ChatColor.GOLD + "[me->" + cp.getName() + "]" + ChatColor.WHITE + message);
 			}
-			cp.sendPrivate(message, arg0.getName());
-			arg0.sendMessage(ChatColor.GOLD + "[me->" + cp.getName() + "]"
-					+ ChatColor.WHITE + message);
 		} else {
-			arg0.sendMessage(plugin.PLAYER_NOT_ONLINE);
+			sender.sendMessage(plugin.PLAYER_NOT_ONLINE);
 		}
 	}
 

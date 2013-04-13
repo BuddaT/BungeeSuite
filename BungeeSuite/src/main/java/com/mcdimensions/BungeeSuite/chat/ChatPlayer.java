@@ -172,7 +172,7 @@ public class ChatPlayer {
 		return mute;
 	}
 
-	public boolean mute() {
+	public boolean toggleMute() {
 		if (isMute()) {
 			mute = false;
 			plugin.getUtilities().unMutePlayer(name);

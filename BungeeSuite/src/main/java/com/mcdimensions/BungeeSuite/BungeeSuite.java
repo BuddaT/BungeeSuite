@@ -33,9 +33,7 @@ import com.mcdimensions.BungeeSuite.chat.MuteCommand;
 import com.mcdimensions.BungeeSuite.chat.MuteAllCommand;
 import com.mcdimensions.BungeeSuite.chat.NicknameCommand;
 import com.mcdimensions.BungeeSuite.chat.ReplyCommand;
-import com.mcdimensions.BungeeSuite.chat.TellCommand;
 import com.mcdimensions.BungeeSuite.chat.ToggleCommand;
-import com.mcdimensions.BungeeSuite.chat.WhisperCommand;
 import com.mcdimensions.BungeeSuite.chat.ServerCommand;
 import com.mcdimensions.BungeeSuite.config.Config;
 import com.mcdimensions.BungeeSuite.listeners.BanListener;
@@ -420,8 +418,6 @@ public class BungeeSuite extends Plugin {
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new NicknameCommand(this));
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new MessageCommand(this));
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new ReplyCommand(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new WhisperCommand(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new TellCommand(this));
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new ToggleCommand(this));
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new AcceptCommand(this));
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new InviteCommand(this));

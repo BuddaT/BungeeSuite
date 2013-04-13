@@ -17,30 +17,31 @@ public class MuteCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
-		if (!arg0.hasPermission("BungeeSuite.mod")
-				|| !arg0.hasPermission("BungeeSuite.admin")) {
-			arg0.sendMessage(plugin.NO_PERMISSION);
+	public void execute(CommandSender sender, String[] arg1) {
+		if (!sender.hasPermission("BungeeSuite.mod") || !sender.hasPermission("BungeeSuite.admin")) {
+			sender.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
+		
 		if (arg1.length < 1) {
-			arg0.sendMessage(ChatColor.RED + "/" + plugin.mute + " (player)");
+			sender.sendMessage(ChatColor.RED + "/" + plugin.mute + " (player)");
 			return;
 		}
+		
 		ProxiedPlayer player = plugin.getUtilities().getClosestPlayer(arg1[0]);
 		if (player != null) {
 			ChatPlayer cp = plugin.getChatPlayer(player.getName());
-			cp.mute();
+			cp.toggleMute();
 			if (cp.isMute()) {
 				player.sendMessage(plugin.PLAYER_MUTE);
-				arg0.sendMessage(plugin.PLAYER_MUTED);
+				sender.sendMessage(plugin.PLAYER_MUTED);
 			} else {
 				player.sendMessage(plugin.PLAYER_UNMUTE);
-				arg0.sendMessage(plugin.PLAYER_UNMUTED);
+				sender.sendMessage(plugin.PLAYER_UNMUTED);
 			}
 			return;
 		} else {
-			arg0.sendMessage(plugin.PLAYER_NOT_EXIST);
+			sender.sendMessage(plugin.PLAYER_NOT_EXIST);
 			return;
 		}
 	}

@@ -16,9 +16,10 @@ public class MuteAllCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
-		if (!arg0.hasPermission("BungeeSuite.admin"))
+	public void execute(CommandSender sender, String[] arg1) {
+		if (!sender.hasPermission("BungeeSuite.admin"))
 			return;
+		
 		if (plugin.allMuted) {
 			plugin.allMuted = false;
 			for (ProxiedPlayer data : plugin.getProxy().getPlayers()) {
@@ -27,7 +28,7 @@ public class MuteAllCommand extends Command {
 		} else {
 			plugin.allMuted = true;
 			for (ProxiedPlayer data : plugin.getProxy().getPlayers()) {
-				data.sendMessage(plugin.PLAYER_ALL_UNMUTED);
+				data.sendMessage(plugin.PLAYER_ALL_MUTED);
 			}
 		}
 

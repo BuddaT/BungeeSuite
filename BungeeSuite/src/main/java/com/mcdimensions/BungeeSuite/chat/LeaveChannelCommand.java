@@ -18,9 +18,9 @@ public class LeaveChannelCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
-		if (arg1.length == 0) {// leave current if not server or global
-			ChatPlayer cp = plugin.getChatPlayer(arg0.getName());
+	public void execute(CommandSender sender, String[] arg1) {
+		if (arg1.length == 0) {
+			ChatPlayer cp = plugin.getChatPlayer(sender.getName());
 			ChatChannel cc = cp.getCurrent();
 			if (cc.isServerChannel()) {
 				cp.sendMessage(plugin.CHANNEL_NOT_LEAVE_SERVER);
@@ -36,8 +36,7 @@ public class LeaveChannelCommand extends Command {
 					cp.setCurrent(plugin.getChannel("Global"));
 					return;
 				} else {
-					ChatChannel newc = plugin.getChannel(cp.getPlayer()
-							.getServer().getInfo().getName());
+					ChatChannel newc = plugin.getChannel(cp.getPlayer().getServer().getInfo().getName());
 					newc.addMember(cp);
 					cp.setCurrent(newc);
 					return;
@@ -48,7 +47,7 @@ public class LeaveChannelCommand extends Command {
 			try {
 				if (plugin.getUtilities().chatChannelExists(channelName)) {
 					ChatChannel cc = plugin.getChannel(channelName);
-					ChatPlayer cp = plugin.getChatPlayer(arg0.getName());
+					ChatPlayer cp = plugin.getChatPlayer(sender.getName());
 					if (cc.isServerChannel()) {
 						cp.sendMessage(plugin.CHANNEL_NOT_LEAVE_SERVER);
 						return;
@@ -57,8 +56,7 @@ public class LeaveChannelCommand extends Command {
 					if (cc.equals(cur)) {
 						cc.removeMember(cp.getName());
 						cp.removeChannel(cc.getName());
-						ChatChannel newc = plugin.getChannel(cp.getPlayer()
-								.getServer().getInfo().getName());
+						ChatChannel newc = plugin.getChannel(cp.getPlayer().getServer().getInfo().getName());
 						newc.addMember(cp);
 						cp.setCurrent(newc);
 					} else {
@@ -66,15 +64,13 @@ public class LeaveChannelCommand extends Command {
 						cp.removeChannel(cc.getName());
 					}
 				} else {
-					arg0.sendMessage(plugin.CHANNEL_NOT_EXIST);
+					sender.sendMessage(plugin.CHANNEL_NOT_EXIST);
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else {
-			arg0.sendMessage(ChatColor.RED + "/" + plugin.leaveChannel
-					+ " (*ChannelName)");
+			sender.sendMessage(ChatColor.RED + "/" + plugin.leaveChannel + " [channel]");
 			return;
 		}
 

@@ -15,16 +15,15 @@ public class GlobalCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
-		if (!(arg0.hasPermission("BungeeSuite.global") || arg0
-				.hasPermission("BungeeSuite.mod"))) {
-			arg0.sendMessage(plugin.NO_PERMISSION);
+	public void execute(CommandSender sender, String[] arg1) {
+		if (!(sender.hasPermission("BungeeSuite.global") || sender.hasPermission("BungeeSuite.mod"))) {
+			sender.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
 
 		if (arg1.length == 0) {
 			ChatChannel cc = plugin.getChannel("Global");
-			ChatPlayer cp = plugin.getChatPlayer(arg0.getName());
+			ChatPlayer cp = plugin.getChatPlayer(sender.getName());
 			if (plugin.globalToggleable) {
 				if (!cp.getCurrent().equals(cc)) {
 					cp.setCurrent(cc);
@@ -39,7 +38,7 @@ public class GlobalCommand extends Command {
 		}
 
 		ChatChannel cc = plugin.getChannel("Global");
-		ChatPlayer cp = plugin.getChatPlayer(arg0.getName());
+		ChatPlayer cp = plugin.getChatPlayer(sender.getName());
 		cc.sendGlobalMessage(cp, message);
 		if (plugin.globalToggleable) {
 			if (!cp.getCurrent().equals(cc)) {

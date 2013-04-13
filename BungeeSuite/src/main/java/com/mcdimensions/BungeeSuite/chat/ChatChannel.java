@@ -156,11 +156,13 @@ public class ChatChannel {
 
 	public void sendGlobalMessage(ChatPlayer player, String message) {
 		message = formatMessage(player, message);
+		
 		for (ChatPlayer data : plugin.onlinePlayers.values()) {
-			if(!data.ignoringPlayer(player.getName())|| data.getPlayer().hasPermission("BungeeSuite.mod")){
-			data.sendMessage(message);
+			if(!data.ignoringPlayer(player.getName()) || player.getPlayer().hasPermission("BungeeSuite.mod")) {
+				data.sendMessage(message);
 			}
 		}
+		
 		if(plugin.logChat){
 			plugin.cl.log(message);
 		}
