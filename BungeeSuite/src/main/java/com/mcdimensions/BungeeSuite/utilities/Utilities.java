@@ -51,7 +51,7 @@ public class Utilities {
 	}
 	public boolean serverExists(String name) throws SQLException{
 		sql.initialise();
-		boolean check = sql.existanceQuery("SELECT ServerName FROM BungeeServers WHERE ServerName = '"+name+"'");
+		boolean check = sql.existenceQuery("SELECT ServerName FROM BungeeServers WHERE ServerName = '"+name+"'");
 		sql.closeConnection();
 		return check;
 	}
@@ -111,7 +111,7 @@ public class Utilities {
 		sql.standardQuery("INSERT INTO BungeeSignType (Type) VALUES('MOTD');");
 	    System.out.println("Table 'BungeeSignType' created!");
 		}
-		boolean check = sql.existanceQuery("SELECT Type FROM BungeeSignType WHERE Type ='Portal'");
+		boolean check = sql.existenceQuery("SELECT Type FROM BungeeSignType WHERE Type ='Portal'");
 		if(!check){ 
 			sql.standardQuery("INSERT INTO BungeeSignType (Type) VALUES('Portal');");
 		}
@@ -138,7 +138,7 @@ public class Utilities {
 	}
 	public boolean warpExists(String name) throws SQLException{
 		sql.initialise();
-		boolean check = sql.existanceQuery("SELECT Name FROM BungeeWarps WHERE Name = '"+name+"'");
+		boolean check = sql.existenceQuery("SELECT Name FROM BungeeWarps WHERE Name = '"+name+"'");
 		sql.closeConnection();
 		return check;
 	}
@@ -260,7 +260,7 @@ public class Utilities {
 	
 	public void createStandardChannels() throws SQLException{
 		sql.initialise();
-		boolean check = sql.existanceQuery("SELECT ChannelName FROM BungeeChannels WHERE ChannelName = 'Global';");
+		boolean check = sql.existenceQuery("SELECT ChannelName FROM BungeeChannels WHERE ChannelName = 'Global';");
 		sql.closeConnection();
 		if(!check){
 			sql.initialise();
@@ -269,7 +269,7 @@ public class Utilities {
 		}
 		for(String data: plugin.getProxy().getServers().keySet()){
 			sql.initialise();
-			boolean check2 = sql.existanceQuery("SELECT ChannelName FROM BungeeChannels WHERE ChannelName = '"+data+"';");
+			boolean check2 = sql.existenceQuery("SELECT ChannelName FROM BungeeChannels WHERE ChannelName = '"+data+"';");
 			sql.closeConnection();
 			if(!check2){
 				sql.initialise();
@@ -320,7 +320,7 @@ public class Utilities {
 	}
 	public boolean playerExists(String player) throws SQLException {
 		sql.initialise();
-		boolean check = sql.existanceQuery("SELECT PlayerName FROM BungeePlayers Where PlayerName = '"+player+"'");
+		boolean check = sql.existenceQuery("SELECT PlayerName FROM BungeePlayers Where PlayerName = '"+player+"'");
 		sql.closeConnection();
 		return check;
 	}
@@ -559,7 +559,7 @@ public class Utilities {
 
 	public void UpdateSignFormats() throws SQLException {
 		sql.initialise();
-		if(sql.existanceQuery("SELECT F_ID FROM BungeeSignFormats Where F_ID = 1")){
+		if(sql.existenceQuery("SELECT F_ID FROM BungeeSignFormats Where F_ID = 1")){
 			sql.standardQuery("UPDATE BungeeSignFormats SET ColoredMOTD="+plugin.motdColored+",MOTDOnline ='"+plugin.motdFormatOnline+"',MOTDOffline= '"+plugin.motdFormatOffline+"',PlayerCountOnline= '"+plugin.playerCountFormatOnline+"', PlayerCountOnlineClick='"+plugin.playerCountFormatOnlineClick+"',PlayerCountOffline= '"+plugin.playerCountFormatOffline+"', PlayerCountOfflineClick='"+plugin.playerCountFormatOfflineClick+"', PortalFormatOnline='"+plugin.portalFormatOnline+"',PortalFormatOffline= '"+plugin.portalFormatOffline+"',PortalFormatOfflineClick= '"+plugin.portalFormatOfflineClick+"' WHERE F_ID = 1");
 		}else{
 		sql.standardQuery("INSERT INTO BungeeSignFormats(F_ID,ColoredMOTD, MOTDOnline, MOTDOffline, PlayerCountOnline,  PlayerCountOnlineClick, PlayerCountOffline, PlayerCountOfflineClick, PortalFormatOnline, PortalFormatOffline, PortalFormatOfflineClick) VALUES(1,"+plugin.motdColored+", '"+plugin.motdFormatOnline+"', '"+plugin.motdFormatOffline+"', '"+plugin.playerCountFormatOnline+"', '"+plugin.playerCountFormatOnlineClick+"', '"+plugin.playerCountFormatOffline+"', '"+plugin.playerCountFormatOfflineClick+"', '"+plugin.portalFormatOnline+"', '"+plugin.portalFormatOffline+"', '"+plugin.portalFormatOfflineClick+"')");
@@ -604,7 +604,7 @@ public class Utilities {
 
 	public boolean portalExists(String string) throws SQLException {
 		sql.initialise();
-		boolean check = sql.existanceQuery("SELECT Name FROM BungeePortals Where Name = '"+string+"' ");
+		boolean check = sql.existenceQuery("SELECT Name FROM BungeePortals Where Name = '"+string+"' ");
 		sql.closeConnection();
 		return check;
 	}

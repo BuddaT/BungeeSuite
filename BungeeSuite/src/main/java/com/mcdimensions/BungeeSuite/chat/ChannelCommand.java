@@ -16,8 +16,8 @@ public class ChannelCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender sender, String[] arg1) {
-		if (arg1.length == 0 || arg1[0].equalsIgnoreCase("help")) {
+	public void execute(CommandSender sender, String[] args) {
+		if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
 			sendHelp(sender);
 			return;
 		}
@@ -28,14 +28,15 @@ public class ChannelCommand extends Command {
 			sender.sendMessage(plugin.CHANNEL_NO_PERMISSION);
 			return;
 		}
+		String command = args[0];
 
-		if (arg1[0].equalsIgnoreCase("kick")) {
-			if (arg1.length < 2) {
+		if (command.equalsIgnoreCase("kick")) {
+			if (args.length < 2) {
 				sender.sendMessage(ChatColor.RED + "/" + plugin.channel + " kick (player)");
 				return;
 			}
 			
-			String player = arg1[1];
+			String player = args[1];
 			if (cc.containsMember(player)) {
 				cc.removeMember(player);
 				plugin.getChatPlayer(player).removeChannel(cc.getName());
@@ -45,47 +46,38 @@ public class ChannelCommand extends Command {
 			}
 			
 			sender.sendMessage(ChatColor.DARK_GREEN + player + "kicked from channel");
-			return;
-		}
 
-		if (arg1[0].equalsIgnoreCase("format")) {
+		} else if (command.equalsIgnoreCase("format")) {
 			sender.sendMessage(ChatColor.GOLD + "Channel format: " + ChatColor.RESET + cc.getFormat());
-			return;
-		}
-
-		if (arg1[0].equalsIgnoreCase("editformat")) {
-			if (arg1.length < 2) {
+			
+		} else if (command.equalsIgnoreCase("editformat")) {
+			if (args.length < 2) {
 				sender.sendMessage(ChatColor.RED + "/" + plugin.channel + " editformat (format)");
 				return;
 			}
-			String format = "";
-			for (String data : arg1) {
-				if (!data.equalsIgnoreCase(arg1[0])) {
-					format += data + " ";
-				}
+			StringBuilder format = new StringBuilder();
+			for (int i = 1; i < args.length; i++) {
+				format.append(args[i]);
+				format.append(" ");
 			}
-			cc.reformat(format);
+			cc.reformat(format.toString());
 			sender.sendMessage(ChatColor.DARK_GREEN + "Channel format changed");
-			return;
-		}
 
-		if (arg1[0].equalsIgnoreCase("rename")) {
-			if (arg1.length < 2) {
+		} else if (command.equalsIgnoreCase("rename")) {
+			if (args.length < 2) {
 				sender.sendMessage(ChatColor.RED + "/" + plugin.channel + " rename (name)");
 				return;
 			}
-			String name = arg1[1];
+			String name = args[1];
 			cc.rename(name);
 			sender.sendMessage(ChatColor.DARK_GREEN + "Channel renamed");
-			return;
-		}
 
-		if (arg1[0].equalsIgnoreCase("setowner")) {
-			if (arg1.length < 2) {
+		} else if (command.equalsIgnoreCase("setowner")) {
+			if (args.length < 2) {
 				sender.sendMessage(ChatColor.RED + "/" + plugin.channel + " setowner (name)");
 				return;
 			}
-			String name = arg1[1];
+			String name = args[1];
 			ChatPlayer player = plugin.getChatPlayer(name);
 			if (player == null) {
 				sender.sendMessage(plugin.PLAYER_NOT_ONLINE);
@@ -101,21 +93,17 @@ public class ChannelCommand extends Command {
 			}
 			cc.setOwner(player);
 			sender.sendMessage(ChatColor.DARK_GREEN + "Owner changed");
-			return;
-		}
 
-		if (arg1[0].equalsIgnoreCase("members")) {
+		} else if (command.equalsIgnoreCase("members")) {
 			String playerList = ChatColor.DARK_AQUA + "Members: " + ChatColor.WHITE;
 			
 			for (String data : cc.members) {
 				playerList += data + ", ";
 			}
 			sender.sendMessage(playerList);
-			return;
+		} else {
+			sendHelp(sender);
 		}
-
-		sendHelp(sender);
-		return;
 	}
 
 	private void sendHelp(CommandSender sender) {

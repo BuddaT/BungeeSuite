@@ -78,7 +78,7 @@ public class SQL extends SQLOperations {
 	 * @return Whether or not a result has been found in the query.
 	 * @throws SQLException
 	 */
-	public boolean existanceQuery(String query) throws SQLException {
+	public boolean existenceQuery(String query) throws SQLException {
 		this.refreshConnection();
 		return super.sqlQuery(query, this.connection).next();
 	}

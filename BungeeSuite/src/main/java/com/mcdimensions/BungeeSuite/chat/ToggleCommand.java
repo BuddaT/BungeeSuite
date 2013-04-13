@@ -2,7 +2,6 @@ package com.mcdimensions.BungeeSuite.chat;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 
 import com.mcdimensions.BungeeSuite.BungeeSuite;
