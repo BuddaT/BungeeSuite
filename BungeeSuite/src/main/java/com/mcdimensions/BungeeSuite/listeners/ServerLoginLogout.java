@@ -11,7 +11,6 @@ import net.md_5.bungee.api.event.LoginEvent;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
-import net.md_5.bungee.api.scheduler.ScheduledTask;
 
 public class ServerLoginLogout implements Listener {
 	BungeeSuite plugin;
@@ -76,6 +75,6 @@ public class ServerLoginLogout implements Listener {
 			cp.updateDisplayName();
 			}
 		};
-		ScheduledTask task = plugin.getProxy().getScheduler().schedule(plugin, UpdateDisplay, 2L, TimeUnit.SECONDS);
+		plugin.getProxy().getScheduler().schedule(plugin, UpdateDisplay, 2L, TimeUnit.SECONDS);
 	}
 }
