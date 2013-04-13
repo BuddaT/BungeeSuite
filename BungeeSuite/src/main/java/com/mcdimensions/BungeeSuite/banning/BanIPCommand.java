@@ -19,15 +19,14 @@ public class BanIPCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
-		if (!arg0.hasPermission("BungeeSuite.mod")) {
-			arg0.sendMessage(plugin.NO_PERMISSION);
+	public void execute(CommandSender sender, String[] arg1) {
+		if (!sender.hasPermission("BungeeSuite.mod")) {
+			sender.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
 
 		if (arg1.length < 1) {
-			arg0.sendMessage(ChatColor.RED + "/" + plugin.ipban
-					+ " (PlayerName/IP)");
+			sender.sendMessage(ChatColor.RED + "/" + plugin.ipban + " (PlayerName/IP)");
 			return;
 		}
 
@@ -53,12 +52,12 @@ public class BanIPCommand extends Command {
 				// if IP was typed in
 				// TODO may need to add a '/' to the start
 				plugin.getUtilities().IPBanPlayer(arg1[0]);
+				
 				String imessage = plugin.DEFAULT_IPBAN_PLAYER;
 				imessage = imessage.replace("%player", arg1[0]);
 				plugin.getUtilities().sendBroadcast(imessage);
 			}
 		} catch (SQLException | UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

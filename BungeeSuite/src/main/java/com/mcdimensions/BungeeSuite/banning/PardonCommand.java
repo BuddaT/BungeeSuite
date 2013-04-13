@@ -18,15 +18,14 @@ public class PardonCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
-		if (!arg0.hasPermission("BungeeSuite.mod")) {
-			arg0.sendMessage(plugin.NO_PERMISSION);
+	public void execute(CommandSender sender, String[] arg1) {
+		if (!sender.hasPermission("BungeeSuite.mod")) {
+			sender.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
 
 		if (arg1.length < 1) {
-			arg0.sendMessage(ChatColor.RED + "/" + plugin.pardon
-					+ " (PlayerName)");
+			sender.sendMessage(ChatColor.RED + "/" + plugin.pardon + " (PlayerName)");
 			return;
 		}
 
@@ -37,15 +36,14 @@ public class PardonCommand extends Command {
 					plugin.getUtilities().unbanPlayer(name);
 					String bmessage = plugin.PLAYER_UNBANNED;
 					bmessage = bmessage.replace("%player", arg1[0]);
-					arg0.sendMessage(bmessage);
-					return;
+					sender.sendMessage(bmessage);
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			} else {
 				String bmessage = plugin.PLAYER_NOT_BANNED;
 				bmessage = bmessage.replace("%player", arg1[0]);
-				arg0.sendMessage(bmessage);
+				sender.sendMessage(bmessage);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

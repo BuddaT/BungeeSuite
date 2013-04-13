@@ -18,14 +18,14 @@ public class UnbanCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
-		if (!arg0.hasPermission("BungeeSuite.mod")) {
-			arg0.sendMessage(plugin.NO_PERMISSION);
+	public void execute(CommandSender sender, String[] arg1) {
+		if (!sender.hasPermission("BungeeSuite.mod")) {
+			sender.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
 
 		if (arg1.length < 1) {
-			arg0.sendMessage(ChatColor.RED + "/" + plugin.unban
+			sender.sendMessage(ChatColor.RED + "/" + plugin.unban
 					+ " (PlayerName)");
 			return;
 		}
@@ -37,13 +37,13 @@ public class UnbanCommand extends Command {
 					plugin.getUtilities().unbanPlayer(name);
 					String bmessage = plugin.PLAYER_UNBANNED;
 					bmessage = bmessage.replace("%player", arg1[0]);
-					arg0.sendMessage(bmessage);
+					sender.sendMessage(bmessage);
 					return;
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			} else {
-				arg0.sendMessage(plugin.PLAYER_NOT_BANNED);
+				sender.sendMessage(plugin.PLAYER_NOT_BANNED);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

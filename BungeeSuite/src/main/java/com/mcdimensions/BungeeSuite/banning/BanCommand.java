@@ -18,24 +18,22 @@ public class BanCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
-		if (!arg0.hasPermission("BungeeSuite.mod")) {
-			arg0.sendMessage(plugin.NO_PERMISSION);
+	public void execute(CommandSender sender, String[] arg1) {
+		if (!sender.hasPermission("BungeeSuite.mod")) {
+			sender.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
 
 		if (arg1.length < 1) {
-			arg0.sendMessage(ChatColor.RED + "/" + plugin.ban
-					+ " (PlayerName) (message)");
+			sender.sendMessage(ChatColor.RED + "/" + plugin.ban + " (PlayerName) (message)");
 			return;
 		}
 
 		try {
 			if (plugin.getUtilities().playerExists(arg1[0])) {
 				String message = plugin.DEFAULT_BAN_PLAYER;
-				message = message.replace("%sender", arg0.getName());
+				message = message.replace("%sender", sender.getName());
 
-				// puts together a ban message.
 				if (arg1.length > 1) {
 					message = "";
 					for (String data : arg1) {
@@ -44,15 +42,14 @@ public class BanCommand extends Command {
 						message += data + " ";
 					}
 				}
-
 				plugin.getUtilities().banPlayer(arg1[0], message);
-				String bmessage = plugin.BAN_MESSAGE_BROADCAST.replace(
-						"%player", arg1[0]);
-				bmessage = bmessage.replace("%sender", arg0.getName());
+				
+				String bmessage = plugin.BAN_MESSAGE_BROADCAST.replace("%player", arg1[0]);
+				bmessage = bmessage.replace("%sender", sender.getName());
 				bmessage = bmessage.replace("%message", message);
 				plugin.getUtilities().sendBroadcast(bmessage);
 			} else {
-				arg0.sendMessage(plugin.PLAYER_NOT_EXIST);
+				sender.sendMessage(plugin.PLAYER_NOT_EXIST);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

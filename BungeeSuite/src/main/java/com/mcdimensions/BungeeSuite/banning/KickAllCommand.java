@@ -15,14 +15,14 @@ public class KickAllCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
-		if (!arg0.hasPermission("BungeeSuite.admin")) {
-			arg0.sendMessage(plugin.NO_PERMISSION);
+	public void execute(CommandSender sender, String[] arg1) {
+		if (!sender.hasPermission("BungeeSuite.admin")) {
+			sender.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
 
 		String kmessage = plugin.DEFAULT_KICK_PLAYER;
-		kmessage.replace("%sender", arg0.getName());
+		kmessage.replace("%sender", sender.getName());
 		String message = kmessage;
 		if (arg1.length > 0) {
 			message = "";
@@ -31,10 +31,8 @@ public class KickAllCommand extends Command {
 			}
 		}
 
-		for (ProxiedPlayer data : plugin.getProxy().getPlayers()) {
+		for (ProxiedPlayer data : plugin.getProxy().getPlayers())
 			data.disconnect(message);
-		}
-		return;
 	}
 
 }
