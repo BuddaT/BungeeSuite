@@ -17,37 +17,37 @@ public class TPAHereCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] args) {
+	public void execute(CommandSender sender, String[] args) {
 		if (args.length < 1) {
-			arg0.sendMessage(ChatColor.RED + "/tpahere (playername)");
+			sender.sendMessage(ChatColor.RED + "/tpahere (playername)");
 			return;
 		}
-		ProxiedPlayer targetPlayer = (ProxiedPlayer) arg0;
-		if (plugin.blockedTeleports.contains(targetPlayer.getServer().getInfo()
-				.getName())) {
-			arg0.sendMessage(ChatColor.RED
-					+ "This server does not have teleports enabled");
+		
+		ProxiedPlayer targetPlayer = (ProxiedPlayer) sender;
+		
+		if (plugin.blockedTeleports.contains(targetPlayer.getServer().getInfo().getName())) {
+			sender.sendMessage(ChatColor.RED + "This server does not have teleports enabled");
 			return;
 		}
-		if (plugin.blockedTeleports.contains(targetPlayer.getServer().getInfo()
-				.getName())) {
-			arg0.sendMessage(ChatColor.RED
-					+ "This server does not have teleports enabled");
+		
+		if (plugin.blockedTeleports.contains(targetPlayer.getServer().getInfo().getName())) {
+			sender.sendMessage(ChatColor.RED + "This server does not have teleports enabled");
 			return;
 		}
+		
 		if (args.length < 1) {
-			arg0.sendMessage(ChatColor.RED + "/tpahere (PlayerName)");
+			sender.sendMessage(ChatColor.RED + "/tpahere (PlayerName)");
 			return;
 		}
+		
 		ProxiedPlayer player = plugin.getUtilities().getClosestPlayer(args[0]);
 		if (player == null) {
-			arg0.sendMessage(ChatColor.RED + "That player is not online!");
+			sender.sendMessage(ChatColor.RED + "That player is not online!");
 			return;
 		}
+		
 		plugin.getUtilities().sendTpHereRequest(player, targetPlayer);
-		arg0.sendMessage(ChatColor.DARK_GREEN + "TP request sent!");
-		return;
-
+		sender.sendMessage(ChatColor.DARK_GREEN + "TP request sent!");
 	}
 
 }

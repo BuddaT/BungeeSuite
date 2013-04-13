@@ -17,37 +17,37 @@ public class TPCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] args) {
+	public void execute(CommandSender sender, String[] args) {
 		if (args.length < 1) {
-			arg0.sendMessage(ChatColor.RED + "/" + plugin.tp + " (playername)");
+			sender.sendMessage(ChatColor.RED + "/" + plugin.tp + " (playername)");
 			return;
 		}
-		if (args.length == 1
-				&& (arg0.hasPermission("BungeeSuite.mod") || arg0
-						.hasPermission("BungeeSuite.admin"))) {
-			ProxiedPlayer playerTo = plugin.getUtilities().getClosestPlayer(
-					args[0]);
+		
+		if (args.length == 1 && (sender.hasPermission("BungeeSuite.mod") || sender.hasPermission("BungeeSuite.admin"))) {
+			ProxiedPlayer playerTo = plugin.getUtilities().getClosestPlayer(args[0]);
+			
 			if (playerTo == null) {
-				arg0.sendMessage(plugin.PLAYER_NOT_ONLINE);
+				sender.sendMessage(plugin.PLAYER_NOT_ONLINE);
 				return;
 			}
-			plugin.getUtilities().teleportToPlayer((ProxiedPlayer) arg0,
-					playerTo);
+			
+			plugin.getUtilities().teleportToPlayer((ProxiedPlayer) sender, playerTo);
 			return;
 		}
-		if (args.length > 1 && arg0.hasPermission("BungeeSuite.admin")) {
-			ProxiedPlayer player = plugin.getUtilities().getClosestPlayer(
-					args[0]);
-			ProxiedPlayer playerTo = plugin.getUtilities().getClosestPlayer(
-					args[1]);
+		
+		if (args.length > 1 && sender.hasPermission("BungeeSuite.admin")) {
+			ProxiedPlayer player = plugin.getUtilities().getClosestPlayer(args[0]);
+			ProxiedPlayer playerTo = plugin.getUtilities().getClosestPlayer(args[1]);
+			
 			if (player == null || playerTo == null) {
-				arg0.sendMessage(plugin.PLAYER_NOT_ONLINE);
+				sender.sendMessage(plugin.PLAYER_NOT_ONLINE);
 				return;
 			}
+			
 			plugin.getUtilities().teleportToPlayer(player, playerTo);
 			return;
 		} else {
-			arg0.sendMessage(plugin.NO_PERMISSION);
+			sender.sendMessage(plugin.NO_PERMISSION);
 		}
 
 	}

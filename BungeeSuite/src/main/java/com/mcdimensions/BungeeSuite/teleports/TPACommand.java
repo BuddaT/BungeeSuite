@@ -17,32 +17,33 @@ public class TPACommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] args) {
+	public void execute(CommandSender sender, String[] args) {
 		if (args.length < 1) {
-			arg0.sendMessage(ChatColor.RED + "/" + plugin.tpa + " (playername)");
+			sender.sendMessage(ChatColor.RED + "/" + plugin.tpa + " (playername)");
 			return;
 		}
-		ProxiedPlayer player = (ProxiedPlayer) arg0;
-		if (plugin.blockedTeleports.contains(player.getServer().getInfo()
-				.getName())) {
-			arg0.sendMessage(ChatColor.RED
-					+ "This server does not have teleports enabled");
+		
+		ProxiedPlayer player = (ProxiedPlayer) sender;
+		
+		if (plugin.blockedTeleports.contains(player.getServer().getInfo().getName())) {
+			sender.sendMessage(ChatColor.RED + "This server does not have teleports enabled");
 			return;
 		}
+		
 		if (args.length < 1) {
-			arg0.sendMessage(ChatColor.RED + "/tpa (PlayerName)");
+			sender.sendMessage(ChatColor.RED + "/tpa (PlayerName)");
 			return;
 		}
-		ProxiedPlayer targetPlayer = plugin.getUtilities().getClosestPlayer(
-				args[0]);
+		
+		ProxiedPlayer targetPlayer = plugin.getUtilities().getClosestPlayer(args[0]);
+		
 		if (targetPlayer == null) {
-			arg0.sendMessage(ChatColor.RED + "That player is not online!");
+			sender.sendMessage(ChatColor.RED + "That player is not online!");
 			return;
 		}
+		
 		plugin.getUtilities().sendTpRequest(player, targetPlayer);
-		arg0.sendMessage(ChatColor.DARK_GREEN + "TP request sent!");
-		return;
-
+		sender.sendMessage(ChatColor.DARK_GREEN + "TP request sent!");
 	}
 
 }

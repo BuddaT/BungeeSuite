@@ -17,28 +17,27 @@ public class TPAcceptCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
-		ProxiedPlayer player = (ProxiedPlayer) arg0;
-		if (plugin.blockedTeleports.contains(player.getServer().getInfo()
-				.getName())) {
-			arg0.sendMessage(ChatColor.RED
-					+ "This server does not have teleports enabled");
+	public void execute(CommandSender sender, String[] arg1) {
+		ProxiedPlayer player = (ProxiedPlayer) sender;
+		
+		if (plugin.blockedTeleports.contains(player.getServer().getInfo().getName())) {
+			sender.sendMessage(ChatColor.RED + "This server does not have teleports enabled");
 			return;
 		}
+		
 		if (plugin.tpaList.containsKey(player)) {
 			ProxiedPlayer targetPlayer = plugin.tpaList.get(player);
 			plugin.tpaList.remove(player);
 			plugin.getUtilities().teleportToPlayer(targetPlayer, player);
 			return;
 		}
+		
 		if (plugin.tpHereList.containsKey(player)) {
 			ProxiedPlayer targetPlayer = plugin.tpHereList.get(player);
 			plugin.tpaList.remove(player);
 			plugin.getUtilities().teleportToPlayer(player, targetPlayer);
-
 			return;
 		}
-		return;
 	}
 
 }
