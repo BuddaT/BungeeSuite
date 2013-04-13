@@ -9,7 +9,6 @@ import com.mcdimensions.BungeeSuite.banning.BanCommand;
 import com.mcdimensions.BungeeSuite.banning.BanIPCommand;
 import com.mcdimensions.BungeeSuite.banning.KickCommand;
 import com.mcdimensions.BungeeSuite.banning.KickAllCommand;
-import com.mcdimensions.BungeeSuite.banning.PardonCommand;
 import com.mcdimensions.BungeeSuite.banning.TempBanCommand;
 import com.mcdimensions.BungeeSuite.banning.UnbanCommand;
 import com.mcdimensions.BungeeSuite.banning.UnbanIPCommand;
@@ -437,7 +436,6 @@ public class BungeeSuite extends Plugin {
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new BanCommand(this));
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new TempBanCommand(this));
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new BanIPCommand(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new PardonCommand(this));
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new UnbanCommand(this));
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new UnbanIPCommand(this));
 		}

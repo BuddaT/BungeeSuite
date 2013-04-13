@@ -3,6 +3,7 @@ package com.mcdimensions.BungeeSuite.banning;
 import java.sql.SQLException;
 
 import com.mcdimensions.BungeeSuite.BungeeSuite;
+import com.mcdimensions.BungeeSuite.utilities.CommandUtil;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
@@ -11,15 +12,17 @@ import net.md_5.bungee.api.plugin.Command;
 public class UnbanCommand extends Command {
 
 	BungeeSuite plugin;
+	private static final String[] PERMISSION_NODES = { "bungeesuite.ban.unban", "bungeesuite.ban.*",
+		"bungeesuite.mod", "bungeesuite.admin", "bungeesuite.*" };
 
 	public UnbanCommand(BungeeSuite bungeeSuite) {
-		super(bungeeSuite.unban);
+		super(bungeeSuite.unban, null, bungeeSuite.pardon);
 		plugin = bungeeSuite;
 	}
 
 	@Override
 	public void execute(CommandSender sender, String[] arg1) {
-		if (!sender.hasPermission("BungeeSuite.mod")) {
+		if (!CommandUtil.hasPermission(sender, PERMISSION_NODES)) {
 			sender.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
@@ -43,7 +46,9 @@ public class UnbanCommand extends Command {
 					e.printStackTrace();
 				}
 			} else {
-				sender.sendMessage(plugin.PLAYER_NOT_BANNED);
+				String bmessage = plugin.PLAYER_NOT_BANNED;
+				bmessage = bmessage.replace("%player", arg1[0]);
+				sender.sendMessage(bmessage);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
