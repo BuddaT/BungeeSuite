@@ -10,60 +10,58 @@
   <name>BungeeSuite</name>
   <url>http://www.spigotmc.org/resources/bungeesuite.9/</url>
 
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<build.number>Unknown</build.number>
-	</properties>
+  <properties>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	<build.number>Unknown</build.number>
+  </properties>
 	
-	<!-- Repositories -->
-	<repositories>
-
-
-		<repository>
-      	<id>snapshot-repo</id>
-      	<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    	</repository>
+  <repositories>
+	<repository>
+      <id>snapshot-repo</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+	</repository>
         
-        <repository>
-			<id>vault-repo</id>
-			<url>http://ci.herocraftonline.com/plugin/repository/everything</url>
-		</repository>
+    <repository>
+	  <id>vault-repo</id>
+	  <url>http://ci.herocraftonline.com/plugin/repository/everything</url>
+	</repository>
+  </repositories>
 
+  <dependencies>
+	<dependency>
+	  <groupId>net.md-5</groupId>
+	  <artifactId>bungeecord-api</artifactId>
+	  <version>1.5-SNAPSHOT</version>
+	  <type>jar</type>
+	  <scope>provided</scope>
+	</dependency>
 		
-	</repositories>
-
-	<!-- Dependencies -->
-	<dependencies>
-		<dependency>
-	      <groupId>net.md-5</groupId>
-	      <artifactId>bungeecord-api</artifactId>
-	      <version>1.5-SNAPSHOT</version>
-	      <type>jar</type>
-	    </dependency>
-		
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.24</version>
-		</dependency>
-		
-       
-	</dependencies>
+	<dependency>
+	  <groupId>mysql</groupId>
+	  <artifactId>mysql-connector-java</artifactId>
+	  <version>5.1.24</version>
+    </dependency>   
+  </dependencies>
 	
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
-					<showDeprecation>true</showDeprecation>
-					<showWarnings>true</showWarnings>
-					<fork>true</fork>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+  <build>
+	<plugins>
+	  <plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-compiler-plugin</artifactId>
+		<configuration>
+		  <source>1.7</source>
+		  <target>1.7</target>
+		  <showDeprecation>true</showDeprecation>
+		  <showWarnings>true</showWarnings>
+		  <fork>true</fork>
+		</configuration>
+	  </plugin>
+	</plugins>
+  </build>
 </project>
