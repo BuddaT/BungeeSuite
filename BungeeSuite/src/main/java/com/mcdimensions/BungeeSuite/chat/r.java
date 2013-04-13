@@ -14,32 +14,29 @@ public class r extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
-		if(arg1.length<1){
-			arg0.sendMessage(ChatColor.RED+"/"+plugin.r+ " (message)");
+	public void execute(CommandSender sender, String[] args) {
+		if (args.length < 1){
+			sender.sendMessage(ChatColor.RED+"/"+plugin.r+ " (message)");
 			return;
 		}
-		ChatPlayer cp =plugin.getChatPlayer(arg0.getName());
-		String player =cp.getReplyPlayer();
-		if(player!=null){
-		ChatPlayer rp =plugin.getChatPlayer(player);
-		if(rp.ignoringPlayer(arg0.getName())){
-			arg0.sendMessage(plugin.PLAYER_IGNORING);
-			return;
-		}
-		if(rp!=null){
-			String message="";
-			for(String data:arg1){
-				message+=data+" ";
+		ChatPlayer cp = plugin.getChatPlayer(sender.getName());
+		String player = cp.getReplyPlayer();
+		if (player == null){
+			sender.sendMessage(plugin.PLAYER_REPLY_NONE);
+		} else {
+			ChatPlayer rp =plugin.getChatPlayer(player);
+			if (rp == null) {
+				sender.sendMessage(plugin.PLAYER_NOT_ONLINE);
+			} else if (rp.ignoringPlayer(sender.getName())) {
+				sender.sendMessage(plugin.PLAYER_IGNORING);
+			} else {
+				String message="";
+				for(String data:args){
+					message+=data+" ";
+				}
+				rp.sendPrivate(message, sender.getName());
+				sender.sendMessage(ChatColor.GOLD+"[me->"+rp.getName()+"]"+ChatColor.WHITE+message);
 			}
-			rp.sendPrivate(message, arg0.getName());
-			arg0.sendMessage(ChatColor.GOLD+"[me->"+rp.getName()+"]"+ChatColor.WHITE+message);
-			return;
-		}else{
-			arg0.sendMessage(plugin.PLAYER_NOT_ONLINE);
-		}
-		}else{
-			arg0.sendMessage(plugin.PLAYER_REPLY_NONE);
 		}
 	}
 
