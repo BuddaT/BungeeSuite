@@ -1,6 +1,7 @@
 package com.mcdimensions.BungeeSuite.chat;
 
 import com.mcdimensions.BungeeSuite.BungeeSuite;
+import com.mcdimensions.BungeeSuite.utilities.CommandUtil;
 
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
@@ -8,6 +9,8 @@ import net.md_5.bungee.api.plugin.Command;
 public class GlobalCommand extends Command {
 
 	BungeeSuite plugin;
+	private static final String[] PERMISSION_NODES = { "bungeesuite.chat.global", "bungeesuite.chat.basic", "bungeesuite.chat.*", 
+		"bungeesuite.global", "bungeesuite.mod", "bungeesuite.admin", "bungeesuite.*" };
 
 	public GlobalCommand(BungeeSuite bungeeSuite) {
 		super(bungeeSuite.global, null, bungeeSuite.g);
@@ -16,7 +19,7 @@ public class GlobalCommand extends Command {
 
 	@Override
 	public void execute(CommandSender sender, String[] arg1) {
-		if (!(sender.hasPermission("BungeeSuite.global") || sender.hasPermission("BungeeSuite.mod"))) {
+		if (!CommandUtil.hasPermission(sender, PERMISSION_NODES)) {
 			sender.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}

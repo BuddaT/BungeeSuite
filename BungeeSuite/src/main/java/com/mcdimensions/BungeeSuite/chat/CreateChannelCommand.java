@@ -1,6 +1,7 @@
 package com.mcdimensions.BungeeSuite.chat;
 
 import com.mcdimensions.BungeeSuite.BungeeSuite;
+import com.mcdimensions.BungeeSuite.utilities.CommandUtil;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
@@ -8,7 +9,12 @@ import net.md_5.bungee.api.plugin.Command;
 
 public class CreateChannelCommand extends Command {
 
-	private BungeeSuite plugin;
+	BungeeSuite plugin;
+	private static final String[] PERMISSION_NODES = { "bungeesuite.chat.channels", "bungeesuite.chat.basic", 
+		"bungeesuite.chat.*", "bungeesuite.createchannel", "bungeesuite.mod", "bungeesuite.admin", "bungeesuite.*" };
+	
+	private static final String[] PERMISSION_NODES_OVERRIDE = { "bungeesuite.chat.channels.override", 
+		"bungeesuite.admin", "bungeesuite.*" };
 
 	public CreateChannelCommand(BungeeSuite bungeeSuite) {
 		super(bungeeSuite.createChannel, null, bungeeSuite.create);
@@ -17,13 +23,13 @@ public class CreateChannelCommand extends Command {
 
 	@Override
 	public void execute(CommandSender sender, String[] arg1) {
-		if (!(sender.hasPermission("BungeeSuite.createchannel") || sender.hasPermission("BungeeSuite.admin"))) {
+		if (!CommandUtil.hasPermission(sender, PERMISSION_NODES)) {
 			sender.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
 
 		if (plugin.getChatPlayer(sender.getName()).getChannelsOwned() >= plugin.maxCustomChannels
-				&& !sender.hasPermission("BungeeSuite.admin")) {
+				&& !CommandUtil.hasPermission(sender, PERMISSION_NODES_OVERRIDE)) {
 			sender.sendMessage(plugin.CHANNEL_TOO_MANY);
 			return;
 		}

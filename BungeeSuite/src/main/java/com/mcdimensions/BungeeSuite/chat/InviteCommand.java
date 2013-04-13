@@ -3,6 +3,7 @@ package com.mcdimensions.BungeeSuite.chat;
 import java.sql.SQLException;
 
 import com.mcdimensions.BungeeSuite.BungeeSuite;
+import com.mcdimensions.BungeeSuite.utilities.CommandUtil;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
@@ -10,8 +11,14 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
 public class InviteCommand extends Command {
+	
 	BungeeSuite plugin;
-
+	private static final String[] PERMISSION_NODES = { "bungeesuite.chat.channels", "bungeesuite.chat.*",
+		"bungeesuite.chat.basic", "bungeesuite.mod", "bungeesuite.admin", "bungeesuite.*" };
+	
+	private static final String[] PERMISSION_NODES_OVERRIDE = { "bungeesuite.chat.channels.override",
+		"bungeesuite.admin", "bungeesuite.*" };
+	
 	public InviteCommand(BungeeSuite bungeeSuite) {
 		super(bungeeSuite.invite);
 		this.plugin = bungeeSuite;
@@ -19,13 +26,18 @@ public class InviteCommand extends Command {
 
 	@Override
 	public void execute(CommandSender sender, String[] arg1) {
+		if (!CommandUtil.hasPermission(sender, PERMISSION_NODES)) {
+			sender.sendMessage(plugin.NO_PERMISSION);
+			return;
+		}
+		
 		if (arg1.length == 1) {
 			String name = sender.getName();
 			String player = arg1[0];
 			ChatPlayer cp = plugin.getChatPlayer(name);
 			ChatChannel cur = cp.getCurrent();
 
-			if (cur.getOwner().equalsIgnoreCase(name) || sender.hasPermission("BungeeSuite.admin")) {
+			if (cur.getOwner().equalsIgnoreCase(name) || CommandUtil.hasPermission(sender, PERMISSION_NODES_OVERRIDE)) {
 				ProxiedPlayer pp = plugin.getUtilities().getClosestPlayer(player);
 				inviteToChannel(cur, pp, sender);
 			} else {
@@ -38,7 +50,7 @@ public class InviteCommand extends Command {
 				if (plugin.getUtilities().chatChannelExists(arg1[1])) {
 					ChatChannel cc = plugin.getChannel(arg1[1]);
 					
-					if (cc.getOwner().equalsIgnoreCase(sender.getName()) || sender.hasPermission("BungeeSuite.admin")) {
+					if (cc.getOwner().equalsIgnoreCase(sender.getName()) || CommandUtil.hasPermission(sender, PERMISSION_NODES_OVERRIDE)) {
 						ProxiedPlayer pp = plugin.getUtilities().getClosestPlayer(arg1[0]);
 						inviteToChannel(cc, pp, sender);
 					} else {

@@ -1,6 +1,7 @@
 package com.mcdimensions.BungeeSuite.chat;
 
 import com.mcdimensions.BungeeSuite.BungeeSuite;
+import com.mcdimensions.BungeeSuite.utilities.CommandUtil;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
@@ -9,6 +10,8 @@ import net.md_5.bungee.api.plugin.Command;
 public class ChannelCommand extends Command {
 
 	BungeeSuite plugin;
+	private static final String[] PERMISSION_NODES = { "bungeesuite.chat.channels", "bungeesuite.chat.*",
+		"bungeesuite.chat.basic", "bungeesuite.mod", "bungeesuite.admin", "bungeesuite.*" };
 
 	public ChannelCommand(BungeeSuite bungeeSuite) {
 		super(bungeeSuite.channel, null, bungeeSuite.c);
@@ -17,17 +20,19 @@ public class ChannelCommand extends Command {
 
 	@Override
 	public void execute(CommandSender sender, String[] args) {
+		ChatPlayer cp = plugin.getChatPlayer(sender.getName());
+		ChatChannel cc = cp.getCurrent();
+		
+		if (!CommandUtil.hasPermission(sender, PERMISSION_NODES) || !sender.getName().equalsIgnoreCase(cc.getOwner())) {
+			sender.sendMessage(plugin.NO_PERMISSION);
+			return;
+		}
+		
 		if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
 			sendHelp(sender);
 			return;
 		}
 
-		ChatPlayer cp = plugin.getChatPlayer(sender.getName());
-		ChatChannel cc = cp.getCurrent();
-		if (!(sender.hasPermission("BungeeSuite.admin") || sender.getName().equalsIgnoreCase(cc.getOwner()))) {
-			sender.sendMessage(plugin.CHANNEL_NO_PERMISSION);
-			return;
-		}
 		String command = args[0];
 
 		if (command.equalsIgnoreCase("kick")) {
