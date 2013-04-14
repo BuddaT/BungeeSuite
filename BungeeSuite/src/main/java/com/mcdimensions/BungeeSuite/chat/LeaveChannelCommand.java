@@ -3,6 +3,7 @@ package com.mcdimensions.BungeeSuite.chat;
 import java.sql.SQLException;
 
 import com.mcdimensions.BungeeSuite.BungeeSuite;
+import com.mcdimensions.BungeeSuite.utilities.CommandUtil;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
@@ -11,6 +12,8 @@ import net.md_5.bungee.api.plugin.Command;
 public class LeaveChannelCommand extends Command {
 
 	BungeeSuite plugin;
+	private static final String[] PERMISSION_NODES = { "bungeesuite.chat.channels", "bungeesuite.chat.*",
+		"bungeesuite.chat.basic", "bungeesuite.mod", "bungeesuite.admin", "bungeesuite.*" };
 
 	public LeaveChannelCommand(BungeeSuite bungeeSuite) {
 		super(bungeeSuite.leaveChannel, null, bungeeSuite.leave);
@@ -19,6 +22,11 @@ public class LeaveChannelCommand extends Command {
 
 	@Override
 	public void execute(CommandSender sender, String[] arg1) {
+		if (!CommandUtil.hasPermission(sender, PERMISSION_NODES)) {
+			sender.sendMessage(plugin.NO_PERMISSION);
+			return;
+		}
+		
 		if (arg1.length == 0) {
 			ChatPlayer cp = plugin.getChatPlayer(sender.getName());
 			ChatChannel cc = cp.getCurrent();

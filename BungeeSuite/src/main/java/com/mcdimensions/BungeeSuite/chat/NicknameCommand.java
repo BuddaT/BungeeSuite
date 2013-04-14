@@ -3,6 +3,7 @@ package com.mcdimensions.BungeeSuite.chat;
 import java.sql.SQLException;
 
 import com.mcdimensions.BungeeSuite.BungeeSuite;
+import com.mcdimensions.BungeeSuite.utilities.CommandUtil;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
@@ -12,6 +13,12 @@ import net.md_5.bungee.api.plugin.Command;
 public class NicknameCommand extends Command {
 	
 	BungeeSuite plugin;
+	private static final String[] PERMISSION_NODES = { "bungeesuite.chat.nick", 
+		"bungeesuite.chat.nick.colored", "bungeesuite.nick", "bungeesuite.nickcolored", 
+		"bungeesuite.chat.admin", "bungeesuite.admin", "bungeesuite.*" };
+	
+	private static final String[] PERMISSION_NODES_COLORED = { "bungeesuite.chat.nick.colored", 
+		"bungeesuite.nickcolored", "bungeesuite.chat.admin", "bungeesuite.admin", "bungeesuite.*" };
 
 	public NicknameCommand(BungeeSuite bungeeSuite) {
 		super(bungeeSuite.nickname);
@@ -20,8 +27,7 @@ public class NicknameCommand extends Command {
 
 	@Override
 	public void execute(CommandSender sender, String[] arg1) {
-		if (!(sender.hasPermission("BungeeSuite.nick") || sender.hasPermission("BungeeSuite.admin") 
-				|| sender.hasPermission("BungeeSuite.nickcolored"))) {
+		if (!CommandUtil.hasPermission(sender, PERMISSION_NODES)) {
 			sender.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
@@ -29,8 +35,7 @@ public class NicknameCommand extends Command {
 		if (arg1.length == 1) {
 			String nick = arg1[0];
 			
-			if (!(sender.hasPermission("BungeeSuite.nickcolored") || sender.hasPermission("BungeeSuite.mod")) 
-					&& arg1[0].contains("&")) {
+			if (!CommandUtil.hasPermission(sender, PERMISSION_NODES_COLORED) && arg1[0].contains("&")) {
 				sender.sendMessage(plugin.NO_PERMISSION_COLOR);
 				return;
 			}

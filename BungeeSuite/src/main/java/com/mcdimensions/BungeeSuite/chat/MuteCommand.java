@@ -1,6 +1,7 @@
 package com.mcdimensions.BungeeSuite.chat;
 
 import com.mcdimensions.BungeeSuite.BungeeSuite;
+import com.mcdimensions.BungeeSuite.utilities.CommandUtil;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
@@ -10,6 +11,8 @@ import net.md_5.bungee.api.plugin.Command;
 public class MuteCommand extends Command {
 
 	BungeeSuite plugin;
+	private static final String[] PERMISSION_NODES = { "bungeesuite.chat.mute", 
+		"bungeesuite.chat.admin", "bungeesuite.mod", "bungeesuite.admin", "bungeesuite.*" };
 
 	public MuteCommand(BungeeSuite bungeeSuite) {
 		super(bungeeSuite.mute);
@@ -18,7 +21,7 @@ public class MuteCommand extends Command {
 
 	@Override
 	public void execute(CommandSender sender, String[] arg1) {
-		if (!sender.hasPermission("BungeeSuite.mod") || !sender.hasPermission("BungeeSuite.admin")) {
+		if (!CommandUtil.hasPermission(sender, PERMISSION_NODES)) {
 			sender.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}

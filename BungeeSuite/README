@@ -54,3 +54,25 @@ Chat Commands:
 		- bungeesuite.chat.channels, bungeesuite.chat.basic, bungeesuite.chat.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
 		Permission to join any channel (ADMIN OVERRIDE):
 			- bungeesuite.chat.channels.override, bungeesuite.admin, bungeesuite.*
+	/leavechannel [channel]
+		- bungeesuite.chat.channels, bungeesuite.chat.basic, bungeesuite.chat.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
+	/message (name) (message)
+	/msg (name) (message)
+	/whisper (name) (message)
+	/tell (name) (message)
+	/t (name) (message)
+		- bungeesuite.chat.message, bungeesuite.chat.basic, bungeesuite.chat.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
+	/muteall
+		- bungeesuite.chat.muteall, bungeesuite.chat.admin, bungeesuite.admin, bungeesuite.*
+	/mute (name)
+		- bungeesuite.chat.muteall, bungeesuite.chat.admin, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
+	/nickname (name) [player]
+		- bungeesuite.chat.nick, bungeesuite.chat.nick.colored, bungeesuite.nick, bungeesuite.nickcolored, bungeesuite.chat.admin, bungeesuite.admin, bungeesuite.*
+	/reply (message)
+	/r (message)
+		- bungeesuite.chat.message, bungeesuite.chat.basic, bungeesuite.chat.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
+	/server [message]
+	/s [message]
+		- bungeesuite.chat.channels, bungeesuite.chat.basic, bungeesuite.chat.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
+	/toggle [channel]
+		- bungeesuite.chat.channels, bungeesuite.chat.basic, bungeesuite.chat.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
