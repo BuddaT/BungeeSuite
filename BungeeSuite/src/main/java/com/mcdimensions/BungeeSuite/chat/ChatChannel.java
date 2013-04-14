@@ -130,19 +130,18 @@ public class ChatChannel {
 			ChatPlayer cp = plugin.getChatPlayer(data);
 			cp.sendMessage(message);
 		}
-		dispatchMessage(message);
 	}
 	
-	private void dispatchMessage(String message) {
+	public static void dispatchMessage(String message, String subChannel) {
 		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 		DataOutputStream dataOut = new DataOutputStream(bytes);
 		try {
-			dataOut.writeUTF(SUBCHANNEL_NAME);
+			dataOut.writeUTF(subChannel);
 			dataOut.writeUTF(message);
 			PluginMessageEvent filteredChatEvent = new PluginMessageEvent(null, null, CHANNEL_OUT_NAME, bytes.toByteArray());
-			plugin.getProxy().getPluginManager().callEvent(filteredChatEvent);
+			ProxyServer.getInstance().getPluginManager().callEvent(filteredChatEvent);
 		} catch (IOException e) {
-			plugin.getProxy().getLogger().warning("Couldn't dispatch chat message to output channel");
+			ProxyServer.getInstance().getLogger().warning("Couldn't dispatch chat message to output channel");
 		}
 	}
 
@@ -222,7 +221,7 @@ public class ChatChannel {
 		if (plugin.logChat) {
 			plugin.cl.log(formattedMessage);
 		}
-		dispatchMessage(formattedMessage);
+		dispatchMessage(formattedMessage, SUBCHANNEL_NAME);
 	}
 
 	public String formatMessage(ChatPlayer player, String message) {
