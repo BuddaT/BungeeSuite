@@ -101,3 +101,18 @@ Teleport Commands
 			- bungeesuite.teleport.tp.p2p, bungeesuite.admin, bungeesuite.*
 	/tpdeny
 		- bungeesuite.teleport.deny, bungeesuite.teleport.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
+		
+Warp Commands
+	/delwarp (name)
+		- bungeesuite.warp.delete, bungeesuite.admin, bungeesuite.*
+	/warplist
+	/warps
+		- bungeesuite.warp.list, bungeesuite.warp.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
+		Permission to get second stage of list(?) (ADMIN OVERRIDE)
+			- bungeesuite.warp.list.admin, bungeesuite.admin, bungeesuite.*
+	/setwarp (name) [private]
+		- bungeesuite.warp.create, bungeesuite.admin, bungeesuite.*
+	/warp (name)
+		- bungeesuite.warp.warp, bungeesuite.warp.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
+	/spawn
+		- bungeesuite.warp.spawn, bungeesuite.warp.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*

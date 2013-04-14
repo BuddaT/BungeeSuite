@@ -58,7 +58,6 @@ import com.mcdimensions.BungeeSuite.warps.DeleteWarpCommand;
 import com.mcdimensions.BungeeSuite.warps.SetWarpCommand;
 import com.mcdimensions.BungeeSuite.warps.WarpSpawnCommand;
 import com.mcdimensions.BungeeSuite.warps.ListWarpsCommand;
-import com.mcdimensions.BungeeSuite.warps.WarpsCommand;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
@@ -387,7 +386,6 @@ public class BungeeSuite extends Plugin {
 		}
 		
 		if (warpsEnabled) {
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new WarpsCommand(this));
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new ListWarpsCommand(this));
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new SetWarpCommand(this));
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new DeleteWarpCommand(this));
