@@ -56,8 +56,8 @@ public class LoginMessages implements Listener {
 
 	@Subscribe
 	public void login(PostLoginEvent event) throws SQLException {
-		ChatChannel.dispatchMessage(ChatColor.GREEN + event.getPlayer().getName()
-				+ ChatColor.WHITE + " connected", SUBCHANNEL_LOGINOUT);
+		ChatChannel.dispatchMessage("[" + ChatColor.DARK_GREEN + event.getPlayer().getName()
+				+ ChatColor.WHITE + " connected]", SUBCHANNEL_LOGINOUT);
 		
 		for (ProxiedPlayer data : ProxyServer.getInstance().getPlayers()) {
 			data.sendMessage(ChatColor.YELLOW + event.getPlayer().getName()
@@ -67,8 +67,8 @@ public class LoginMessages implements Listener {
 
 	@Subscribe
 	public void logout(PlayerDisconnectEvent event) throws SQLException {
-		ChatChannel.dispatchMessage(ChatColor.GREEN + event.getPlayer().getName()
-				+ ChatColor.WHITE + " disconnected", SUBCHANNEL_LOGINOUT);
+		ChatChannel.dispatchMessage("[" + ChatColor.DARK_GREEN + event.getPlayer().getName()
+				+ ChatColor.WHITE + " disconnected]", SUBCHANNEL_LOGINOUT);
 		
 		for (ProxiedPlayer data : ProxyServer.getInstance().getPlayers()) {
 			data.sendMessage(ChatColor.YELLOW + event.getPlayer().getName()
