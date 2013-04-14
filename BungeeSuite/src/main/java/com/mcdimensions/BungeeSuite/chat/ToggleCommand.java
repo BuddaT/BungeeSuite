@@ -58,8 +58,11 @@ public class ToggleCommand extends Command {
 
 				}
 			}
-			cp.setCurrentChannel(next);
-			return;
+			
+			if (next != null)
+				cp.setCurrentChannel(next);
+			else
+				cp.sendMessage("You have no channel to toggle");
 		}
 		
 		String channel = arg1[0];

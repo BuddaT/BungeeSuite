@@ -38,7 +38,9 @@ public class CreateChannelCommand extends Command {
 			String name = arg1[0];
 			plugin.getUtilities().createChannel(name, plugin.defaultCustomChannelFormat, false, sender.getName());
 			
-			sender.sendMessage(plugin.CHANNEL_CREATE_CONFIRM);
+			String chmsg = plugin.CHANNEL_CREATE_CONFIRM;
+			chmsg = chmsg.replace("%channel", name);
+			sender.sendMessage(chmsg);
 		} else if (arg1.length == 2) {
 			String name = arg1[0];
 			String format = arg1[1];
