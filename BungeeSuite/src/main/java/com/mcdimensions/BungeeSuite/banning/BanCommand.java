@@ -12,7 +12,7 @@ import net.md_5.bungee.api.plugin.Command;
 public class BanCommand extends Command {
 
 	BungeeSuite plugin;
-	private static final String[] PERMISSION_NODES = { "bungeesuite.ban", "bungeesuite.ban.*",
+	private static final String[] PERMISSION_NODES = { "bungeesuite.ban.ban", "bungeesuite.ban.*",
 			"bungeesuite.mod", "bungeesuite.admin", "bungeesuite.*" };
 
 	public BanCommand(BungeeSuite bungeeSuite) {

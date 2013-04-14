@@ -2,7 +2,7 @@ Permission Nodes:
 
 Banning Commands:
 	/ban (name) [message]
-		- bungeesuite.ban, bungeesuite.ban.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
+		- bungeesuite.ban.ban, bungeesuite.ban.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
 	/ipban (name/ip)
 		- bungeesuite.ban.banip, bungeesuite.ban.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
 	/kickall
@@ -85,3 +85,19 @@ Portal Commands:
 		- bungeesuite.portal.list, bungeesuite.portal.*, bungeesuite.admin, bungeesuite.*
 	/setportal (name) (type) (destination)
 		- bungeesuite.portal.create, bungeesuite.portal.*, bungeesuite.admin, bungeesuite.*
+		
+Teleport Commands
+	/tpaccept
+		- bungeesuite.teleport.accept, bungeesuite.teleport.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
+	/tpa (name)
+		- bungeesuite.teleport.tpa, bungeesuite.teleport.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
+	/tpahere (name)
+		- bungeesuite.teleport.tpahere, bungeesuite.teleport.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
+	/tpall
+		- bungeesuite.teleport.tpall, bungeesuite.admin, bungeesuite.*
+	/tp (name) [name2]
+		- bungeesuite.teleport.tp, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
+		Permission to teleport a player to another player (ADMIN OVERRIDE)
+			- bungeesuite.teleport.tp.p2p, bungeesuite.admin, bungeesuite.*
+	/tpdeny
+		- bungeesuite.teleport.deny, bungeesuite.teleport.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*

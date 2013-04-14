@@ -3,6 +3,7 @@ package com.mcdimensions.BungeeSuite.teleports;
 import java.sql.SQLException;
 
 import com.mcdimensions.BungeeSuite.BungeeSuite;
+import com.mcdimensions.BungeeSuite.utilities.CommandUtil;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
@@ -12,6 +13,8 @@ import net.md_5.bungee.api.plugin.Command;
 public class TPAllCommand extends Command {
 
 	BungeeSuite plugin;
+	private static final String[] PERMISSION_NODES = { "bungeesuite.teleport.tpall",
+		"bungeesuite.admin", "bungeesuite.*" };
 
 	public TPAllCommand(BungeeSuite bungeeSuite) {
 		super(bungeeSuite.tpAll);
@@ -19,9 +22,11 @@ public class TPAllCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
-		if (!arg0.hasPermission("BungeeSuite.admin"))
+	public void execute(CommandSender sender, String[] arg1) {
+		if (!CommandUtil.hasPermission(sender, PERMISSION_NODES)) {
+			sender.sendMessage(plugin.NO_PERMISSION);
 			return;
+		}
 		
 		if (arg1.length > 1) {
 			String player = arg1[0];
@@ -31,12 +36,12 @@ public class TPAllCommand extends Command {
 					data.sendMessage(ChatColor.DARK_GREEN + "All players have been teleported to " + player);
 				}
 			} else {
-				arg0.sendMessage(ChatColor.RED + "That player is not online!");
+				sender.sendMessage(ChatColor.RED + "That player is not online!");
 			}
 		} else {
 			for (ProxiedPlayer data : plugin.getProxy().getPlayers()) {
-				plugin.getUtilities().teleportToPlayer(data, (ProxiedPlayer) arg0);
-				data.sendMessage(ChatColor.DARK_GREEN + "All players have been teleported to " + arg0.getName());
+				plugin.getUtilities().teleportToPlayer(data, (ProxiedPlayer) sender);
+				data.sendMessage(ChatColor.DARK_GREEN + "All players have been teleported to " + sender.getName());
 			}
 		}
 	}
