@@ -9,7 +9,7 @@ import net.md_5.bungee.api.plugin.Command;
 public class ChatSpyCommand extends Command {
 
 	BungeeSuite plugin;
-	private static final String[] PERMISSION_NODES = { "bungeesuite.chat.spy", "bungeesuite.chat.admin", 
+	public static final String[] PERMISSION_NODES = { "bungeesuite.chat.spy", "bungeesuite.chat.admin", 
 		"bungeesuite.chatspy", "bungeesuite.admin", "bungeesuite.*" };
 
 	public ChatSpyCommand(BungeeSuite bungeeSuite) {
@@ -25,7 +25,7 @@ public class ChatSpyCommand extends Command {
 		}
 
 		ChatPlayer cp = plugin.getChatPlayer(sender.getName());
-		cp.ChatSpy();
+		cp.toggleChatSpy();
 		sender.sendMessage(plugin.CHATSPY_TOGGLED);
 	}
 

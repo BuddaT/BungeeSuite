@@ -35,7 +35,7 @@ public class MuteCommand extends Command {
 		if (player != null) {
 			ChatPlayer cp = plugin.getChatPlayer(player.getName());
 			cp.toggleMute();
-			if (cp.isMute()) {
+			if (cp.isMuted()) {
 				player.sendMessage(plugin.PLAYER_MUTE);
 				sender.sendMessage(plugin.PLAYER_MUTED);
 			} else {

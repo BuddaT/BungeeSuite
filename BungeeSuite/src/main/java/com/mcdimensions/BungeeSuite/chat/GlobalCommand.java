@@ -28,8 +28,8 @@ public class GlobalCommand extends Command {
 			ChatChannel cc = plugin.getChannel("Global");
 			ChatPlayer cp = plugin.getChatPlayer(sender.getName());
 			if (plugin.globalToggleable) {
-				if (!cp.getCurrent().equals(cc)) {
-					cp.setCurrent(cc);
+				if (!cp.getCurrentChannel().equals(cc)) {
+					cp.setCurrentChannel(cc);
 				}
 			}
 			return;
@@ -44,8 +44,8 @@ public class GlobalCommand extends Command {
 		ChatPlayer cp = plugin.getChatPlayer(sender.getName());
 		cc.sendGlobalMessage(cp, message);
 		if (plugin.globalToggleable) {
-			if (!cp.getCurrent().equals(cc)) {
-				cp.setCurrent(cc);
+			if (!cp.getCurrentChannel().equals(cc)) {
+				cp.setCurrentChannel(cc);
 			}
 		}
 	}

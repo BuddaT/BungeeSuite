@@ -37,7 +37,7 @@ public class ToggleCommand extends Command {
 			}
 			
 			ChatPlayer cp = plugin.getChatPlayer(sender.getName());
-			ChatChannel cur = cp.getCurrent();
+			ChatChannel cur = cp.getCurrentChannel();
 			int check = 0;
 			ChatChannel next = null;
 			ChatChannel data = null;
@@ -58,7 +58,7 @@ public class ToggleCommand extends Command {
 
 				}
 			}
-			cp.setCurrent(next);
+			cp.setCurrentChannel(next);
 			return;
 		}
 		
@@ -69,7 +69,7 @@ public class ToggleCommand extends Command {
 				ChatPlayer cp = plugin.getChatPlayer(sender.getName());
 				
 				if (cc.containsMember(cp.getName())) {
-					cp.setCurrent(cc);
+					cp.setCurrentChannel(cc);
 				} else {
 					sender.sendMessage(plugin.CHANNEL_TOGGLE_PERMISSION);
 				}

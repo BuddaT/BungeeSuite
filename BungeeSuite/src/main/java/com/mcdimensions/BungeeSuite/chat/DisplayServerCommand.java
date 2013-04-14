@@ -25,7 +25,7 @@ public class DisplayServerCommand extends Command {
 		}
 
 		ChatPlayer cp = plugin.getChatPlayer(sender.getName());
-		cp.sendServer();
+		cp.toggleSendingServer();
 		sender.sendMessage(plugin.PLAYER_SENDING_SERVER);
 	}
 

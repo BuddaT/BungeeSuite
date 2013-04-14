@@ -46,7 +46,7 @@ public class MessageCommand extends Command {
 					}
 				}
 				
-				cp.sendPrivate(message, sender.getName());
+				cp.sendPrivateMessage(message, sender.getName());
 				sender.sendMessage(ChatColor.GOLD + "[me->" + cp.getName() + "]" + ChatColor.WHITE + message);
 			}
 		} else {

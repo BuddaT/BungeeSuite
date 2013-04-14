@@ -29,7 +29,7 @@ public class LeaveChannelCommand extends Command {
 		
 		if (arg1.length == 0) {
 			ChatPlayer cp = plugin.getChatPlayer(sender.getName());
-			ChatChannel cc = cp.getCurrent();
+			ChatChannel cc = cp.getCurrentChannel();
 			if (cc.isServerChannel()) {
 				cp.sendMessage(plugin.CHANNEL_NOT_LEAVE_SERVER);
 				return;
@@ -41,12 +41,12 @@ public class LeaveChannelCommand extends Command {
 				cc.removeMember(cp.getName());
 				cp.removeChannel(cc.getName());
 				if (plugin.globalDefault) {
-					cp.setCurrent(plugin.getChannel("Global"));
+					cp.setCurrentChannel(plugin.getChannel("Global"));
 					return;
 				} else {
 					ChatChannel newc = plugin.getChannel(cp.getPlayer().getServer().getInfo().getName());
 					newc.addMember(cp);
-					cp.setCurrent(newc);
+					cp.setCurrentChannel(newc);
 					return;
 				}
 			}
@@ -60,13 +60,13 @@ public class LeaveChannelCommand extends Command {
 						cp.sendMessage(plugin.CHANNEL_NOT_LEAVE_SERVER);
 						return;
 					}
-					ChatChannel cur = cp.getCurrent();
+					ChatChannel cur = cp.getCurrentChannel();
 					if (cc.equals(cur)) {
 						cc.removeMember(cp.getName());
 						cp.removeChannel(cc.getName());
 						ChatChannel newc = plugin.getChannel(cp.getPlayer().getServer().getInfo().getName());
 						newc.addMember(cp);
-						cp.setCurrent(newc);
+						cp.setCurrentChannel(newc);
 					} else {
 						cc.removeMember(cp.getName());
 						cp.removeChannel(cc.getName());

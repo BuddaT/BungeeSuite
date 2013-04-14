@@ -501,7 +501,7 @@ public class Utilities {
 		cp.addChannelsOwned();
 		cp.addChannel(newchan.getName());
 		newchan.addMember(cp);
-		cp.setCurrent(newchan);
+		cp.setCurrentChannel(newchan);
 		sql.closeConnection();
 	}
 	
@@ -510,7 +510,7 @@ public class Utilities {
 		for(String data:plugin.getChannel(channel).members){//set online
 			ChatPlayer cp = plugin.getChatPlayer(data);
 			ChatChannel cc = plugin.getChannel(cp.getCurrentServer());
-			cp.setCurrent(cc);
+			cp.setCurrentChannel(cc);
 		}
 		sql.initialise();//set offline to stop them being deleted
 		try {
@@ -739,7 +739,7 @@ public class Utilities {
 		
 	}
 
-	public void ChatSpy(ChatPlayer chatPlayer) {
+	public void addChatSpy(ChatPlayer chatPlayer) {
 		sql.initialise();
 		try {
 			sql.standardQuery("UPDATE BungeePlayers SET ChatSpy = TRUE WHERE PlayerName = '"+chatPlayer.getName()+"'");

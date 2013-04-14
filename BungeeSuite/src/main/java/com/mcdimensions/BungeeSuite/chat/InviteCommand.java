@@ -35,7 +35,7 @@ public class InviteCommand extends Command {
 			String name = sender.getName();
 			String player = arg1[0];
 			ChatPlayer cp = plugin.getChatPlayer(name);
-			ChatChannel cur = cp.getCurrent();
+			ChatChannel cur = cp.getCurrentChannel();
 
 			if (cur.getOwner().equalsIgnoreCase(name) || CommandUtil.hasPermission(sender, PERMISSION_NODES_OVERRIDE)) {
 				ProxiedPlayer pp = plugin.getUtilities().getClosestPlayer(player);

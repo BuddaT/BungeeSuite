@@ -44,7 +44,7 @@ public class ReplyCommand extends Command {
 				for (String data : arg1)
 					message += data + " ";
 
-				rp.sendPrivate(message, sender.getName());
+				rp.sendPrivateMessage(message, sender.getName());
 				sender.sendMessage(ChatColor.GOLD + "[me->" + rp.getName() + "]" + ChatColor.WHITE + message);
 				return;
 			}

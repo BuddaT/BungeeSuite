@@ -32,9 +32,9 @@ public class ChatListener implements Listener {
 		ProxiedPlayer player = (ProxiedPlayer) event.getSender();
 		String serverName = player.getServer().getInfo().getName();
 		ChatPlayer cp = plugin.getChatPlayer(player.getName());
-		if (cp.getCurrent().getName().equalsIgnoreCase(serverName)
+		if (cp.getCurrentChannel().getName().equalsIgnoreCase(serverName)
 				&& plugin.ignoreServers.contains(serverName)) {
-			if (cp.isMute() || plugin.allMuted) {
+			if (cp.isMuted() || plugin.allMuted) {
 				event.setCancelled(true);
 			}
 			return;
@@ -43,8 +43,8 @@ public class ChatListener implements Listener {
 		if (plugin.allMuted && !player.hasPermission("BungeeSuite.admin")) {
 			return;
 		}
-		if (!cp.isMute()) {
-			ChatChannel cur = cp.getCurrent();
+		if (!cp.isMuted()) {
+			ChatChannel cur = cp.getCurrentChannel();
 			if (cur.getName().equalsIgnoreCase("Global")) {
 				cur.sendGlobalMessage(cp, event.getMessage());
 				return;
@@ -69,7 +69,7 @@ public class ChatListener implements Listener {
 			}
 		}
 		ChatPlayer cp = plugin.getChatPlayer(event.getPlayer().getName());
-		ChatChannel cc = cp.getCurrent();
+		ChatChannel cc = cp.getCurrentChannel();
 
 		ChatChannel oldServerchan = plugin.getChannel(cp.getCurrentServer());
 		ChatChannel newServerchan = plugin.getChannel(event.getServer()
@@ -81,9 +81,9 @@ public class ChatListener implements Listener {
 		cp.addChannel(newServerchan.getName());
 		cp.setCurrentServer(event.getServer().getInfo().getName());
 		if (cc == null) {
-			cp.setCurrentSilent(newServerchan);
+			cp.setCurrentChannel(newServerchan, false);
 		} else if (cc.equals(oldServerchan)) {// swap if current = old or null
-			cp.setCurrentSilent(newServerchan);
+			cp.setCurrentChannel(newServerchan, false);
 		}
 	}
 

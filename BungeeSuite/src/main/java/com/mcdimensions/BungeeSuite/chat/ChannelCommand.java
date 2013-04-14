@@ -21,7 +21,7 @@ public class ChannelCommand extends Command {
 	@Override
 	public void execute(CommandSender sender, String[] args) {
 		ChatPlayer cp = plugin.getChatPlayer(sender.getName());
-		ChatChannel cc = cp.getCurrent();
+		ChatChannel cc = cp.getCurrentChannel();
 		
 		if (!CommandUtil.hasPermission(sender, PERMISSION_NODES) || !sender.getName().equalsIgnoreCase(cc.getOwner())) {
 			sender.sendMessage(plugin.NO_PERMISSION);
@@ -65,7 +65,7 @@ public class ChannelCommand extends Command {
 				format.append(args[i]);
 				format.append(" ");
 			}
-			cc.reformat(format.toString());
+			cc.reformatChannel(format.toString());
 			sender.sendMessage(ChatColor.DARK_GREEN + "Channel format changed");
 
 		} else if (command.equalsIgnoreCase("rename")) {
@@ -74,7 +74,7 @@ public class ChannelCommand extends Command {
 				return;
 			}
 			String name = args[1];
-			cc.rename(name);
+			cc.renameChannel(name);
 			sender.sendMessage(ChatColor.DARK_GREEN + "Channel renamed");
 
 		} else if (command.equalsIgnoreCase("setowner")) {

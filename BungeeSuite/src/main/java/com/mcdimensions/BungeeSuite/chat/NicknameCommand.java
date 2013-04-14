@@ -13,11 +13,11 @@ import net.md_5.bungee.api.plugin.Command;
 public class NicknameCommand extends Command {
 	
 	BungeeSuite plugin;
-	private static final String[] PERMISSION_NODES = { "bungeesuite.chat.nick", 
+	public static final String[] PERMISSION_NODES = { "bungeesuite.chat.nick", 
 		"bungeesuite.chat.nick.colored", "bungeesuite.nick", "bungeesuite.nickcolored", 
 		"bungeesuite.chat.admin", "bungeesuite.admin", "bungeesuite.*" };
 	
-	private static final String[] PERMISSION_NODES_COLORED = { "bungeesuite.chat.nick.colored", 
+	public static final String[] PERMISSION_NODES_COLORED = { "bungeesuite.chat.nick.colored", 
 		"bungeesuite.nickcolored", "bungeesuite.chat.admin", "bungeesuite.admin", "bungeesuite.*" };
 
 	public NicknameCommand(BungeeSuite bungeeSuite) {

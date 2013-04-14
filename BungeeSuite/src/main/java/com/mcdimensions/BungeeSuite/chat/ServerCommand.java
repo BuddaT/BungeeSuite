@@ -30,8 +30,8 @@ public class ServerCommand extends Command {
 			ChatChannel cc = plugin.getChannel(cp.getPlayer().getServer() .getInfo().getName());
 			
 			if (plugin.globalToggleable)
-				if (!cp.getCurrent().equals(cc))
-					cp.setCurrent(cc);
+				if (!cp.getCurrentChannel().equals(cc))
+					cp.setCurrentChannel(cc);
 
 			return;
 		}
@@ -51,8 +51,8 @@ public class ServerCommand extends Command {
 		
 		cc.sendMessage(cp, message);
 		
-		if (!cp.getCurrent().equals(cc)) {
-			cp.setCurrent(cc);
+		if (!cp.getCurrentChannel().equals(cc)) {
+			cp.setCurrentChannel(cc);
 		}
 	}
 

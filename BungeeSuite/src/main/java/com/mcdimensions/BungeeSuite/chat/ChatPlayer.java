@@ -4,90 +4,114 @@ import java.sql.SQLException;
 import java.util.HashSet;
 
 import com.mcdimensions.BungeeSuite.BungeeSuite;
+import com.mcdimensions.BungeeSuite.utilities.CommandUtil;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class ChatPlayer {
+	
+	BungeeSuite plugin;
+	
 	private String name;
-	private ChatChannel current;
-	private int channelsOwned;
-	private String currentServer;
 	private String displayName;
+	private String currentServer;
+	
+	private ChatChannel currentChannel;
+	private int channelsOwned;
+	
 	private boolean chatspying;
+	
 	private boolean sendingServer;
 	private boolean sendingPrefix;
 	private boolean sendingSuffix;
+	
 	private String prefix;
 	private String suffix;
+	
 	private boolean mute;
-	BungeeSuite plugin;
+	
 	private String replyPlayer;
 	private HashSet<String> channels;
 	private HashSet<String> ignores;
 
-	public ChatPlayer(String name, String displayName, ChatChannel current, boolean chatspying, boolean sendingServer, boolean mute, int channelsOwned, boolean sendingPrefix, boolean sendingSuffix) {
+	public ChatPlayer(String name, String displayName, ChatChannel current, boolean chatspying, 
+			boolean sendingServer, boolean mute, int channelsOwned, boolean sendingPrefix, boolean sendingSuffix) {
 		this.name = name;
 		this.displayName = displayName;
-		this.current = current;
+		this.currentChannel = current;
 		this.chatspying = chatspying;
 		this.sendingServer = sendingServer;
 		this.sendingPrefix = sendingPrefix;
 		this.sendingSuffix = sendingSuffix;
 		this.mute = mute;
 		this.channelsOwned = channelsOwned;
+		
 		plugin = (BungeeSuite) ProxyServer.getInstance().getPluginManager().getPlugin("BungeeSuite");
+		
 		channels = new HashSet<String>();
 		ignores = new HashSet<String>();
 	}
-	public void addChannel(String channel){
+
+	public void addChannel(String channel) {
 		channels.add(channel);
 	}
-	public void removeChannel(String channel){
+
+	public void removeChannel(String channel) {
 		channels.remove(channel);
 	}
-	public HashSet<String> getChannels(){
+
+	public HashSet<String> getChannels() {
 		return this.channels;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public String getDisplayName() {
 		return displayName;
 	}
-	public void updateDisplayName(){
-		System.out.println(name);
-		System.out.println(displayName);
-		if(this.getPlayer().hasPermission("BungeeSuite.nick") || this.getPlayer().hasPermission("BungeeSuite.nickcolored") || this.getPlayer().hasPermission("BungeeSuite.nickdisplay") || this.getPlayer().hasPermission("BungeeSuite.mod")){
-		this.getPlayer().setDisplayName(colorSub(displayName));
-		System.out.println("updated to "+ colorSub(displayName));
-		}
-		else{
+
+	public void updateDisplayName() {
+		if (CommandUtil.hasPermission(this.getPlayer(), NicknameCommand.PERMISSION_NODES_COLORED))
+			this.getPlayer().setDisplayName(colorSub(displayName));
+		else
 			this.getPlayer().setDisplayName(name);
-		}
 	}
-	public void setDisplayName(String nick) throws SQLException{
+
+	public void setDisplayName(String nick) throws SQLException {
 		this.displayName = nick;
+		
 		plugin.getUtilities().setNickName(name, nick);
 		updateDisplayName();
 	}
-	public ChatChannel getCurrent() {
-		return current;
+
+	public ChatChannel getCurrentChannel() {
+		return currentChannel;
 	}
 
-	public void setCurrent(ChatChannel channel) {
-		this.current = channel;
-		plugin.getUtilities().setCurrentChannel(name,channel.getName());
-		sendMessage(ChatColor.DARK_GREEN+"Sending messages in the channel "+ channel.getName());
+	public void setCurrentChannel(ChatChannel channel) {
+		this.setCurrentChannel(channel, true);
+	}
+	
+	public void setCurrentChannel(ChatChannel channel, boolean alert) {
+		this.currentChannel = channel;
+		plugin.getUtilities().setCurrentChannel(name, channel.getName());
+		
+		if (alert)
+			sendMessage(ChatColor.DARK_GREEN + "Sending messages in the channel " + channel.getName());
 	}
 
-	public String getCurrentServer(){
+	public String getCurrentServer() {
 		return currentServer;
 	}
-	public void setCurrentServer(String server){
+
+	public void setCurrentServer(String server) {
 		currentServer = server;
 	}
+
 	public int getChannelsOwned() {
 		return channelsOwned;
 	}
@@ -96,14 +120,14 @@ public class ChatPlayer {
 		return chatspying;
 	}
 
-	public void ChatSpy() {
+	public void toggleChatSpy() {
 		if (isChatSpying()) {
 			chatspying = false;
 			plugin.getUtilities().removeChatSpy(this);
 			return;
 		} else {
 			chatspying = true;
-			plugin.getUtilities().ChatSpy(this);
+			plugin.getUtilities().addChatSpy(this);
 			return;
 		}
 	}
@@ -112,7 +136,7 @@ public class ChatPlayer {
 		return sendingPrefix;
 	}
 
-	public boolean sendPrefix() {
+	public boolean toggleSendingPrefix() {
 		if (sendingPrefix()) {
 			sendingPrefix = false;
 			return false;
@@ -121,11 +145,12 @@ public class ChatPlayer {
 			return true;
 		}
 	}
+
 	public boolean sendingSuffix() {
 		return sendingSuffix;
 	}
 
-	public boolean sendSuffix() {
+	public boolean toggleSendingSuffix() {
 		if (sendingSuffix()) {
 			sendingSuffix = false;
 			return false;
@@ -134,46 +159,53 @@ public class ChatPlayer {
 			return true;
 		}
 	}
-	public void setSuffix(String suffix){
-		this.suffix=suffix;
+
+	public void setSuffix(String suffix) {
+		this.suffix = suffix;
 	}
-	public String getSuffix(){
-		if(suffix!=null){
-		return suffix;
-		}else{
+
+	public String getSuffix() {
+		if (suffix != null) {
+			return suffix;
+		} else {
 			return "";
 		}
 	}
-	public void setPrefix(String prefix){
-		this.prefix=prefix;
+
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
 	}
-	public String getPrefix(){
-		if(prefix!=null){
-		return prefix;
-		}else{
+
+	public String getPrefix() {
+		if (prefix != null) {
+			return prefix;
+		} else {
 			return "";
 		}
 	}
-	public boolean sendingServer(){
+
+	public boolean sendingServer() {
 		return sendingServer;
 	}
-	public void sendServer(){
-		if(sendingServer()){
+
+	public void toggleSendingServer() {
+		if (sendingServer()) {
 			sendingServer = false;
 			plugin.getUtilities().playerRemoveSendServer(name);
 			return;
-		}else{
+		} else {
 			sendingServer = true;
 			plugin.getUtilities().playerSendServer(name);
 			return;
 		}
 	}
-	public boolean isMute() {
+
+	public boolean isMuted() {
 		return mute;
 	}
 
 	public boolean toggleMute() {
-		if (isMute()) {
+		if (isMuted()) {
 			mute = false;
 			plugin.getUtilities().unMutePlayer(name);
 			return false;
@@ -183,60 +215,70 @@ public class ChatPlayer {
 			return true;
 		}
 	}
-	public ProxiedPlayer getPlayer(){
+
+	public ProxiedPlayer getPlayer() {
 		return ProxyServer.getInstance().getPlayer(name);
 	}
-	
-	public String getReplyPlayer(){
+
+	public String getReplyPlayer() {
 		return replyPlayer;
 	}
-	public void sendMessage(String message){
-		if (this.getPlayer() == null)
+
+	public void sendMessage(String message) {
+		if (this.getPlayer() == null) {
+			System.out.println("PLAYER NULL: " + getName());
 			return;
-		
+		}
+
 		this.getPlayer().sendMessage(message);
 	}
+
+	public void sendPrivateMessage(String message, String replyPlayer) {
+		this.replyPlayer = replyPlayer;
+		
+		this.getPlayer().sendMessage(ChatColor.GOLD + "[" + replyPlayer + "->me] " 
+				+ ChatColor.WHITE + message);
+		
+		for (String data : plugin.chatSpying) {
+			ChatPlayer cp = plugin.getChatPlayer(data);
+			
+			if (!cp.equals(this)) {
+				cp.sendMessage(ChatColor.YELLOW + "[" + replyPlayer + "->"
+						+ this.name + "] " + ChatColor.WHITE + message);
+			}
+		}
+		
+		if (plugin.logChat) {
+			plugin.cl.cLog("&e[" + replyPlayer + "->" + this.name + "] &f" + message);
+		}
+	}
+
+	public boolean ignoringPlayer(String player) {
+		return ignores.contains(player);
+	}
+
+	public void addIgnore(String string) {
+		this.ignores.add(string);
+	}
+
+	public void removeIgnore(String string) {
+		this.ignores.remove(string);
+	}
+
+	public HashSet<String> getIgnores() {
+		return ignores;
+	}
 	
-	public void addChannelsOwned(){
+	public void addChannelsOwned() {
 		this.channelsOwned++;
 		plugin.getUtilities().addChannel(name);
 	}
-	public void subtractChannelsOwned(){
-		this.channelsOwned --;
+
+	public void subtractChannelsOwned() {
+		this.channelsOwned--;
 		plugin.getUtilities().subtractChannel(name);
 	}
-	public void sendPrivate(String message, String name2) {
-		this.replyPlayer = name2;
-				this.getPlayer().sendMessage(ChatColor.GOLD+"["+name2+"->me] "+ChatColor.WHITE+message);
-				for(String data:plugin.chatSpying){
-					ChatPlayer cp = plugin.getChatPlayer(data);
-					if(!cp.equals(this)){
-						cp.sendMessage(ChatColor.YELLOW+"["+name2+"->"+this.name+"] "+ChatColor.WHITE+message);
-					}
-		}
-				if(plugin.logChat){
-					plugin.cl.cLog("&e["+name2+"->"+this.name+"] &f"+message);
-				}
-		
-	}
-	public void setCurrentSilent(ChatChannel channel) {
-		this.current = channel;
-		plugin.getUtilities().setCurrentChannel(name,channel.getName());
-		
-	}
-	
-	public boolean ignoringPlayer(String player){
-		return ignores.contains(player);
-	}
-	public void addIgnore(String string) {
-		this.ignores.add(string);	
-	}
-	public void removeIgnore(String string) {
-		this.ignores.remove(string);	
-	}
-	public HashSet<String> getIgnores(){
-		return ignores;
-	}
+
 	public String colorSub(String str) {
 		String output = "";
 		output = str.replace("&0", ChatColor.BLACK.toString());
