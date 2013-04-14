@@ -3,6 +3,7 @@ package com.mcdimensions.BungeeSuite.portals;
 import java.sql.SQLException;
 
 import com.mcdimensions.BungeeSuite.BungeeSuite;
+import com.mcdimensions.BungeeSuite.utilities.CommandUtil;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
@@ -10,17 +11,19 @@ import net.md_5.bungee.api.plugin.Command;
 
 public class ListPortalsCommand extends Command {
 
-	private BungeeSuite plugin;
+	BungeeSuite plugin;
+	private static final String[] PERMISSION_NODES = { "bungeesuite.portal.delete", "bungeesuite.portal.*",
+		"bungeesuite.admin", "bungeesuite.*" };
 
 	public ListPortalsCommand(BungeeSuite bungeeSuite) {
-		super(bungeeSuite.listPortals);
+		super(bungeeSuite.listPortals, null, bungeeSuite.portalsc);
 		this.plugin = bungeeSuite;
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
-		if (!arg0.hasPermission("BungeeSuite.admin")) {
-			arg0.sendMessage(plugin.NO_PERMISSION);
+	public void execute(CommandSender sender, String[] arg1) {
+		if (!CommandUtil.hasPermission(sender, PERMISSION_NODES)) {
+			sender.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
 		
@@ -34,7 +37,7 @@ public class ListPortalsCommand extends Command {
 			e.printStackTrace();
 		}
 
-		arg0.sendMessage(message);
+		sender.sendMessage(message);
 	}
 
 }

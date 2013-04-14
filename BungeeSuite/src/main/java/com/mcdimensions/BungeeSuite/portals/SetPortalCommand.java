@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import com.mcdimensions.BungeeSuite.BungeeSuite;
+import com.mcdimensions.BungeeSuite.utilities.CommandUtil;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
@@ -14,6 +15,8 @@ import net.md_5.bungee.api.plugin.Command;
 public class SetPortalCommand extends Command {
 	
 	BungeeSuite plugin;
+	private static final String[] PERMISSION_NODES = { "bungeesuite.portal.create", "bungeesuite.portal.*",
+		"bungeesuite.admin", "bungeesuite.*" };
 
 	public SetPortalCommand(BungeeSuite bungeeSuite) {
 		super(bungeeSuite.setPortal);
@@ -22,7 +25,7 @@ public class SetPortalCommand extends Command {
 
 	@Override
 	public void execute(CommandSender sender, String[] arg1) {
-		if (!sender.hasPermission("BungeeSuite.admin")) {
+		if (!CommandUtil.hasPermission(sender, PERMISSION_NODES)) {
 			sender.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import com.mcdimensions.BungeeSuite.BungeeSuite;
+import com.mcdimensions.BungeeSuite.utilities.CommandUtil;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
@@ -14,7 +15,9 @@ import net.md_5.bungee.api.plugin.Command;
 
 public class DeletePortalCommand extends Command {
 
-	private BungeeSuite plugin;
+	BungeeSuite plugin;
+	private static final String[] PERMISSION_NODES = { "bungeesuite.portal.delete", "bungeesuite.portal.*",
+		"bungeesuite.admin", "bungeesuite.*" };
 
 	public DeletePortalCommand(BungeeSuite bungeeSuite) {
 		super(bungeeSuite.delPortal);
@@ -22,14 +25,14 @@ public class DeletePortalCommand extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender arg0, String[] arg1) {
-		if (!arg0.hasPermission("BungeeSuite.admin")) {
-			arg0.sendMessage(plugin.NO_PERMISSION);
+	public void execute(CommandSender sender, String[] arg1) {
+		if (!CommandUtil.hasPermission(sender, PERMISSION_NODES)) {
+			sender.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
 		
 		if (arg1.length < 1) {
-			arg0.sendMessage(ChatColor.RED + "/" + plugin.delPortal + " (Name)");
+			sender.sendMessage(ChatColor.RED + "/" + plugin.delPortal + " (Name)");
 			return;
 		}
 		
@@ -43,9 +46,9 @@ public class DeletePortalCommand extends Command {
 				out.writeUTF(arg1[0]);
 				server.sendData("BungeeSuiteMC", b.toByteArray());
 				
-				arg0.sendMessage(plugin.PORTAL_DELETE_CONFIRM);
+				sender.sendMessage(plugin.PORTAL_DELETE_CONFIRM);
 			} else {
-				arg0.sendMessage(plugin.PORTAL_NOT_EXIST);
+				sender.sendMessage(plugin.PORTAL_NOT_EXIST);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

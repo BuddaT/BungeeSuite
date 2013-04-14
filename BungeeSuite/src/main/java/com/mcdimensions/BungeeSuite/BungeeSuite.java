@@ -40,7 +40,6 @@ import com.mcdimensions.BungeeSuite.listeners.ChatListener;
 import com.mcdimensions.BungeeSuite.listeners.LoginMessages;
 import com.mcdimensions.BungeeSuite.listeners.PluginMessageListener;
 import com.mcdimensions.BungeeSuite.listeners.ServerLoginLogout;
-import com.mcdimensions.BungeeSuite.portals.PortalsCommand;
 import com.mcdimensions.BungeeSuite.portals.DeletePortalCommand;
 import com.mcdimensions.BungeeSuite.portals.ListPortalsCommand;
 import com.mcdimensions.BungeeSuite.portals.SetPortalCommand;
@@ -385,7 +384,6 @@ public class BungeeSuite extends Plugin {
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new SetPortalCommand(this));
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new DeletePortalCommand(this));
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new ListPortalsCommand(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new PortalsCommand(this));
 		}
 		
 		if (warpsEnabled) {

@@ -76,3 +76,12 @@ Chat Commands:
 		- bungeesuite.chat.channels, bungeesuite.chat.basic, bungeesuite.chat.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
 	/toggle [channel]
 		- bungeesuite.chat.channels, bungeesuite.chat.basic, bungeesuite.chat.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
+
+Portal Commands:
+	/delportal (portal)
+		- bungeesuite.portal.delete, bungeesuite.portal.*, bungeesuite.admin, bungeesuite.*
+	/listportals
+	/portals
+		- bungeesuite.portal.list, bungeesuite.portal.*, bungeesuite.admin, bungeesuite.*
+	/setportal (name) (type) (destination)
+		- bungeesuite.portal.create, bungeesuite.portal.*, bungeesuite.admin, bungeesuite.*
