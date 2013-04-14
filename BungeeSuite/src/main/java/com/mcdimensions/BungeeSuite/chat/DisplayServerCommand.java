@@ -9,8 +9,8 @@ import net.md_5.bungee.api.plugin.Command;
 public class DisplayServerCommand extends Command {
 
 	BungeeSuite plugin;
-	private static final String[] PERMISSION_NODES = { "bungeesuite.chat.admin", "bungeesuite.chat.*", 
-		"bungeesuite.mod", "bungeesuite.admin", "bungeesuite.*" };
+	private static final String[] PERMISSION_NODES = { "bungeesuite.chat.displayserver", "bungeesuite.chat.admin", 
+		"bungeesuite.admin", "bungeesuite.*" };
 
 	public DisplayServerCommand(BungeeSuite bungeeSuite) {
 		super(bungeeSuite.displayServer);

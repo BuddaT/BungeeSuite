@@ -1,118 +1,178 @@
 Permission Nodes:
+===================
 
-Banning Commands:
-	/ban (name) [message]
-		- bungeesuite.ban.ban, bungeesuite.ban.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-	/ipban (name/ip)
-		- bungeesuite.ban.banip, bungeesuite.ban.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-	/kickall
-		- bungeesuite.ban.kickall, bungeesuite.ban.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-	/kick (name)
-		- bungeesuite.ban.kick, bungeesuite.ban.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-	/tempban (name) ([d:#] [h:#] [m:#])
-	/tban (name) ([d:#] [h:#] [m:#])
-		- bungeesuite.ban.tempban, bungeesuite.ban.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-	/unban (name)
-	/pardon (name)
-		- bungeesuite.ban.unban, bungeesuite.ban.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-	/unbanip (ip)
-		- bungeesuite.ban.unbanip, bungeesuite.ban.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-
-Chat Commands:
-	/accept (channel)
-		- bungeesuite.chat.channels, bungeesuite.chat.basic, bungeesuite.chat.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-		Permission to join any channel (ADMIN OVERRIDE):
-			- bungeesuite.chat.channels.override, bungeesuite.admin, bungeesuite.*
-	/broadcast (message)
-		- bungeesuite.chat.broadcast, bungeesuite.chat.admin, bungeesuite.admin, bungeesuite.*
-	/channel (kick/format/editformat/rename/setowner/members/help) [args]
-		- bungeesuite.chat.channels, bungeesuite.chat.basic, bungeesuite.chat.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-	/chatspy
-		- bungeesuite.chat.spy, bungeesuite.chat.admin, bungeesuite.chatspy, bungeesuite.admin, bungeesuite.*
-	/createchannel (channel) [format]
-		- bungeesuite.chat.channels, bungeesuite.chat.basic, bungeesuite.chat.*, bungeesuite.createchannel, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-		Permission to create channels over the channel limit (ADMIN OVERRIDE):
-			- bungeesuite.chat.channels.override, bungeesuite.admin, bungeesuite.*
-	/deletechannel [channel]
-		- bungeesuite.chat.channels, bungeesuite.chat.basic, bungeesuite.chat.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-		Permission to delete any channel (ADMIN OVERRIDE):
-			- bungeesuite.chat.channels.override, bungeesuite.admin, bungeesuite.*
-	/displayserver
-		- bungeesuite.chat.admin, bungeesuite.chat.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-	/global [message]
-	/g [message]
-		- bungeesuite.chat.global, bungeesuite.chat.basic, bungeesuite.chat.*, bungeesuite.global, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-	/ignore (name)
-		- bungeesuite.chat.ignore, bungeesuite.chat.basic, bungeesuite.chat.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-	/ignoring
-		- bungeesuite.chat.ignore, bungeesuite.chat.basic, bungeesuite.chat.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-	/invite (name) [channel]
-		- bungeesuite.chat.channels, bungeesuite.chat.basic, bungeesuite.chat.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-		Permission to invite to any channel (ADMIN OVERRIDE):
-			- bungeesuite.chat.channels.override, bungeesuite.admin, bungeesuite.*
-	/join [channel]
-		- bungeesuite.chat.channels, bungeesuite.chat.basic, bungeesuite.chat.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-		Permission to join any channel (ADMIN OVERRIDE):
-			- bungeesuite.chat.channels.override, bungeesuite.admin, bungeesuite.*
-	/leavechannel [channel]
-		- bungeesuite.chat.channels, bungeesuite.chat.basic, bungeesuite.chat.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-	/message (name) (message)
-	/msg (name) (message)
-	/whisper (name) (message)
-	/tell (name) (message)
-	/t (name) (message)
-		- bungeesuite.chat.message, bungeesuite.chat.basic, bungeesuite.chat.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-	/muteall
-		- bungeesuite.chat.muteall, bungeesuite.chat.admin, bungeesuite.admin, bungeesuite.*
-	/mute (name)
-		- bungeesuite.chat.muteall, bungeesuite.chat.admin, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-	/nickname (name) [player]
-		- bungeesuite.chat.nick, bungeesuite.chat.nick.colored, bungeesuite.nick, bungeesuite.nickcolored, bungeesuite.chat.admin, bungeesuite.admin, bungeesuite.*
-	/reply (message)
-	/r (message)
-		- bungeesuite.chat.message, bungeesuite.chat.basic, bungeesuite.chat.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-	/server [message]
-	/s [message]
-		- bungeesuite.chat.channels, bungeesuite.chat.basic, bungeesuite.chat.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-	/toggle [channel]
-		- bungeesuite.chat.channels, bungeesuite.chat.basic, bungeesuite.chat.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-
-Portal Commands:
-	/delportal (portal)
-		- bungeesuite.portal.delete, bungeesuite.portal.*, bungeesuite.admin, bungeesuite.*
-	/listportals
-	/portals
-		- bungeesuite.portal.list, bungeesuite.portal.*, bungeesuite.admin, bungeesuite.*
-	/setportal (name) (type) (destination)
-		- bungeesuite.portal.create, bungeesuite.portal.*, bungeesuite.admin, bungeesuite.*
+	Special Nodes:
+	================
+		bungeesuite.ban.*
+			- bungeesuite.ban.ban
+			- bungeesuite.ban.banip
+			- bungeesuite.ban.kickall
+			- bungeesuite.ban.kick
+			- bungeesuite.ban.tempban
+			- bungeesuite.ban.unban
+			- bungeesuite.ban.unbanip
+		bungeesuite.chat.basic
+			- bungeesuite.chat.channels
+			- bungeesuite.chat.global
+			- bungeesuite.chat.message
+			- bungeesuite.chat.ignore
+		bungeesuite.chat.*
+			- bungeesuite.chat.basic
+		bungeesuite.chat.admin
+			- bungeesuite.chat.basic
+			- bungeesuite.chat.broadcast
+			- bungeesuite.chat.spy
+			- bungeesuite.chat.displayserver
+			- bungeesuite.chat.muteall
+			- bungeesuite.chat.mute
+		bungeesuite.portal.*
+			- bungeesuite.portal.delete
+			- bungeesuite.portal.list
+			- bungeesuite.portal.create
+		bungeesuite.teleport.*
+			- bungeesuite.teleport.accept
+			- bungeesuite.teleport.tpa
+			- bungeesuite.teleport.tpahere
+			- bungeesuite.teleport.deny
+		bungeesuite.warp.*
+			- bungeesuite.warp.list
+			- bungeesuite.warp.warp
+			- bungeesuite.warp.spawn
+		bungeesuite.mod
+			- bungeesuite.ban.*
+			- bungeesuite.chat.*
+			- bungeesuite.chat.mute
+			- bungeesuite.teleport.*
+			- bungeesuite.teleport.tp
+			- bungeesuite.warp.*
+		bungeesuite.admin
+			- bungeesuite.mod
+			- bungeesuite.chat.admin
+			- bungeesuite.chat.channels.override
+			- bungeesuite.portal.*
+			- bungeesuite.teleport.tp.p2p
+			- bungeesuite.warp.delete
+			- bungeesuite.warp.create
+			- bungeesuite.warp.list.admin
+		bungeesuite.*
+			- bungeesuite.admin
+			
+	
+	Commands & Permissions
+	========================
+		Banning Commands:
+			/ban (name) [message]
+				- bungeesuite.ban.ban
+			/ipban (name/ip)
+				- bungeesuite.ban.banip
+			/kickall
+				- bungeesuite.ban.kickall
+			/kick (name)
+				- bungeesuite.ban.kick
+			/tempban (name) ([d:#] [h:#] [m:#])
+			/tban (name) ([d:#] [h:#] [m:#])
+				- bungeesuite.ban.tempban
+			/unban (name)
+			/pardon (name)
+				- bungeesuite.ban.unban
+			/unbanip (ip)
+				- bungeesuite.ban.unbanip
 		
-Teleport Commands
-	/tpaccept
-		- bungeesuite.teleport.accept, bungeesuite.teleport.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-	/tpa (name)
-		- bungeesuite.teleport.tpa, bungeesuite.teleport.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-	/tpahere (name)
-		- bungeesuite.teleport.tpahere, bungeesuite.teleport.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-	/tpall
-		- bungeesuite.teleport.tpall, bungeesuite.admin, bungeesuite.*
-	/tp (name) [name2]
-		- bungeesuite.teleport.tp, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-		Permission to teleport a player to another player (ADMIN OVERRIDE)
-			- bungeesuite.teleport.tp.p2p, bungeesuite.admin, bungeesuite.*
-	/tpdeny
-		- bungeesuite.teleport.deny, bungeesuite.teleport.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-		
-Warp Commands
-	/delwarp (name)
-		- bungeesuite.warp.delete, bungeesuite.admin, bungeesuite.*
-	/warplist
-	/warps
-		- bungeesuite.warp.list, bungeesuite.warp.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-		Permission to get second stage of list(?) (ADMIN OVERRIDE)
-			- bungeesuite.warp.list.admin, bungeesuite.admin, bungeesuite.*
-	/setwarp (name) [private]
-		- bungeesuite.warp.create, bungeesuite.admin, bungeesuite.*
-	/warp (name)
-		- bungeesuite.warp.warp, bungeesuite.warp.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
-	/spawn
-		- bungeesuite.warp.spawn, bungeesuite.warp.*, bungeesuite.mod, bungeesuite.admin, bungeesuite.*
+		Chat Commands
+			/accept (channel)
+				- bungeesuite.chat.channels
+				Permission to join any channel (ADMIN OVERRIDE):
+					- bungeesuite.chat.channels.override
+			/broadcast (message)
+				- bungeesuite.chat.broadcast
+			/channel (kick/format/editformat/rename/setowner/members/help) [args]
+				- bungeesuite.chat.channels
+			/chatspy
+				- bungeesuite.chat.spy, bungeesuite.chatspy
+			/createchannel (channel) [format]
+				- bungeesuite.chat.channels
+				Permission to create channels over the channel limit (ADMIN OVERRIDE):
+					- bungeesuite.chat.channels.override
+			/deletechannel [channel]
+				- bungeesuite.chat.channels
+				Permission to delete any channel (ADMIN OVERRIDE):
+					- bungeesuite.chat.channels.override
+			/displayserver
+				- bungeesuite.chat.displayserver
+			/global [message]
+			/g [message]
+				- bungeesuite.chat.global
+			/ignore (name)
+				- bungeesuite.chat.ignore
+			/ignoring
+				- bungeesuite.chat.ignore
+			/invite (name) [channel]
+				- bungeesuite.chat.channels
+				Permission to invite to any channel (ADMIN OVERRIDE):
+					- bungeesuite.chat.channels.override
+			/join [channel]
+				- bungeesuite.chat.channels
+				Permission to join any channel (ADMIN OVERRIDE):
+					- bungeesuite.chat.channels.override
+			/leavechannel [channel]
+				- bungeesuite.chat.channels
+			/message (name) (message)
+			/msg (name) (message)
+			/whisper (name) (message)
+			/tell (name) (message)
+			/t (name) (message)
+				- bungeesuite.chat.message
+			/muteall
+				- bungeesuite.chat.muteall
+			/mute (name)
+				- bungeesuite.chat.muteall
+			/nickname (name) [player]
+				- bungeesuite.chat.nick, bungeesuite.chat.nick.colored, bungeesuite.nick, bungeesuite.nickcolored
+			/reply (message)
+			/r (message)
+				- bungeesuite.chat.message
+			/server [message]
+			/s [message]
+				- bungeesuite.chat.channels
+			/toggle [channel]
+				- bungeesuite.chat.channels
+
+		Portal Commands:
+			/delportal (portal)
+				- bungeesuite.portal.delete
+			/listportals
+			/portals
+				- bungeesuite.portal.list
+			/setportal (name) (type) (destination)
+				- bungeesuite.portal.create
+				
+		Teleport Commands
+			/tpaccept
+				- bungeesuite.teleport.accept
+			/tpa (name)
+				- bungeesuite.teleport.tpa
+			/tpahere (name)
+				- bungeesuite.teleport.tpahere
+			/tpall
+				- bungeesuite.teleport.tpall
+			/tp (name) [name2]
+				- bungeesuite.teleport.tp
+				Permission to teleport a player to another player (ADMIN OVERRIDE)
+					- bungeesuite.teleport.tp.p2p
+			/tpdeny
+				- bungeesuite.teleport.deny
+				
+		Warp Commands
+			/delwarp (name)
+				- bungeesuite.warp.delete
+			/warplist
+			/warps
+				- bungeesuite.warp.list
+				Permission to get second stage of list(?) (ADMIN OVERRIDE)
+					- bungeesuite.warp.list.admin
+			/setwarp (name) [private]
+				- bungeesuite.warp.create
+			/warp (name)
+				- bungeesuite.warp.warp
+			/spawn
+				- bungeesuite.warp.spawn
