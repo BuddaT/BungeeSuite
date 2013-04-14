@@ -236,15 +236,15 @@ public class ChatPlayer {
 	public void sendPrivateMessage(String message, String replyPlayer) {
 		this.replyPlayer = replyPlayer;
 		
-		this.getPlayer().sendMessage(ChatColor.GOLD + "[" + replyPlayer + "->me] " 
-				+ ChatColor.WHITE + message);
+		this.getPlayer().sendMessage(ChatColor.GRAY + "[" + ChatColor.GOLD + replyPlayer + ChatColor.GRAY + 
+				"->" + ChatColor.AQUA + "me" + ChatColor.GRAY + "] " + message);
 		
 		for (String data : plugin.chatSpying) {
 			ChatPlayer cp = plugin.getChatPlayer(data);
 			
 			if (!cp.equals(this)) {
-				cp.sendMessage(ChatColor.YELLOW + "[" + replyPlayer + "->"
-						+ this.name + "] " + ChatColor.WHITE + message);
+				cp.sendMessage(ChatColor.GRAY + "[" + ChatColor.GOLD + replyPlayer + ChatColor.GRAY + 
+						"->" + ChatColor.GOLD + this.name + ChatColor.GRAY + "] " + message);
 			}
 		}
 		

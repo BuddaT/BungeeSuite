@@ -47,7 +47,8 @@ public class MessageCommand extends Command {
 				}
 				
 				cp.sendPrivateMessage(message, sender.getName());
-				sender.sendMessage(ChatColor.GOLD + "[me->" + cp.getName() + "]" + ChatColor.WHITE + message);
+				sender.sendMessage(ChatColor.GRAY + "[" + ChatColor.AQUA + "me" + ChatColor.GRAY + 
+						"->" + ChatColor.GOLD + cp.getName() + ChatColor.GRAY + "] " + message);
 			}
 		} else {
 			sender.sendMessage(plugin.PLAYER_NOT_ONLINE);
