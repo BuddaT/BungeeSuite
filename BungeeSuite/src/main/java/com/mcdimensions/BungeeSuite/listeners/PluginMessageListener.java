@@ -22,11 +22,11 @@ public class PluginMessageListener implements Listener {
 	
 	@Subscribe
 	public void recievePluginMessage(PluginMessageEvent event) throws IOException, SQLException{
-		if(!event.getTag().equalsIgnoreCase("BungeeSuite"))return;
+		if(!event.getTag().equalsIgnoreCase(BungeeSuite.PLUGIN_NAME)) return;
 		DataInputStream in = new DataInputStream(new ByteArrayInputStream(event.getData()));
 		String channel = in.readUTF();
 		System.out.println(channel);
-		if(channel.equalsIgnoreCase("warp")){
+		if (channel.equalsIgnoreCase("warp")){
 			if(!plugin.warpsEnabled){
 				return;
 			}

@@ -525,10 +525,10 @@ public class Utilities {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		sql.closeConnection();
 		//may need to go through and change any players with it as their current.
 		plugin.getChatPlayer(plugin.chatChannels.get(channel).getOwner()).subtractChannelsOwned();
 		plugin.chatChannels.remove(channel);
-		sql.closeConnection();
 	}
 
 	public void updateTables() {

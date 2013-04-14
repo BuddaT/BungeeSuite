@@ -65,6 +65,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Plugin;
 
 public class BungeeSuite extends Plugin {
+	public static final String PLUGIN_NAME = "BungeeSuite";
 
 	/* Chat Settings */
 	public Config config, channelConfig, locale, prefixConfig, commands;
@@ -355,6 +356,8 @@ public class BungeeSuite extends Plugin {
 		prefix.put("admin", prefixConfig.getString("Prefix.admin", ChatColor.RED + "[Admin]"));
 		prefix.put("mod", prefixConfig.getString("Prefix.mod", ChatColor.RED + "[Mod]"));
 		prefix.put("tmod", prefixConfig.getString("Prefix.tmod", ChatColor.DARK_PURPLE + "[TMod]"));
+		
+		getProxy().registerChannel(ChatChannel.CHANNEL_OUT_NAME);
 	}
 
 	private void loadTeleports() {
@@ -665,4 +668,7 @@ public class BungeeSuite extends Plugin {
 		this.prefixConfig.load();
 	}
 
+	public HashMap<String, ChatChannel> getChatChannels() {
+		return new HashMap<>(chatChannels);
+	}
 }

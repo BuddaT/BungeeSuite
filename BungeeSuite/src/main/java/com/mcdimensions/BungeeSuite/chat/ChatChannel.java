@@ -1,5 +1,8 @@
 package com.mcdimensions.BungeeSuite.chat;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.HashSet;
 
 import com.mcdimensions.BungeeSuite.BungeeSuite;
@@ -8,8 +11,19 @@ import com.mcdimensions.BungeeSuite.utilities.CommandUtil;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.event.PluginMessageEvent;
 
 public class ChatChannel {
+	/**
+	 * Name of the BungeeCord channel on which chat messages are broadcast to
+	 * other plugins.
+	 */
+	public static final String CHANNEL_OUT_NAME = BungeeSuite.PLUGIN_NAME + "Out";
+	/**
+	 * Name of the subchannel appended to the BungeeCord channel on which chat
+	 * messages are broadcast to other plugins.
+	 */
+	public static final String SUBCHANNEL_NAME = "chat";
 
 	private String channelName;
 	private String channelFormat;
@@ -116,6 +130,20 @@ public class ChatChannel {
 			ChatPlayer cp = plugin.getChatPlayer(data);
 			cp.sendMessage(message);
 		}
+		dispatchMessage(message);
+	}
+	
+	private void dispatchMessage(String message) {
+		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+		DataOutputStream dataOut = new DataOutputStream(bytes);
+		try {
+			dataOut.writeUTF(SUBCHANNEL_NAME);
+			dataOut.writeUTF(message);
+			PluginMessageEvent filteredChatEvent = new PluginMessageEvent(null, null, CHANNEL_OUT_NAME, bytes.toByteArray());
+			plugin.getProxy().getPluginManager().callEvent(filteredChatEvent);
+		} catch (IOException e) {
+			plugin.getProxy().getLogger().warning("Couldn't dispatch chat message to output channel");
+		}
 	}
 
 	public void renameChannel(String name) {
@@ -183,17 +211,18 @@ public class ChatChannel {
 	}
 
 	public void sendGlobalMessage(ChatPlayer player, String message) {
-		message = formatMessage(player, message);
+		String formattedMessage = formatMessage(player, message);
 
 		for (ChatPlayer data : plugin.onlinePlayers.values()) {
 			if (!data.ignoringPlayer(player.getName()) || CommandUtil.hasPermission(player.getPlayer(), ChatSpyCommand.PERMISSION_NODES)) {
-				data.sendMessage(message);
+				data.sendMessage(formattedMessage);
 			}
 		}
 
 		if (plugin.logChat) {
-			plugin.cl.log(message);
+			plugin.cl.log(formattedMessage);
 		}
+		dispatchMessage(formattedMessage);
 	}
 
 	public String formatMessage(ChatPlayer player, String message) {
