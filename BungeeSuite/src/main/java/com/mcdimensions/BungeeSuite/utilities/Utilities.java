@@ -21,6 +21,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import com.mcdimensions.BungeeSuite.BungeeSuite;
 import com.mcdimensions.BungeeSuite.chat.ChatChannel;
 import com.mcdimensions.BungeeSuite.chat.ChatPlayer;
+import com.mcdimensions.BungeeSuite.teleports.TPCommand;
 import com.mcdimensions.BungeeSuite.warps.Warp;
 import com.mcdimensions.BungeeSuite.warps.WarpLocation;
 
@@ -178,36 +179,38 @@ public class Utilities {
 		
 	}
 
-	public void teleportToPlayer(ProxiedPlayer originalPlayer, ProxiedPlayer targetPlayer) {
-		if(!originalPlayer.getServer().getInfo().equals(targetPlayer.getServer().getInfo())){
+	public void teleportToPlayer(ProxiedPlayer originalPlayer,
+			ProxiedPlayer targetPlayer) {
+		if (!originalPlayer.getServer().getInfo().equals(targetPlayer.getServer().getInfo())) {
 			plugin.teleportsPending.put(originalPlayer, targetPlayer);
 			originalPlayer.connect(targetPlayer.getServer().getInfo());
-			return;
-		}else{
+		} else {
 			ByteArrayOutputStream b = new ByteArrayOutputStream();
 			DataOutputStream o = new DataOutputStream(b);
-			 
+
 			try {
-			    o.writeUTF("Teleport");
-			    o.writeUTF(originalPlayer.getName());
-			    o.writeUTF(targetPlayer.getName());//target player
+				o.writeUTF("Teleport");
+				o.writeUTF(originalPlayer.getName());
+				o.writeUTF(targetPlayer.getName());// target player
 			} catch (IOException e) {
-			    // Can never happen
+				// Can never happen
 			}
-			originalPlayer.getServer().sendData("BungeeSuiteMC", b.toByteArray());
+			
+			originalPlayer.getServer().sendData("BungeeSuiteMC",
+					b.toByteArray());
+			
 			String tmsg = plugin.TELEPORTED_PLAYER_TO_TARGET;
 			tmsg = tmsg.replace("%player", targetPlayer.getName());
 			tmsg = tmsg.replace("%sender", originalPlayer.getName());
 			originalPlayer.sendMessage(tmsg);
-			if(!originalPlayer.hasPermission("BungeeSuite.mod")){
-			String pmsg = plugin.PLAYER_TELEPORTED_TO;
-			pmsg = pmsg.replace("%player", targetPlayer.getName());
-			pmsg = pmsg.replace("%sender", originalPlayer.getName());
-			targetPlayer.sendMessage(pmsg);
+			
+			if (CommandUtil.hasPermission(targetPlayer, TPCommand.PERMISSION_NODES)) {
+				String pmsg = plugin.PLAYER_TELEPORTED_TO;
+				pmsg = pmsg.replace("%player", targetPlayer.getName());
+				pmsg = pmsg.replace("%sender", originalPlayer.getName());
+				targetPlayer.sendMessage(pmsg);
 			}
-			return;
 		}
-		
 	}
 
 	public void sendTpRequest(ProxiedPlayer player, ProxiedPlayer targetPlayer) {

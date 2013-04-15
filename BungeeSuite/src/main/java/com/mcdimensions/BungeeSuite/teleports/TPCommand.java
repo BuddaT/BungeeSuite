@@ -11,7 +11,7 @@ import net.md_5.bungee.api.plugin.Command;
 public class TPCommand extends Command {
 	
 	BungeeSuite plugin;
-	private static final String[] PERMISSION_NODES = { "bungeesuite.teleport.tp",
+	public static final String[] PERMISSION_NODES = { "bungeesuite.teleport.tp",
 		"bungeesuite.mod", "bungeesuite.admin", "bungeesuite.*" };
 	
 	private static final String[] PERMISSION_NODES_P2P = { "bungeesuite.teleport.tp.p2p",
