@@ -1,6 +1,6 @@
 package com.mcdimensions.BungeeSuite.teleports;
 
-import java.sql.SQLException;
+
 
 import com.mcdimensions.BungeeSuite.BungeeSuite;
 import com.mcdimensions.BungeeSuite.utilities.CommandUtil;
