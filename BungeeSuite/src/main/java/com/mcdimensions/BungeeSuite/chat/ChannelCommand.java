@@ -43,10 +43,22 @@ public class ChannelCommand extends Command {
 				return;
 			}
 			
-			String player = args[1];
+			String player = plugin.getUtilities().getClosestPlayer(args[1]).getName();
+			if(player==null){
+				player = args[1];
+			}
 			if (cc.containsMember(player)) {
-				cc.removeMember(player);
-				plugin.getChatPlayer(player).removeChannel(cc.getName());
+				ChatPlayer kp = plugin.getChatPlayer(player);
+				ChatChannel cur = kp.getCurrentChannel();
+				if(cur.equals(cc)){
+					if(plugin.globalDefault){
+						kp.setCurrentChannel(plugin.getChannel("Global"));
+					}else{
+						kp.setCurrentChannel(plugin.getChannel(kp.getCurrentServer()));
+					}
+				}
+				cc.kickPlayer(player);
+				kp.removeChannel(cc.getName());
 			} else {
 				sender.sendMessage(plugin.CHANNEL_NOT_MEMBER);
 				return;
