@@ -9,7 +9,7 @@ import net.md_5.bungee.api.plugin.Command;
 public class GlobalCommand extends Command {
 
 	BungeeSuite plugin;
-	private static final String[] PERMISSION_NODES = { "bungeesuite.chat.global", "bungeesuite.chat.basic", "bungeesuite.chat.*", 
+	public static final String[] PERMISSION_NODES = { "bungeesuite.chat.global", "bungeesuite.chat.basic", "bungeesuite.chat.*", 
 		"bungeesuite.global", "bungeesuite.mod", "bungeesuite.admin", "bungeesuite.*" };
 
 	public GlobalCommand(BungeeSuite bungeeSuite) {

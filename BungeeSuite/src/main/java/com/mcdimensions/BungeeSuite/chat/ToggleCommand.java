@@ -8,6 +8,7 @@ import java.util.Iterator;
 import com.mcdimensions.BungeeSuite.BungeeSuite;
 import com.mcdimensions.BungeeSuite.utilities.CommandUtil;
 
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 
@@ -29,34 +30,38 @@ public class ToggleCommand extends Command {
 			return;
 		}
 		
-		if(arg1.length==0){
-			ArrayList<ChatChannel> channels = null;
-			try {
-				channels = plugin.getUtilities().getPlayersChannels(sender.getName());
-			} catch (SQLException e) {
-				e.printStackTrace();
+		if (arg1.length == 0) {
+			ArrayList<String> channels = null;
+			channels = plugin.getChatPlayer(sender.getName()).getChannels();
+			if (channels.isEmpty()) {
+				sender.sendMessage(ChatColor.RED
+						+ "You have no channels to toggle to");
+				return;
 			}
+
 			ChatPlayer cp = plugin.getChatPlayer(sender.getName());
-			ChatChannel cur = cp.getCurrentChannel();
-			int check = 0;
-			int count = 0;
-			ChatChannel next = null;
-			for(ChatChannel data: channels){
-				if(check==1){
-					next = data;
-					break;
+			ChatChannel current = cp.getCurrentChannel();
+			boolean next = false;
+
+			for (String data : channels) {
+				String newchannel = data;
+				
+				if (data.equals(channels.get(channels.size() - 1))
+						&& next == false) {
+					cp.setCurrentChannel(plugin.getChannel(channels.get(0)));
+					return;
 				}
-				if(data.equals(cur)){
-					check =1;
-				}else{
-					count++;
-					if(count==channels.size()){
-						next=channels.iterator().next();
+				
+				if (newchannel.equals(current.getName())) {
+					next = true;
+				} else {
+					if (next) {
+						cp.setCurrentChannel(plugin.getChannel(newchannel));
+						return;
 					}
 				}
+				
 			}
-			cp.setCurrentChannel(next);
-			return;
 		}
 		
 		String channel = arg1[0];

@@ -1,6 +1,7 @@
 package com.mcdimensions.BungeeSuite.chat;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import com.mcdimensions.BungeeSuite.BungeeSuite;
@@ -33,7 +34,7 @@ public class ChatPlayer {
 	private boolean mute;
 	
 	private String replyPlayer;
-	private HashSet<String> channels;
+	private ArrayList<String> channels;
 	private HashSet<String> ignores;
 
 	public ChatPlayer(String name, String displayName, ChatChannel current, boolean chatspying, 
@@ -50,7 +51,8 @@ public class ChatPlayer {
 		
 		plugin = (BungeeSuite) ProxyServer.getInstance().getPluginManager().getPlugin("BungeeSuite");
 		
-		channels = new HashSet<String>();
+		channels = new ArrayList<String>();
+		channels.add("Global");
 		ignores = new HashSet<String>();
 	}
 
@@ -62,7 +64,7 @@ public class ChatPlayer {
 		channels.remove(channel);
 	}
 
-	public HashSet<String> getChannels() {
+	public ArrayList<String> getChannels() {
 		return this.channels;
 	}
 

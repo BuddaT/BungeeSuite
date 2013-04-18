@@ -21,6 +21,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import com.mcdimensions.BungeeSuite.BungeeSuite;
 import com.mcdimensions.BungeeSuite.chat.ChatChannel;
 import com.mcdimensions.BungeeSuite.chat.ChatPlayer;
+import com.mcdimensions.BungeeSuite.chat.GlobalCommand;
 import com.mcdimensions.BungeeSuite.teleports.TPCommand;
 import com.mcdimensions.BungeeSuite.warps.Warp;
 import com.mcdimensions.BungeeSuite.warps.WarpLocation;
@@ -730,7 +731,7 @@ public class Utilities {
 		while(res.next()){
 			channels.add(plugin.getChannel(res.getString("ChannelName")));
 		}
-		if(plugin.globalToggleable && plugin.getProxy().getPlayer(name).hasPermission("BungeeSuite.global")){
+		if(plugin.globalToggleable && CommandUtil.hasPermission(name, GlobalCommand.PERMISSION_NODES)){
 			channels.add(plugin.getChannel("Global"));
 		}
 		sql.closeConnection();
