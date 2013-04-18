@@ -512,8 +512,14 @@ public class Utilities {
 	public void deleteChannel(String channel){
 		for(String data:plugin.getChannel(channel).members){//set online
 			ChatPlayer cp = plugin.getChatPlayer(data);
-			ChatChannel cc = plugin.getChannel(cp.getCurrentServer());
-			cp.setCurrentChannel(cc);
+			if (plugin.globalDefault) {
+				cp.setCurrentChannel(plugin.getChannel("Global"));
+				return;
+			} else {
+				ChatChannel newc = plugin.getChannel(cp.getPlayer().getServer().getInfo().getName());
+				cp.setCurrentChannel(newc);
+				return;
+			}
 		}
 		sql.initialise();//set offline to stop them being deleted
 		try {

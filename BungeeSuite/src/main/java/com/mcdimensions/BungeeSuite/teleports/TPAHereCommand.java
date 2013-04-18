@@ -27,25 +27,25 @@ public class TPAHereCommand extends Command {
 		}
 		
 		if (args.length < 1) {
-			sender.sendMessage(ChatColor.RED + "/tpahere (playername)");
+			sender.sendMessage(ChatColor.RED + "/"+plugin.tpaHere+" (playername)");
 			return;
 		}
 		
 		ProxiedPlayer targetPlayer = (ProxiedPlayer) sender;
 		
 		if (plugin.blockedTeleports.contains(targetPlayer.getServer().getInfo().getName())) {
-			sender.sendMessage(ChatColor.RED + "This server does not have teleports enabled");
+			sender.sendMessage(plugin.TELEPORTS_NOT_ENABLED);
 			return;
 		}
 		
 		ProxiedPlayer player = plugin.getUtilities().getClosestPlayer(args[0]);
 		if (player == null) {
-			sender.sendMessage(ChatColor.RED + "That player is not online!");
+			sender.sendMessage(plugin.PLAYER_NOT_ONLINE);
 			return;
 		}
 		
 		plugin.getUtilities().sendTpHereRequest(player, targetPlayer);
-		sender.sendMessage(ChatColor.DARK_GREEN + "TP request sent!");
+		sender.sendMessage(plugin.TELEPORT_REQUEST_SENT);
 	}
 
 }

@@ -27,16 +27,15 @@ public class KickAllCommand extends Command {
 
 		String kmessage = plugin.DEFAULT_KICK_PLAYER;
 		kmessage.replace("%sender", sender.getName());
-		String message = kmessage;
 		if (arg1.length > 0) {
-			message = "";
+			kmessage = "";
 			for (String data : arg1) {
-				message += data + " ";
+				kmessage += data + " ";
 			}
 		}
 
 		for (ProxiedPlayer data : plugin.getProxy().getPlayers())
-			data.disconnect(message);
+			data.disconnect(kmessage);
 	}
 
 }

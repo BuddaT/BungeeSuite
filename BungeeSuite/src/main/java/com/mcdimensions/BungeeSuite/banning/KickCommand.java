@@ -35,27 +35,26 @@ public class KickCommand extends Command {
 
 		ProxiedPlayer player = plugin.getUtilities().getClosestPlayer(name);
 		String kmessage = plugin.DEFAULT_KICK_PLAYER;
-		kmessage.replace("%sender", sender.getName());
-		String Message = kmessage;
+		kmessage = kmessage.replace("%sender", sender.getName());
 
 		if (player != null) {
 			if (arg1.length > 1) {
 				int count = 0;
 				for (String data : arg1) {
 					if (count == 0) {
-						Message = "";
+						kmessage = "";
 						count++;
 					} else {
-						Message += data + " ";
+						kmessage += data + " ";
 					}
 				}
 			}
-			player.disconnect(Message);
+			player.disconnect(kmessage);
 			
 			String k2message = plugin.DEFAULT_KICK_BROADCAST;
-			k2message.replace("%sender", sender.getName());
-			k2message.replace("%player", player.getDisplayName());
-			k2message.replace("%message", Message);
+			k2message = k2message.replace("%sender", sender.getName());
+			k2message = k2message.replace("%player", player.getDisplayName());
+			k2message = k2message.replace("%message", kmessage);
 			plugin.getUtilities().sendBroadcast(k2message);
 		} else {
 			sender.sendMessage(plugin.PLAYER_NOT_ONLINE);

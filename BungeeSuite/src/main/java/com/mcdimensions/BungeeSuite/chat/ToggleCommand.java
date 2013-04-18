@@ -2,6 +2,7 @@ package com.mcdimensions.BungeeSuite.chat;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 
 import com.mcdimensions.BungeeSuite.BungeeSuite;
@@ -28,41 +29,34 @@ public class ToggleCommand extends Command {
 			return;
 		}
 		
-		if (arg1.length == 0) {
+		if(arg1.length==0){
 			ArrayList<ChatChannel> channels = null;
 			try {
 				channels = plugin.getUtilities().getPlayersChannels(sender.getName());
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			
 			ChatPlayer cp = plugin.getChatPlayer(sender.getName());
 			ChatChannel cur = cp.getCurrentChannel();
 			int check = 0;
+			int count = 0;
 			ChatChannel next = null;
-			ChatChannel data = null;
-			
-			Iterator<ChatChannel> it = channels.iterator();
-			while (it.hasNext()) {
-				data = it.next();
-				if (check == 1) {
+			for(ChatChannel data: channels){
+				if(check==1){
 					next = data;
 					break;
 				}
-				if (data.equals(cur)) {
-					if (it.hasNext()) {
-						check = 1;
-					} else {
-						next = channels.iterator().next();
+				if(data.equals(cur)){
+					check =1;
+				}else{
+					count++;
+					if(count==channels.size()){
+						next=channels.iterator().next();
 					}
-
 				}
 			}
-			
-			if (next != null)
-				cp.setCurrentChannel(next);
-			else
-				cp.sendMessage("You have no channel to toggle");
+			cp.setCurrentChannel(next);
+			return;
 		}
 		
 		String channel = arg1[0];

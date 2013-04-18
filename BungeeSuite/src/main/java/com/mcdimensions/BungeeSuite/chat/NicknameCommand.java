@@ -20,8 +20,11 @@ public class NicknameCommand extends Command {
 	public static final String[] PERMISSION_NODES_COLORED = { "bungeesuite.chat.nick.colored", 
 		"bungeesuite.nickcolored", "bungeesuite.chat.admin", "bungeesuite.admin", "bungeesuite.*" };
 
+	public static final String[] PERMISSION_NODES_OTHER = { "bungeesuite.chat.admin",
+		"bungeesuite.admin", "bungeesuite.*" };
+	
 	public NicknameCommand(BungeeSuite bungeeSuite) {
-		super(bungeeSuite.nickname);
+		super(bungeeSuite.nickname, null, bungeeSuite.nick);
 		this.plugin = bungeeSuite;
 	}
 
@@ -51,6 +54,7 @@ public class NicknameCommand extends Command {
 				pmsg = pmsg.replace("%nickname", plugin.getUtilities().colorSub(nick));
 				pmsg = pmsg.replace("%player", cp.getName());
 				pmsg = pmsg.replace("%sender", sender.getName());
+				sender.sendMessage(pmsg);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -58,7 +62,7 @@ public class NicknameCommand extends Command {
 		}
 		
 		if (arg1.length > 1) {
-			if (sender.hasPermission("BungeeSuite.admin")) {
+			if (CommandUtil.hasPermission(sender, PERMISSION_NODES_OTHER)) {
 				try {
 					if (plugin.getUtilities().playerExists(arg1[0])) {
 						String nick = arg1[1];

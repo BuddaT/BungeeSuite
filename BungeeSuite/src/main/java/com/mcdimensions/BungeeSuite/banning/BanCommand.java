@@ -35,7 +35,6 @@ public class BanCommand extends Command {
 		try {
 			if (plugin.getUtilities().playerExists(arg1[0])) {
 				String message = plugin.DEFAULT_BAN_PLAYER;
-				message = message.replace("%sender", sender.getName());
 
 				if (arg1.length > 1) {
 					message = "";

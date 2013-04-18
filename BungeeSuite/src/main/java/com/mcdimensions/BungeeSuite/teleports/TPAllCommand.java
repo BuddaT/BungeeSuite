@@ -1,6 +1,6 @@
 package com.mcdimensions.BungeeSuite.teleports;
 
-import java.sql.SQLException;
+
 
 import com.mcdimensions.BungeeSuite.BungeeSuite;
 import com.mcdimensions.BungeeSuite.utilities.CommandUtil;
@@ -36,7 +36,7 @@ public class TPAllCommand extends Command {
 					data.sendMessage(ChatColor.DARK_GREEN + "All players have been teleported to " + player);
 				}
 			} else {
-				sender.sendMessage(ChatColor.RED + "That player is not online!");
+				sender.sendMessage(plugin.PLAYER_NOT_ONLINE);
 			}
 		} else {
 			for (ProxiedPlayer data : plugin.getProxy().getPlayers()) {

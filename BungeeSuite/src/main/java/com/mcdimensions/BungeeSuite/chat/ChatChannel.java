@@ -25,13 +25,13 @@ public class ChatChannel {
 	 */
 	public static final String SUBCHANNEL_NAME = "chat";
 
+	public static final String[] PERMISSION_NODES_COLORED_CHAT = { "bungeesuite.chat.colored", 
+		 "bungeesuite.chat.admin", "bungeesuite.admin", "bungeesuite.*" };
+	
 	private String channelName;
 	private String channelFormat;
-	
 	private String owner;
-	
 	private boolean serverChannel;
-	
 	public HashSet<String> members;
 	private HashSet<String> invites;
 	
@@ -193,7 +193,7 @@ public class ChatChannel {
 		for (String data : members) {
 			ChatPlayer cp = plugin.getChatPlayer(data);
 			
-			if (!cp.ignoringPlayer(player.getName()) || CommandUtil.hasPermission(cp.getPlayer(), ChatSpyCommand.PERMISSION_NODES))
+			if (!cp.ignoringPlayer(player.getName()) || cp.isChatSpying())
 				cp.getPlayer().sendMessage(message);
 		}
 		
@@ -213,7 +213,7 @@ public class ChatChannel {
 		String formattedMessage = formatMessage(player, message);
 
 		for (ChatPlayer data : plugin.onlinePlayers.values()) {
-			if (!data.ignoringPlayer(player.getName()) || CommandUtil.hasPermission(player.getPlayer(), ChatSpyCommand.PERMISSION_NODES)) {
+			if (!data.ignoringPlayer(player.getName()) || data.isChatSpying()) {
 				data.sendMessage(formattedMessage);
 			}
 		}
@@ -243,31 +243,20 @@ public class ChatChannel {
 		}
 		
 		output = output.replace("%cname", channelName);
-		output = output.replace("%title", "");
-		output = output.replace("%rank", "");
 
 		if (plugin.useVault) {
 			output = output.replace("%prefix", player.getPrefix());
 			output = output.replace("%suffix", player.getSuffix());
-		} else {
-			if (p.hasPermission("bungeesuite.owner")) {
-				output = output.replace("%prefix", plugin.prefix.get("owner"));
-			} else if (p.hasPermission("bungeesuite.admin")) {
-				output = output.replace("%prefix", plugin.prefix.get("admin"));
-			} else if (p.hasPermission("bungeesuite.mod")) {
-				output = output.replace("%prefix", plugin.prefix.get("mod"));
-			} else if (p.hasPermission("bungeesuite.tmod")) {
-				output = output.replace("%prefix", plugin.prefix.get("tmod"));
-			} else {
-				output = output.replace("%prefix", "");
-			}
-			output = output.replace("%suffix", "");
+		}else{
+		output = output.replace("%prefix", "");
+			
+		output = output.replace("%suffix", "");
 		}
 		
 		output = output.replace("%title", "");
 		
-		if (CommandUtil.hasPermission(p, NicknameCommand.PERMISSION_NODES_COLORED)) {
-			output = output.replace("%message", ChatColor.WHITE + message);
+		if (CommandUtil.hasPermission(p, PERMISSION_NODES_COLORED_CHAT)) {
+			output = output.replace("%message", message);
 			output = colorSub(output);
 		} else {
 			if (plugin.formatChat) {
@@ -354,7 +343,7 @@ public class ChatChannel {
 	public void setOwner(ChatPlayer player) {
 		this.owner = player.getName();
 		
-		String cmsg = plugin.CHANNEL_CREATE_CONFIRM;
+		String cmsg = plugin.CHANNEL_NEW_OWNER;
 		cmsg = cmsg.replace("%channel", channelName);
 		player.sendMessage(cmsg);
 		

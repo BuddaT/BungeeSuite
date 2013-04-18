@@ -72,7 +72,7 @@ public class BungeeSuite extends Plugin {
 	public String PLAYER_IGNORING, PLAYER_IGNORED, PLAYER_UNIGNORED,
 			DEFAULT_BAN_PLAYER, PLAYER_TELEPORTED_TO,
 			TELEPORTED_PLAYER_TO_TARGET, TELEPORTS_NOT_ENABLED,
-			TELEPORT_REQUEST_HERE, TELEPORT_REQUEST_TO, WARP_SPAWN_NOT_EXIST,
+			TELEPORT_REQUEST_HERE,TELEPORT_REQUEST_SENT, TELEPORT_REQUEST_TO, WARP_SPAWN_NOT_EXIST,
 			WARP_NOT_EXIST, WARP_DELETE_CONFIRM, WARP_CREATE_CONFIRM,
 			PORTAL_DELETE_CONFIRM, PORTAL_NOT_EXIST, DEFAULT_IPBAN_PLAYER,
 			TEMP_BAN_BROADCAST, BAN_MESSAGE_BROADCAST, IP_NOT_EXIST,
@@ -80,13 +80,13 @@ public class BungeeSuite extends Plugin {
 			PLAYER_NICKNAME_CHANGE, PLAYER_NICKNAMED, PLAYER_ALL_MUTED,
 			PLAYER_ALL_UNMUTED, PLAYER_MUTE, PLAYER_MUTED, PLAYER_UNMUTE,
 			PLAYER_UNMUTED, PLAYER_NOT_EXIST, PLAYER_NOT_ONLINE,
-			PLAYER_UNBANNED, PLAYER_INVITED, PLAYER_INVITE,
+			PLAYER_UNBANNED, PLAYER_INVITED, PLAYER_INVITE, PLAYER_SENDING_CHAT,
 			PLAYER_SENDING_SERVER, PLAYER_NOT_BANNED, DEFAULT_KICK_PLAYER,
 			DEFAULT_KICK_BROADCAST, UNBAN_PLAYER, CHANNEL_INVITE_NOPERM,
 			CHANNEL_NOT_INVITED, CHANNEL_NOT_LEAVE_SERVER,
 			CHANNEL_TOGGLE_PERMISSION, CHANNEL_NOT_LEAVE_OWNER,
 			CHANNEL_IS_MEMBER, CHANNEL_NOT_MEMBER, CHANNEL_NO_PERMISSION,
-			CHANNEL_NOT_EXIST, CHANNEL_CREATE_CONFIRM, CHANNEL_DELETE_CONFIRM,
+			CHANNEL_NOT_EXIST, CHANNEL_NEW_OWNER, CHANNEL_CREATE_CONFIRM, CHANNEL_DELETE_CONFIRM,
 			CHANNEL_PLAYER_JOINED, CHANNEL_WELCOME, CHANNEL_KICK_PLAYER,
 			CHANNEL_PLAYER_LEAVE, CHANNEL_TOO_MANY, BROADCAST_MESSAGE,
 			CHATSPY_TOGGLED, NO_PERMISSION_COLOR;
@@ -265,10 +265,11 @@ public class BungeeSuite extends Plugin {
 						+ "You have been teleported to %player");
 		PLAYER_TELEPORTED_TO = locale.getString("PLAYER_TELEPORTED_TO", ChatColor.DARK_GREEN + "%sender has teleported to you");
 		TELEPORT_REQUEST_HERE = locale.getString("TELEPORT_REQUEST_HERE", ChatColor.LIGHT_PURPLE
-						+ "%player has requested you teleport to them");
+						+ "%player has requested you teleport to them. Type /tpaccept to accept");
 		TELEPORT_REQUEST_TO = locale.getString("TELEPORT_REQUEST_TO", ChatColor.LIGHT_PURPLE
-						+ "%player has requested to teleport to you");
+						+ "%player has requested to teleport to you. Type /tpaccept to accept");
 		TELEPORTS_NOT_ENABLED = locale.getString("TELEPORTS_NOT_ENABLED", ChatColor.RED + "Teleports are not enabled for this world");
+		TELEPORT_REQUEST_SENT = locale.getString("TELEPORT_REQUEST_SENT",ChatColor.DARK_GREEN + "TP request sent!");
 		WARP_SPAWN_NOT_EXIST = locale.getString("WARP_SPAWN_NOT_EXIST", ChatColor.RED
 						+ "The warp \"Spawn\" has not been created yet, please ask your admin to set the \"Spawn\" warp");
 		WARP_NOT_EXIST = locale.getString("WARP_NOT_EXIST", ChatColor.RED + "That warp does not exist");
@@ -289,7 +290,8 @@ public class BungeeSuite extends Plugin {
 		PLAYER_INVITED = locale.getString("PLAYER_INVITED", ChatColor.DARK_GREEN
 						+ "%player has been invited to join the channel %channel");
 		PLAYER_INVITE = locale.getString("PLAYER_INVITE", ChatColor.DARK_GREEN
-						+ "You have been invited by %sender to join the channel %channel");
+						+ "You have been invited by %sender to join the channel %channel. Type /join %channel");
+		PLAYER_SENDING_CHAT = locale.getString("PLAYER_SENDING_CHAT", ChatColor.DARK_GREEN + "Sending messages in the channel "+ChatColor.DARK_AQUA+"%channel");
 		PLAYER_SENDING_SERVER = locale.getString("PLAYER_SENDING_SERVER", ChatColor.DARK_GREEN + "Toggled display of server");
 		CHANNEL_INVITE_NOPERM = locale.getString("CHANNEL_INVITE_NOPERM", ChatColor.RED
 						+ "You do not have permission to invite players to the channel " + ChatColor.AQUA + "%channel");
@@ -307,6 +309,7 @@ public class BungeeSuite extends Plugin {
 		CHANNEL_NOT_EXIST = locale.getString("CHANNEL_NOT_EXIST", ChatColor.RED + "That channel does not exist!");
 		CHANNEL_CREATE_CONFIRM = locale.getString("CHANNEL_CREATE_CONFIRM", ChatColor.DARK_GREEN + "Channel %channel created!");
 		CHANNEL_DELETE_CONFIRM = locale.getString("CHANNEL_DELETE_CONFIRM", ChatColor.DARK_GREEN + "Channel deleted!");
+		CHANNEL_NEW_OWNER = locale.getString("CHANNEL_NEW_OWNER", ChatColor.DARK_GREEN + "You are now the owner of the channel %channel");
 		CHANNEL_PLAYER_JOINED = locale.getString("CHANNEL_PLAYER_JOINED", ChatColor.GRAY + "%player has joined the channel %channel");
 		CHANNEL_WELCOME = locale.getString("CHANNEL_WELCOME", ChatColor.GRAY + "Welcome to the channel %channel");
 		CHANNEL_KICK_PLAYER = locale.getString("CHANNEL_KICK_PLAYER", ChatColor.RED + "You have been kicked from the channel %channel");

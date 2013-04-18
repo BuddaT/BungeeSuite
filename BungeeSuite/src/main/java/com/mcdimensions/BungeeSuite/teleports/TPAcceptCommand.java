@@ -29,7 +29,7 @@ public class TPAcceptCommand extends Command {
 		ProxiedPlayer player = (ProxiedPlayer) sender;
 		
 		if (plugin.blockedTeleports.contains(player.getServer().getInfo().getName())) {
-			sender.sendMessage(ChatColor.RED + "This server does not have teleports enabled");
+			sender.sendMessage(plugin.TELEPORTS_NOT_ENABLED);
 			return;
 		}
 		

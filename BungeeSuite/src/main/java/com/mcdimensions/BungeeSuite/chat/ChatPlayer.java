@@ -78,7 +78,7 @@ public class ChatPlayer {
 		if (CommandUtil.hasPermission(this.getPlayer(), NicknameCommand.PERMISSION_NODES_COLORED))
 			this.getPlayer().setDisplayName(colorSub(displayName));
 		else
-			this.getPlayer().setDisplayName(name);
+			this.getPlayer().setDisplayName(ChatColor.stripColor(colorSub(name)));
 	}
 
 	public void setDisplayName(String nick) throws SQLException {
@@ -100,8 +100,11 @@ public class ChatPlayer {
 		this.currentChannel = channel;
 		plugin.getUtilities().setCurrentChannel(name, channel.getName());
 		
-		if (alert)
-			sendMessage(ChatColor.DARK_GREEN + "Sending messages in the channel " + channel.getName());
+		if (alert){
+			String msg = plugin.PLAYER_SENDING_CHAT;
+			msg = msg.replace("%channel", channel.getName());
+			sendMessage(msg);
+		}
 	}
 
 	public String getCurrentServer() {

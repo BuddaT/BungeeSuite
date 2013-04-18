@@ -34,24 +34,19 @@ public class TPACommand extends Command {
 		ProxiedPlayer player = (ProxiedPlayer) sender;
 		
 		if (plugin.blockedTeleports.contains(player.getServer().getInfo().getName())) {
-			sender.sendMessage(ChatColor.RED + "This server does not have teleports enabled");
-			return;
-		}
-		
-		if (args.length < 1) {
-			sender.sendMessage(ChatColor.RED + "/tpa (PlayerName)");
+			sender.sendMessage(plugin.TELEPORTS_NOT_ENABLED);
 			return;
 		}
 		
 		ProxiedPlayer targetPlayer = plugin.getUtilities().getClosestPlayer(args[0]);
 		
 		if (targetPlayer == null) {
-			sender.sendMessage(ChatColor.RED + "That player is not online!");
+			sender.sendMessage(plugin.PLAYER_NOT_ONLINE);
 			return;
 		}
 		
 		plugin.getUtilities().sendTpRequest(player, targetPlayer);
-		sender.sendMessage(ChatColor.DARK_GREEN + "TP request sent!");
+		sender.sendMessage(plugin.TELEPORT_REQUEST_SENT);
 	}
 
 }

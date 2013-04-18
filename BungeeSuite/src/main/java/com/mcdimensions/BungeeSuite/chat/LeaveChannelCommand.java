@@ -45,7 +45,6 @@ public class LeaveChannelCommand extends Command {
 					return;
 				} else {
 					ChatChannel newc = plugin.getChannel(cp.getPlayer().getServer().getInfo().getName());
-					newc.addMember(cp);
 					cp.setCurrentChannel(newc);
 					return;
 				}
@@ -65,7 +64,6 @@ public class LeaveChannelCommand extends Command {
 						cc.removeMember(cp.getName());
 						cp.removeChannel(cc.getName());
 						ChatChannel newc = plugin.getChannel(cp.getPlayer().getServer().getInfo().getName());
-						newc.addMember(cp);
 						cp.setCurrentChannel(newc);
 					} else {
 						cc.removeMember(cp.getName());
