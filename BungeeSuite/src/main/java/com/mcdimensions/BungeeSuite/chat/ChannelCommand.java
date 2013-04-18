@@ -13,7 +13,7 @@ public class ChannelCommand extends Command {
 	private static final String[] PERMISSION_NODES = { "bungeesuite.chat.channels", "bungeesuite.chat.*",
 		"bungeesuite.chat.basic", "bungeesuite.mod", "bungeesuite.admin", "bungeesuite.*" };
 	
-	private static final String[] PERMISSION_OVERRIDE_NODES = { "bungeesuite.admin", "bungeesuite.*" };
+	private static final String[] PERMISSION_OVERRIDE_NODES = {  "bungeesuite.chat.channels.override", "bungeesuite.admin", "bungeesuite.*" };
 
 	public ChannelCommand(BungeeSuite bungeeSuite) {
 		super(bungeeSuite.channel, null, bungeeSuite.c);
