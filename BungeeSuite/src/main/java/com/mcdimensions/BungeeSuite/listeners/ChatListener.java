@@ -56,6 +56,7 @@ public class ChatListener implements Listener {
 
 	@Subscribe
 	public void changeServer(ServerConnectedEvent event) throws SQLException {
+		if(!plugin.chatEnabled)return;
 		if (!plugin.onlinePlayers.containsKey(event.getPlayer().getName())) {
 			String player = event.getPlayer().getName();
 			String connection = event.getPlayer().getAddress().getAddress()

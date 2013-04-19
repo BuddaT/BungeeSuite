@@ -20,6 +20,7 @@ public class BanListener implements Listener {
 	
 	@Subscribe
 	public void login(LoginEvent event) throws SQLException {
+		if(!plugin.bansEnabled)return;
 		if(plugin.IPbans.contains(event.getConnection().getAddress().getAddress().toString())){
 			event.setCancelReason("Your IP is banned from this server, please appeal on the server website");
 			event.setCancelled(true);

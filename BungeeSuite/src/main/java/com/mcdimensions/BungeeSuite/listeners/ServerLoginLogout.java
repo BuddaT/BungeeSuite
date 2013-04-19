@@ -33,13 +33,14 @@ public class ServerLoginLogout implements Listener {
 			}else{
 				plugin.getUtilities().updateIP(player, connection);
 			}
-			if(!plugin.onlinePlayers.containsKey(player)){
+			if(plugin.chatEnabled && !plugin.onlinePlayers.containsKey(player)){
 				plugin.getUtilities().getChatPlayer(player);
 			}
 		}
 	
 	@Subscribe
 	public void logout(PlayerDisconnectEvent event) throws SQLException {
+		if(!plugin.chatEnabled)return;
 		String name = event.getPlayer().getName();
 		if(name==null){
 			for(String data:plugin.onlinePlayers.keySet()){
@@ -69,6 +70,7 @@ public class ServerLoginLogout implements Listener {
 	}	
 	@Subscribe
 	public void postlog(final PostLoginEvent event) {
+		if(!plugin.chatEnabled)return;
 		Runnable UpdateDisplay = new Runnable(){
 			public void run() {
 			ChatPlayer cp = plugin.getChatPlayer(event.getPlayer().getName());

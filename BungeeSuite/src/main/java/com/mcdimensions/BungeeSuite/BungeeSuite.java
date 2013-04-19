@@ -454,7 +454,7 @@ public class BungeeSuite extends Plugin {
 		
 		if (loginMessagesEnabled)
 			proxy.getPluginManager().registerListener(this, new LoginMessages(this));
-
+		
 		proxy.getPluginManager().registerListener(this, new ChatListener(this));
 
 		if (bansEnabled)
