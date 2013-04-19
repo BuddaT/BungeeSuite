@@ -4,7 +4,7 @@
 
   <groupId>com.mcdimensions.BungeeSuite</groupId>
   <artifactId>BungeeSuite</artifactId>
-  <version>0.91-SNAPSHOT</version>
+  <version>0.91b-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>BungeeSuite</name>
@@ -12,7 +12,7 @@
 
   <properties>
 	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	<build.number>Unknown</build.number>
+	<build.number>0.91b</build.number>
   </properties>
 	
   <repositories>

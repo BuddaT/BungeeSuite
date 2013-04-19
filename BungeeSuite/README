@@ -58,7 +58,32 @@ Permission Nodes:
 		bungeesuite.*
 			- bungeesuite.admin
 			
+	Example BungeeCord config
+	========================
 	
+permissions:
+   default:
+   - bungeecord.command.server
+   - bungeecord.command.list
+   - bungeesuite.chat.basic
+   - bungeesuite.teleport.*
+   - bungeeesuite.warp.*
+   mod:
+   - bungeesuite.mod
+   admin:
+   - bungeesuite.admin
+   - bungeecord.command.alert
+   - bungeecord.command.end
+   - bungeecord.command.ip
+   - bungeecord.command.reload
+   owner:
+   - bungeesuite.*
+groups:
+  bloodsplat07:
+  - owner
+  - admin
+  
+
 	Commands & Permissions
 	========================
 		Banning Commands:
