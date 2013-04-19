@@ -50,6 +50,8 @@ public class PluginMessageListener implements Listener {
 			String playername = in.readUTF();
 			ChatPlayer cp = plugin.getChatPlayer(playername);
 			
+			if(cp==null)return;
+			
 			cp.setPrefix(in.readUTF());
 			cp.setSuffix(in.readUTF());
 		} else if (channel.equalsIgnoreCase("BouncePlayer")) {
