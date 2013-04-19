@@ -13,7 +13,7 @@ import net.md_5.bungee.api.plugin.Command;
 public class WarpSpawnCommand extends Command {
 
 	BungeeSuite plugin;
-	private static final String[] PERMISSION_NODES = { "bungeesuite.warp.spawn", "bungeeesuite.warp.*",
+	private static final String[] PERMISSION_NODES = { "bungeesuite.warp.spawn", "bungeesuite.warp.*",
 		"bungeesuite.mod", "bungeesuite.admin", "bungeesuite.*" };
 
 	public WarpSpawnCommand(BungeeSuite bungeeSuite) {

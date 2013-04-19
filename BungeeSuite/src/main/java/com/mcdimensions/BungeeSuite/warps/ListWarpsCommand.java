@@ -11,7 +11,7 @@ import net.md_5.bungee.api.plugin.Command;
 public class ListWarpsCommand extends Command {
 	
 	BungeeSuite plugin;
-	private static final String[] PERMISSION_NODES = { "bungeesuite.warp.list", "bungeeesuite.warp.*",
+	private static final String[] PERMISSION_NODES = { "bungeesuite.warp.list", "bungeesuite.warp.*",
 		"bungeesuite.mod", "bungeesuite.admin", "bungeesuite.*" };
 	
 	private static final String[] PERMISSION_NODES_OVERRIDE = { "bungeesuite.warp.list.admin",
