@@ -30,13 +30,15 @@ public class InviteCommand extends Command {
 			sender.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
-		
 		if (arg1.length == 1) {
 			String name = sender.getName();
 			String player = arg1[0];
 			ChatPlayer cp = plugin.getChatPlayer(name);
 			ChatChannel cur = cp.getCurrentChannel();
-
+			if(cur.isServerChannel()){
+				sender.sendMessage(plugin.CHANNEL_INVITE_NOPERM);
+				return;
+			}
 			if (cur.getOwner().equalsIgnoreCase(name) || CommandUtil.hasPermission(sender, PERMISSION_NODES_OVERRIDE)) {
 				ProxiedPlayer pp = plugin.getUtilities().getClosestPlayer(player);
 				inviteToChannel(cur, pp, sender);
@@ -49,7 +51,10 @@ public class InviteCommand extends Command {
 			try {
 				if (plugin.getUtilities().chatChannelExists(arg1[1])) {
 					ChatChannel cc = plugin.getChannel(arg1[1]);
-					
+					if(cc.isServerChannel()){
+						sender.sendMessage(plugin.CHANNEL_INVITE_NOPERM);
+						return;
+					}
 					if (cc.getOwner().equalsIgnoreCase(sender.getName()) || CommandUtil.hasPermission(sender, PERMISSION_NODES_OVERRIDE)) {
 						ProxiedPlayer pp = plugin.getUtilities().getClosestPlayer(arg1[0]);
 						inviteToChannel(cc, pp, sender);

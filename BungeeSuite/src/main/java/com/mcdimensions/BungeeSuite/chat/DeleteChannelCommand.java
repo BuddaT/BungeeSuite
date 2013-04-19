@@ -33,6 +33,10 @@ public class DeleteChannelCommand extends Command {
 		if (arg1.length == 0) {
 			ChatPlayer cp = plugin.getChatPlayer(sender.getName());
 			ChatChannel current = cp.getCurrentChannel();
+			if(current.isServerChannel()){
+				sender.sendMessage(plugin.CHANNEL_INVITE_NOPERM);
+				return;
+			}
 			if (sender.getName().equalsIgnoreCase(current.getOwner()) || CommandUtil.hasPermission(sender, PERMISSION_NODES_OVERRIDE)) {
 				plugin.getUtilities().deleteChannel(current.getName());
 				sender.sendMessage(plugin.CHANNEL_DELETE_CONFIRM);
@@ -41,6 +45,10 @@ public class DeleteChannelCommand extends Command {
 			}
 		} else if (arg1.length == 1) {
 			ChatChannel cc = plugin.getChannel(arg1[0]);
+			if(cc.isServerChannel()){
+				sender.sendMessage(plugin.CHANNEL_INVITE_NOPERM);
+				return;
+			}
 			try {
 				if (!plugin.getUtilities().chatChannelExists(arg1[0])) {
 					sender.sendMessage(plugin.CHANNEL_NOT_EXIST);

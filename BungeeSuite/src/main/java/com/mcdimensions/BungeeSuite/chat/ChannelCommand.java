@@ -42,7 +42,10 @@ public class ChannelCommand extends Command {
 				sender.sendMessage(ChatColor.RED + "/" + plugin.channel + " kick (player)");
 				return;
 			}
-			
+			if(cc.isServerChannel()){
+				sender.sendMessage(plugin.CHANNEL_INVITE_NOPERM);
+				return;
+			}
 			String player = plugin.getUtilities().getClosestPlayer(args[1]).getName();
 			if(player==null){
 				player = args[1];
