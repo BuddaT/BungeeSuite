@@ -1,5 +1,6 @@
 package com.mcdimensions.BungeeSuite.utilities;
 
+
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -511,15 +512,14 @@ public class Utilities {
 	
 	
 	public void deleteChannel(String channel){
-		for(String data:plugin.getChannel(channel).members){//set online
+		for(String data:plugin.getChannel(channel).members){//set online players to new channel
 			ChatPlayer cp = plugin.getChatPlayer(data);
+			cp.removeChannel(channel);
 			if (plugin.globalDefault) {
 				cp.setCurrentChannel(plugin.getChannel("Global"));
-				return;
 			} else {
-				ChatChannel newc = plugin.getChannel(cp.getPlayer().getServer().getInfo().getName());
+				ChatChannel newc = plugin.getChannel(cp.getCurrentServer());
 				cp.setCurrentChannel(newc);
-				return;
 			}
 		}
 		sql.initialise();//set offline to stop them being deleted
@@ -536,7 +536,6 @@ public class Utilities {
 			e.printStackTrace();
 		}
 		sql.closeConnection();
-		//may need to go through and change any players with it as their current.
 		plugin.getChatPlayer(plugin.chatChannels.get(channel).getOwner()).subtractChannelsOwned();
 		plugin.chatChannels.remove(channel);
 	}
