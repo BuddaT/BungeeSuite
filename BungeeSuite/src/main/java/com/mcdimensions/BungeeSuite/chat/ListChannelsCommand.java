@@ -41,7 +41,7 @@ public class ListChannelsCommand extends Command {
 			if (data.equals(current)) {
 				message += ChatColor.GOLD + data + ", ";
 			} else {
-				message += ChatColor.DARK_GRAY + ", ";
+				message += ChatColor.DARK_GRAY + data+", ";
 			}
 		}
 		message = message.substring(0, message.length() - 2);
