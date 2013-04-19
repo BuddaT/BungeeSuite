@@ -315,8 +315,10 @@ public class Utilities {
 		sql.standardQuery("UPDATE BungeePlayers SET LastOnline=CURDATE() WHERE PlayerName = '"+player+"'");
 		sql.closeConnection();
 	}
-	public boolean chatChannelExists(String name) throws SQLException{
-		boolean check = plugin.chatChannels.containsKey(name);
+	public boolean chatChannelExists(String name) throws SQLException{ //gotta sql query as the db is not case sensitive anymore
+		sql.initialise();
+		boolean check = sql.existenceQuery("SELECT ChannelName FROM BungeeChannels Where ChannelName = '"+name+"'");
+		sql.closeConnection();
 		return check;
 	}
 	public ChatChannel getChatChannel(String name){

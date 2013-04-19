@@ -87,7 +87,7 @@ public class BungeeSuite extends Plugin {
 			CHANNEL_NOT_INVITED, CHANNEL_NOT_LEAVE_SERVER,
 			CHANNEL_TOGGLE_PERMISSION, CHANNEL_NOT_LEAVE_OWNER,
 			CHANNEL_IS_MEMBER, CHANNEL_NOT_MEMBER, CHANNEL_NO_PERMISSION,
-			CHANNEL_NOT_EXIST, CHANNEL_NEW_OWNER, CHANNEL_CREATE_CONFIRM, CHANNEL_DELETE_CONFIRM,
+			CHANNEL_NOT_EXIST, CHANNEL_ALREADY_EXISTS, CHANNEL_NEW_OWNER, CHANNEL_CREATE_CONFIRM, CHANNEL_DELETE_CONFIRM,
 			CHANNEL_PLAYER_JOINED, CHANNEL_WELCOME, CHANNEL_KICK_PLAYER,
 			CHANNEL_PLAYER_LEAVE, CHANNEL_TOO_MANY, BROADCAST_MESSAGE,
 			CHATSPY_TOGGLED, NO_PERMISSION_COLOR;
@@ -307,6 +307,7 @@ public class BungeeSuite extends Plugin {
 		CHANNEL_NOT_MEMBER = locale.getString("CHANNEL_NOT_MEMBER", ChatColor.RED + "That player is not a member of the channel");
 		CHANNEL_NO_PERMISSION = locale.getString("CHANNEL_NO_PERMISSION", ChatColor.RED + "You do not have permission to edit this channel");
 		CHANNEL_NOT_EXIST = locale.getString("CHANNEL_NOT_EXIST", ChatColor.RED + "That channel does not exist!");
+		CHANNEL_ALREADY_EXISTS = locale.getString("CHANNEL_ALREADY_EXISTS", ChatColor.RED+ "That channel already exists");
 		CHANNEL_CREATE_CONFIRM = locale.getString("CHANNEL_CREATE_CONFIRM", ChatColor.DARK_GREEN + "Channel %channel created!");
 		CHANNEL_DELETE_CONFIRM = locale.getString("CHANNEL_DELETE_CONFIRM", ChatColor.DARK_GREEN + "Channel deleted!");
 		CHANNEL_NEW_OWNER = locale.getString("CHANNEL_NEW_OWNER", ChatColor.DARK_GREEN + "You are now the owner of the channel %channel");

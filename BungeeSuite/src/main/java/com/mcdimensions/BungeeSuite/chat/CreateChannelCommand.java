@@ -1,5 +1,7 @@
 package com.mcdimensions.BungeeSuite.chat;
 
+import java.sql.SQLException;
+
 import com.mcdimensions.BungeeSuite.BungeeSuite;
 import com.mcdimensions.BungeeSuite.utilities.CommandUtil;
 
@@ -27,13 +29,20 @@ public class CreateChannelCommand extends Command {
 			sender.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
-
+		try {
+			if(plugin.getUtilities().chatChannelExists(arg1[0])){
+				sender.sendMessage(plugin.CHANNEL_ALREADY_EXISTS);
+				return;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if (plugin.getChatPlayer(sender.getName()).getChannelsOwned() >= plugin.maxCustomChannels
 				&& !CommandUtil.hasPermission(sender, PERMISSION_NODES_OVERRIDE)) {
 			sender.sendMessage(plugin.CHANNEL_TOO_MANY);
 			return;
 		}
-
 		if (arg1.length == 1) {
 			String name = arg1[0];
 			plugin.getUtilities().createChannel(name, plugin.defaultCustomChannelFormat, false, sender.getName());
