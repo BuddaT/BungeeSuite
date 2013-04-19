@@ -538,7 +538,7 @@ public class Utilities {
 			e.printStackTrace();
 		}
 		sql.closeConnection();
-		plugin.getChatPlayer(plugin.chatChannels.get(channel).getOwner()).subtractChannelsOwned();
+		plugin.getUtilities().subtractChannel(plugin.chatChannels.get(channel).getOwner());
 		plugin.chatChannels.remove(channel);
 	}
 
