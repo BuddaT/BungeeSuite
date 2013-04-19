@@ -355,7 +355,9 @@ public class Utilities {
 		while(res2.next()){
 			ChatChannel cc = plugin.getChannel(res2.getString("ChannelName"));
 			cc.onlineMember(cp);
-			cp.addChannel(cc.getName());
+			if(!cp.getChannels().contains(cc.getName())){
+				cp.addChannel(cc.getName());
+			}
 		}
 		//add players ignored
 		ResultSet res3 = sql.sqlQuery("SELECT Ignoring FROM BungeeIgnores WHERE PlayerName = '"+player+"'");
