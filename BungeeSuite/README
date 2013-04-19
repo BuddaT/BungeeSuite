@@ -92,8 +92,7 @@ Permission Nodes:
 			/channellist
 				- bungeesuite.chat.channels	
 				Permission to get second stage of list(?) (ADMIN OVERRIDE)
-					- bungeesuite.chat.list.admin
-							
+					- bungeesuite.chat.list.admin			
 			/chatspy
 				- bungeesuite.chat.spy, bungeesuite.chatspy
 			/createchannel (channel) [format]
