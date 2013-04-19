@@ -53,6 +53,15 @@ public class CreateChannelCommand extends Command {
 		} else if (arg1.length == 2) {
 			String name = arg1[0];
 			String format = arg1[1];
+			try {
+				if(plugin.getUtilities().chatChannelExists(arg1[0])){
+					sender.sendMessage(plugin.CHANNEL_ALREADY_EXISTS);
+					return;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			plugin.getUtilities().createChannel(name, format, false, sender.getName());
 			
 			String chmsg = plugin.CHANNEL_CREATE_CONFIRM;
