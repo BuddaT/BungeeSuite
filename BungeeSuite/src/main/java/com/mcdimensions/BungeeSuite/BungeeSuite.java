@@ -27,6 +27,7 @@ import com.mcdimensions.BungeeSuite.chat.IgnoringCommand;
 import com.mcdimensions.BungeeSuite.chat.InviteCommand;
 import com.mcdimensions.BungeeSuite.chat.JoinCommand;
 import com.mcdimensions.BungeeSuite.chat.LeaveChannelCommand;
+import com.mcdimensions.BungeeSuite.chat.ListChannelsCommand;
 import com.mcdimensions.BungeeSuite.chat.MessageCommand;
 import com.mcdimensions.BungeeSuite.chat.MuteCommand;
 import com.mcdimensions.BungeeSuite.chat.MuteAllCommand;
@@ -104,7 +105,7 @@ public class BungeeSuite extends Plugin {
 			nickname, w, world, s, server, msg, whisper, r, message, reply, t,
 			tell, toggle, invite, join, accept, create, createChannel, channel,
 			c, delete, deleteChannel, leave, leaveChannel, chatSpy,
-			displayServer;
+			displayServer, channels, channelslist;
 	public String defaultCustomChannelFormat, defaultServerChannelFormat;
 	public int maxCustomChannels;
 	public String setPortal, delPortal, listPortals, portalsc;
@@ -128,7 +129,6 @@ public class BungeeSuite extends Plugin {
 
 	/* Chat Info*/
 	public HashMap<String, String> serverNames, replacementWords;
-
 	public HashMap<String, Calendar> playerBans;
 	public HashMap<String, ChatPlayer> onlinePlayers;
 	public HashMap<String, ChatChannel> chatChannels;
@@ -430,6 +430,7 @@ public class BungeeSuite extends Plugin {
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new DisplayServerCommand(this));
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new IgnoreCommand(this));
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new IgnoringCommand(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new ListChannelsCommand(this));
 		}
 		
 		if (bansEnabled) {
@@ -613,6 +614,8 @@ public class BungeeSuite extends Plugin {
 		s = commands.getString("BungeeSuite.Commands.s", "s");
 		chatSpy = commands.getString("BungeeSuite.Commands.chatspy", "chatspy");
 		displayServer = commands.getString( "BungeeSuite.Commands.displayserver", "displayserver");
+		channels = commands.getString( "BungeeSuite.Commands.channels", "channels");
+		channelslist = commands.getString( "BungeeSuite.Commands.channelslist", "channelslist");
 
 		/* Portal Commands */
 		setPortal = commands.getString("BungeeSuite.Commands.setportal", "setportal");

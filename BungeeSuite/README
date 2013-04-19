@@ -54,6 +54,7 @@ Permission Nodes:
 			- bungeesuite.warp.delete
 			- bungeesuite.warp.create
 			- bungeesuite.warp.list.admin
+			- bungeesuite.chat.list.admin
 		bungeesuite.*
 			- bungeesuite.admin
 			
@@ -87,6 +88,12 @@ Permission Nodes:
 				- bungeesuite.chat.broadcast
 			/channel (kick/format/editformat/rename/setowner/members/help) [args]
 				- bungeesuite.chat.channels
+			/channels		
+			/channellist
+				- bungeesuite.chat.channels	
+				Permission to get second stage of list(?) (ADMIN OVERRIDE)
+					- bungeesuite.chat.list.admin
+							
 			/chatspy
 				- bungeesuite.chat.spy, bungeesuite.chatspy
 			/createchannel (channel) [format]
