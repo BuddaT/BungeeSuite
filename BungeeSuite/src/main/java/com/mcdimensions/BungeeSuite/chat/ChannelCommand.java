@@ -12,6 +12,8 @@ public class ChannelCommand extends Command {
 	BungeeSuite plugin;
 	private static final String[] PERMISSION_NODES = { "bungeesuite.chat.channels", "bungeesuite.chat.*",
 		"bungeesuite.chat.basic", "bungeesuite.mod", "bungeesuite.admin", "bungeesuite.*" };
+	
+	private static final String[] PERMISSION_OVERRIDE_NODES = { "bungeesuite.admin", "bungeesuite.*" };
 
 	public ChannelCommand(BungeeSuite bungeeSuite) {
 		super(bungeeSuite.channel, null, bungeeSuite.c);
@@ -23,7 +25,7 @@ public class ChannelCommand extends Command {
 		ChatPlayer cp = plugin.getChatPlayer(sender.getName());
 		ChatChannel cc = cp.getCurrentChannel();
 		
-		if (!CommandUtil.hasPermission(sender, PERMISSION_NODES) || !sender.getName().equalsIgnoreCase(cc.getOwner())) {
+		if (!CommandUtil.hasPermission(sender, PERMISSION_NODES) || !(sender.getName().equalsIgnoreCase(cc.getOwner()) || CommandUtil.hasPermission(sender, PERMISSION_OVERRIDE_NODES))) {
 			sender.sendMessage(plugin.NO_PERMISSION);
 			return;
 		}
