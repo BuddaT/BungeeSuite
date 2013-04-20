@@ -4,7 +4,7 @@
 
   <groupId>com.mcdimensions.BungeeSuite</groupId>
   <artifactId>BungeeSuite</artifactId>
-  <version>0.90-SNAPSHOT</version>
+  <version>0.91-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>BungeeSuite</name>
@@ -46,7 +46,12 @@
 	  <groupId>mysql</groupId>
 	  <artifactId>mysql-connector-java</artifactId>
 	  <version>5.1.24</version>
-    </dependency>   
+	</dependency>
+	<dependency>
+		<groupId>net.buddat.bungeesuite</groupId>
+		<artifactId>bungeesuitelib</artifactId>
+		<version>0.1-SNAPSHOT</version>
+	</dependency>
   </dependencies>
 	
   <build>

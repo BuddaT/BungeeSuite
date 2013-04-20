@@ -50,7 +50,6 @@ import com.mcdimensions.BungeeSuite.teleports.TPAHereCommand;
 import com.mcdimensions.BungeeSuite.teleports.TPAllCommand;
 import com.mcdimensions.BungeeSuite.teleports.TPDenyCommand;
 import com.mcdimensions.BungeeSuite.utilities.ColorLog;
-import com.mcdimensions.BungeeSuite.utilities.SQL;
 import com.mcdimensions.BungeeSuite.utilities.Utilities;
 import com.mcdimensions.BungeeSuite.warps.Warp;
 import com.mcdimensions.BungeeSuite.warps.WarpCommand;
@@ -59,6 +58,8 @@ import com.mcdimensions.BungeeSuite.warps.SetWarpCommand;
 import com.mcdimensions.BungeeSuite.warps.WarpSpawnCommand;
 import com.mcdimensions.BungeeSuite.warps.ListWarpsCommand;
 
+import net.buddat.bungeesuite.database.Database;
+import net.buddat.bungeesuite.database.DatabaseDependencyException;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -148,7 +149,7 @@ public class BungeeSuite extends Plugin {
 	public ColorLog cl;
 	
 	private ProxyServer proxy;
-	private SQL sql;
+	private Database sql;
 
 	public void onLoad() {
 		this.instance = this;
@@ -166,6 +167,8 @@ public class BungeeSuite extends Plugin {
 			loadVariables();
 		} catch (SQLException e1) {
 			e1.printStackTrace();
+		} catch (DatabaseDependencyException e) {
+			e.printStackTrace();
 		}
 		
 		cl.cLog("&2 -Creating SQL tables");
@@ -467,9 +470,9 @@ public class BungeeSuite extends Plugin {
 		warped = new HashMap<String, Warp>();
 	}
 
-	private void loadVariables() throws SQLException {
+	private void loadVariables() throws SQLException, DatabaseDependencyException {
 		proxy = ProxyServer.getInstance();
-		sql = new SQL(url, port, database, username, password);
+		sql = new Database(url, port, database, username, password);
 		utils = new Utilities(this);
 		this.allMuted = false;
 	}
@@ -640,7 +643,7 @@ public class BungeeSuite extends Plugin {
 		return config;
 	}
 
-	public SQL getSQL() {
+	public Database getDatabase() {
 		return sql;
 	}
 
