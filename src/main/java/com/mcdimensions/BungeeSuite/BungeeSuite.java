@@ -51,7 +51,6 @@ import com.mcdimensions.BungeeSuite.teleports.TPAHereCommand;
 import com.mcdimensions.BungeeSuite.teleports.TPAllCommand;
 import com.mcdimensions.BungeeSuite.teleports.TPDenyCommand;
 import com.mcdimensions.BungeeSuite.utilities.ColorLog;
-import com.mcdimensions.BungeeSuite.utilities.SQL;
 import com.mcdimensions.BungeeSuite.utilities.Utilities;
 import com.mcdimensions.BungeeSuite.warps.Warp;
 import com.mcdimensions.BungeeSuite.warps.WarpCommand;
