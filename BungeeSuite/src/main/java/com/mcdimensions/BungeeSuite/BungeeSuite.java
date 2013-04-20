@@ -95,7 +95,7 @@ public class BungeeSuite extends Plugin {
 	public HashMap<String, String> prefix;
 	
 	/* MySQL Information */
-	public String url, database, port, username, password;
+	public String url, databaseHost, port, username, password;
 	
 	/* Command Configuration */
 	public String bungeeSuiteCommand;
@@ -149,7 +149,7 @@ public class BungeeSuite extends Plugin {
 	public ColorLog cl;
 	
 	private ProxyServer proxy;
-	private Database sql;
+	private Database database;
 
 	public void onLoad() {
 		this.instance = this;
@@ -472,7 +472,7 @@ public class BungeeSuite extends Plugin {
 
 	private void loadVariables() throws SQLException, DatabaseDependencyException {
 		proxy = ProxyServer.getInstance();
-		sql = new Database(url, port, database, username, password);
+		database = new Database(url, databaseHost, port, username, password);
 		utils = new Utilities(this);
 		this.allMuted = false;
 	}
@@ -494,7 +494,7 @@ public class BungeeSuite extends Plugin {
 		
 		username = config.getString("BungeeSuite.SQL.Username", "root");
 		password = config.getString("BungeeSuite.SQL.Password", "password");
-		database = config.getString("BungeeSuite.SQL.Database", "minecraft");
+		databaseHost = config.getString("BungeeSuite.SQL.Database", "minecraft");
 		url = config.getString("BungeeSuite.SQL.URL", "localhost");
 		port = config.getString("BungeeSuite.SQL.Port", "3306");
 		
@@ -644,7 +644,7 @@ public class BungeeSuite extends Plugin {
 	}
 
 	public Database getDatabase() {
-		return sql;
+		return database;
 	}
 
 	public Utilities getUtilities() {
