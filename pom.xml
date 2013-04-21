@@ -33,7 +33,7 @@
 		</repository>
 		<repository>
 			<id>buddat</id>
-			<url>http://ci.buddat.net:8080/plugin/repository/project/BungeeSuiteLib/LastSuccessful/repositoryChain</url>
+			<url>http://ci.buddat.net:8080/plugin/repository/everything</url>
 		</repository>
 	</repositories>
 
