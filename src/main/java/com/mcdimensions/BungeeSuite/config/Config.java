@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
-
 public class Config {
+	/**
+	 * Base config item.
+	 */
+	public static final String BASE = "BungeeSuite";
 	
 	private FileConfiguration fconfig;
 	private String path;

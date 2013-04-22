@@ -68,6 +68,7 @@ import net.md_5.bungee.api.plugin.Plugin;
 
 public class BungeeSuite extends Plugin {
 	public static final String PLUGIN_NAME = "BungeeSuite";
+	public static final String PLUGIN_BASE_CONFIG = "bungeesuite";
 
 	/* Chat Settings */
 	public Config config, channelConfig, locale, prefixConfig, commands;
