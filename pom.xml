@@ -56,6 +56,11 @@
 			<artifactId>bungeesuitelib</artifactId>
 			<version>0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>14.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -87,6 +92,7 @@
 							<artifactSet>
 								<includes>
 									<include>net.buddat.bungeesuite:bungeesuitelib</include>
+									<include>com.jolbox:bonecp</include>
 								</includes>
 							</artifactSet>
 						</configuration>
