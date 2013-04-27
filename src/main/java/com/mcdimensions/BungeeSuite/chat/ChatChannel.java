@@ -67,12 +67,12 @@ public class ChatChannel {
 
 	public void addMember(ChatPlayer player) {
 		members.add(player.getName());
-		plugin.getUtilities().addMemberChannel(player.getName(), this.getName());
+		plugin.getChatPersistence().addMemberChannel(player.getName(), this.getName());
 	}
 
 	public void removeMember(String player) {
 		members.remove(player);
-		plugin.getUtilities().removeMemberChannel(player, this.getName());
+		plugin.getChatPersistence().removeMemberChannel(player, this.getName());
 		
 		if (plugin.channelMessages) {
 			String jmessage = plugin.CHANNEL_PLAYER_LEAVE;
@@ -156,7 +156,7 @@ public class ChatChannel {
 		}
 		
 		this.channelName = name;
-		plugin.getUtilities().renameChannel(channelName, name);
+		plugin.getChatPersistence().renameChannel(channelName, name);
 	}
 
 	public void reformatChannel(String format) {
@@ -165,7 +165,7 @@ public class ChatChannel {
 		plugin.channelConfig.setString("BungeeSuite.Chat.Channels." + getName(), format);
 		plugin.channelConfig.save();
 		
-		plugin.getUtilities().reformatChannel(channelName, format);
+		plugin.getChatPersistence().reformatChannel(channelName, format);
 	}
 
 	public void kickPlayer(String player) {
@@ -179,7 +179,7 @@ public class ChatChannel {
 			
 			members.remove(plugin.getChatPlayer(player));
 		} else {
-			plugin.getUtilities().removeMemberChannel(player, channelName);
+			plugin.getChatPersistence().removeMemberChannel(player, channelName);
 		}
 	}
 
@@ -347,7 +347,7 @@ public class ChatChannel {
 		cmsg = cmsg.replace("%channel", channelName);
 		player.sendMessage(cmsg);
 		
-		plugin.getUtilities().setChannelOwner(channelName, player.getName());
+		plugin.getChatPersistence().setChannelOwner(channelName, player.getName());
 	}
 
 }

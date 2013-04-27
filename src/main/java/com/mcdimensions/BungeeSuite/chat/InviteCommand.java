@@ -49,7 +49,7 @@ public class InviteCommand extends Command {
 			}
 		} else if (arg1.length == 2) {
 			try {
-				if (plugin.getUtilities().chatChannelExists(arg1[1])) {
+				if (plugin.getChatPersistence().chatChannelExists(arg1[1])) {
 					ChatChannel cc = plugin.getChannel(arg1[1]);
 					if(cc.isServerChannel()){
 						sender.sendMessage(plugin.CHANNEL_INVITE_NOPERM);

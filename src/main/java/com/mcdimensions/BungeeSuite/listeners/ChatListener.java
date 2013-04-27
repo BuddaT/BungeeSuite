@@ -133,8 +133,8 @@ public class ChatListener implements Listener {
 				plugin.getUtilities().createPlayer(player, connection);
 			}
 			if (!plugin.onlinePlayers.containsKey(event.getPlayer().getName())) {
-				plugin.getUtilities()
-						.getChatPlayer(event.getPlayer().getName());
+				plugin.getChatPersistence()
+						.loadChatPlayer(event.getPlayer().getName());
 			}
 		}
 		ChatPlayer cp = plugin.getChatPlayer(event.getPlayer().getName());

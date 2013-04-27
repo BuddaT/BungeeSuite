@@ -52,7 +52,7 @@ public class LeaveChannelCommand extends Command {
 		} else if (arg1.length == 1) {
 			String channelName = arg1[0];
 			try {
-				if (plugin.getUtilities().chatChannelExists(channelName)) {
+				if (plugin.getChatPersistence().chatChannelExists(channelName)) {
 					ChatChannel cc = plugin.getChannel(channelName);
 					ChatPlayer cp = plugin.getChatPlayer(sender.getName());
 					if (cc.isServerChannel()) {

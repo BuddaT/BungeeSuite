@@ -96,4 +96,8 @@ public class WarpPersistence {
 		}
 	}
 
+	public void deleteWarp(String warp) throws SQLException {
+		database.update("DELETE FROM BungeeWarps WHERE Name = ?", warp);
+		plugin.warpList.remove(warp);
+	}
 }

@@ -34,7 +34,7 @@ public class ServerLoginLogout implements Listener {
 				plugin.getUtilities().updateIP(player, connection);
 			}
 			if(plugin.chatEnabled && !plugin.onlinePlayers.containsKey(player)){
-				plugin.getUtilities().getChatPlayer(player);
+				plugin.getChatPersistence().loadChatPlayer(player);
 			}
 		}
 	

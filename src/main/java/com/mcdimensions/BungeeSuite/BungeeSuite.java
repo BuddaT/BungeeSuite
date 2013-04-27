@@ -35,6 +35,7 @@ import com.mcdimensions.BungeeSuite.chat.NicknameCommand;
 import com.mcdimensions.BungeeSuite.chat.ReplyCommand;
 import com.mcdimensions.BungeeSuite.chat.ServerCommand;
 import com.mcdimensions.BungeeSuite.chat.ToggleCommand;
+import com.mcdimensions.BungeeSuite.chat.persistence.ChatPersistence;
 import com.mcdimensions.BungeeSuite.config.Config;
 import com.mcdimensions.BungeeSuite.listeners.BanListener;
 import com.mcdimensions.BungeeSuite.listeners.ChatListener;
@@ -153,6 +154,7 @@ public class BungeeSuite extends Plugin {
 	private ProxyServer proxy;
 	private Database database;
 	private WarpPersistence warpPersistence;
+	private ChatPersistence chatPersistence;
 
 	public void onLoad() {
 		this.instance = this;
@@ -347,13 +349,13 @@ public class BungeeSuite extends Plugin {
 		String configpath = "/plugins/BungeeSuite/channelFormats.yml";
 		channelConfig = new Config(configpath);
 
-		utils.loadChannels();
+		chatPersistence.loadChannels();
 
 		for (ChatChannel data : chatChannels.values()) {
 			String format = channelConfig.getString("BungeeSuite.Chat.Channels." + data.getName(), data.getFormat());
 
 			if (!format.equals(data.getFormat()))
-				getUtilities().reformatChannel(data.getName(), format);
+				chatPersistence.reformatChannel(data.getName(), format);
 		}
 
 		channelConfig.save();
@@ -377,14 +379,14 @@ public class BungeeSuite extends Plugin {
 
 	private void loadSQLTables() throws SQLException {
 		utils.selectDatabase();
-		utils.CreateChatSQLTables();
+		chatPersistence.createChatSQLTables();
 		utils.createBanningSQLTables();
 		utils.createSQLServerTable();
 		utils.CreateSignSQLTables();
 		utils.UpdateSignFormats();
 		warpPersistence.createTables();
 		utils.CreatePortalSQLTables();
-		utils.createStandardChannels();
+		chatPersistence.createStandardChannels();
 		utils.updateTables();
 	}
 
@@ -481,6 +483,7 @@ public class BungeeSuite extends Plugin {
 		proxy = ProxyServer.getInstance();
 		database = new Database(url, databaseHost, port, username, password);
 		warpPersistence = new WarpPersistence(this, database, false);
+		chatPersistence = new ChatPersistence(this, database, false);
 		utils = new Utilities(this);
 		this.allMuted = false;
 	}
@@ -676,6 +679,10 @@ public class BungeeSuite extends Plugin {
 	
 	public WarpPersistence getWarpPersistence() {
 		return warpPersistence;
+	}
+	
+	public ChatPersistence getChatPersistence() {
+		return chatPersistence;
 	}
 
 	public void reload() {

@@ -38,7 +38,7 @@ public class DeleteChannelCommand extends Command {
 				return;
 			}
 			if (sender.getName().equalsIgnoreCase(current.getOwner()) || CommandUtil.hasPermission(sender, PERMISSION_NODES_OVERRIDE)) {
-				plugin.getUtilities().deleteChannel(current.getName());
+				plugin.getChatPersistence().deleteChannel(current.getName());
 				sender.sendMessage(plugin.CHANNEL_DELETE_CONFIRM);
 			} else {
 				sender.sendMessage(plugin.CHANNEL_NO_PERMISSION);
@@ -50,7 +50,7 @@ public class DeleteChannelCommand extends Command {
 				return;
 			}
 			try {
-				if (!plugin.getUtilities().chatChannelExists(arg1[0])) {
+				if (!plugin.getChatPersistence().chatChannelExists(arg1[0])) {
 					sender.sendMessage(plugin.CHANNEL_NOT_EXIST);
 					return;
 				}
@@ -59,7 +59,7 @@ public class DeleteChannelCommand extends Command {
 			}
 
 			if (cc != null && (sender.getName().equalsIgnoreCase(cc.getOwner()) || CommandUtil.hasPermission(sender, PERMISSION_NODES_OVERRIDE))) {
-				plugin.getUtilities().deleteChannel(cc.getName());
+				plugin.getChatPersistence().deleteChannel(cc.getName());
 				sender.sendMessage(plugin.CHANNEL_DELETE_CONFIRM);
 			} else {
 				sender.sendMessage(plugin.CHANNEL_NO_PERMISSION);

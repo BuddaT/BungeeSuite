@@ -37,7 +37,7 @@ public class DeleteWarpCommand extends Command {
 		
 		try {
 			if (warpStorage.warpExists(arg1[0])) {
-				plugin.getUtilities().deleteWarp(arg1[0]);
+				plugin.getWarpPersistence().deleteWarp(arg1[0]);
 				sender.sendMessage(plugin.WARP_DELETE_CONFIRM);
 			} else {
 				sender.sendMessage(plugin.WARP_NOT_EXIST);

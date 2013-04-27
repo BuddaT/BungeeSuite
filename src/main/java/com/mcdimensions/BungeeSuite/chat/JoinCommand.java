@@ -38,7 +38,7 @@ public class JoinCommand extends Command {
 		String channelName = arg1[0];
 		String playerName = sender.getName();
 		try {
-			if (plugin.getUtilities().chatChannelExists(channelName)) {
+			if (plugin.getChatPersistence().chatChannelExists(channelName)) {
 				ChatChannel cc = plugin.getChannel(channelName);
 				if (cc.isInvited(playerName) || CommandUtil.hasPermission(sender, PERMISSION_NODES_OVERRIDE)) {
 					cc.acceptInvite(playerName);

@@ -30,7 +30,7 @@ public class CreateChannelCommand extends Command {
 			return;
 		}
 		try {
-			if(plugin.getUtilities().chatChannelExists(arg1[0])){
+			if(plugin.getChatPersistence().chatChannelExists(arg1[0])){
 				sender.sendMessage(plugin.CHANNEL_ALREADY_EXISTS);
 				return;
 			}
@@ -45,7 +45,7 @@ public class CreateChannelCommand extends Command {
 		}
 		if (arg1.length == 1) {
 			String name = arg1[0];
-			plugin.getUtilities().createChannel(name, plugin.defaultCustomChannelFormat, false, sender.getName());
+			plugin.getChatPersistence().createChannel(name, plugin.defaultCustomChannelFormat, false, sender.getName());
 			
 			String chmsg = plugin.CHANNEL_CREATE_CONFIRM;
 			chmsg = chmsg.replace("%channel", name);
@@ -54,7 +54,7 @@ public class CreateChannelCommand extends Command {
 			String name = arg1[0];
 			String format = arg1[1];
 			try {
-				if(plugin.getUtilities().chatChannelExists(arg1[0])){
+				if(plugin.getChatPersistence().chatChannelExists(arg1[0])){
 					sender.sendMessage(plugin.CHANNEL_ALREADY_EXISTS);
 					return;
 				}
@@ -62,7 +62,7 @@ public class CreateChannelCommand extends Command {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			plugin.getUtilities().createChannel(name, format, false, sender.getName());
+			plugin.getChatPersistence().createChannel(name, format, false, sender.getName());
 			
 			String chmsg = plugin.CHANNEL_CREATE_CONFIRM;
 			chmsg = chmsg.replace("%channel", name);

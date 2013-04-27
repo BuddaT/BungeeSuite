@@ -100,7 +100,7 @@ public class ChatPlayer {
 	
 	public void setCurrentChannel(ChatChannel channel, boolean alert) {
 		this.currentChannel = channel;
-		plugin.getUtilities().setCurrentChannel(name, channel.getName());
+		plugin.getChatPersistence().setCurrentChannel(name, channel.getName());
 		
 		if (alert){
 			String msg = plugin.PLAYER_SENDING_CHAT;
@@ -128,11 +128,11 @@ public class ChatPlayer {
 	public void toggleChatSpy() {
 		if (isChatSpying()) {
 			chatspying = false;
-			plugin.getUtilities().removeChatSpy(this);
+			plugin.getChatPersistence().removeChatSpy(this);
 			return;
 		} else {
 			chatspying = true;
-			plugin.getUtilities().addChatSpy(this);
+			plugin.getChatPersistence().addChatSpy(this);
 			return;
 		}
 	}
@@ -276,12 +276,12 @@ public class ChatPlayer {
 	
 	public void addChannelsOwned() {
 		this.channelsOwned++;
-		plugin.getUtilities().addChannel(name);
+		plugin.getChatPersistence().addChannel(name);
 	}
 
 	public void subtractChannelsOwned() {
 		this.channelsOwned--;
-		plugin.getUtilities().subtractChannel(name);
+		plugin.getChatPersistence().subtractChannel(name);
 	}
 
 	public String colorSub(String str) {

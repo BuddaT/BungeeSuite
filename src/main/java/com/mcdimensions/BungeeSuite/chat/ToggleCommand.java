@@ -64,7 +64,7 @@ public class ToggleCommand extends Command {
 		
 		String channel = arg1[0];
 		try {
-			if (plugin.getUtilities().chatChannelExists(channel)) {
+			if (plugin.getChatPersistence().chatChannelExists(channel)) {
 				ChatChannel cc = plugin.getChannel(channel);
 				ChatPlayer cp = plugin.getChatPlayer(sender.getName());
 				
