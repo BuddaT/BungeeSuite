@@ -45,6 +45,7 @@ import com.mcdimensions.BungeeSuite.listeners.ServerLoginLogout;
 import com.mcdimensions.BungeeSuite.portals.DeletePortalCommand;
 import com.mcdimensions.BungeeSuite.portals.ListPortalsCommand;
 import com.mcdimensions.BungeeSuite.portals.SetPortalCommand;
+import com.mcdimensions.BungeeSuite.signs.SignPersistence;
 import com.mcdimensions.BungeeSuite.teleports.TPACommand;
 import com.mcdimensions.BungeeSuite.teleports.TPAHereCommand;
 import com.mcdimensions.BungeeSuite.teleports.TPAcceptCommand;
@@ -155,6 +156,7 @@ public class BungeeSuite extends Plugin {
 	private Database database;
 	private WarpPersistence warpPersistence;
 	private ChatPersistence chatPersistence;
+	private SignPersistence signPersistence;
 
 	public void onLoad() {
 		this.instance = this;
@@ -382,8 +384,8 @@ public class BungeeSuite extends Plugin {
 		chatPersistence.createChatSQLTables();
 		utils.createBanningSQLTables();
 		utils.createSQLServerTable();
-		utils.CreateSignSQLTables();
-		utils.UpdateSignFormats();
+		signPersistence.createSignSQLTables();
+		signPersistence.updateSignFormats();
 		warpPersistence.createTables();
 		utils.CreatePortalSQLTables();
 		chatPersistence.createStandardChannels();
@@ -482,8 +484,9 @@ public class BungeeSuite extends Plugin {
 	private void loadVariables() throws SQLException, DatabaseDependencyException {
 		proxy = ProxyServer.getInstance();
 		database = new Database(url, databaseHost, port, username, password);
-		warpPersistence = new WarpPersistence(this, database, false);
-		chatPersistence = new ChatPersistence(this, database, false);
+		warpPersistence = new WarpPersistence(this, database);
+		chatPersistence = new ChatPersistence(this, database);
+		signPersistence = new SignPersistence(this, database);
 		utils = new Utilities(this);
 		this.allMuted = false;
 	}

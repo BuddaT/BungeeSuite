@@ -15,31 +15,12 @@ import net.md_5.bungee.api.CommandSender;
 public class WarpPersistence {
 	private final BungeeSuite plugin;
 	private final Database database;
-	private final Object lockEnabled = new Object();
-	private volatile boolean isEnabled;
 	
-	public WarpPersistence(BungeeSuite plugin, Database database, boolean isEnabled) {
+	public WarpPersistence(BungeeSuite plugin, Database database) {
 		this.plugin = plugin;
 		this.database = database;
-		this.isEnabled = isEnabled;
 	}
 	
-	public void enable() {
-		synchronized (lockEnabled) {
-			this.isEnabled = true;
-		}
-	}
-	
-	public void disable() {
-		synchronized (lockEnabled) {
-			this.isEnabled = false;
-		}
-	}
-	
-	public boolean isEnabled() {
-		return isEnabled;
-	}
-
 	/**
 	 * Creates the tables required for storing warps. This is done regardless of
 	 * enabled, as other functionality references these tables even if warps are

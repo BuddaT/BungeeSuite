@@ -18,7 +18,7 @@ public class ChatPersistence {
 	private final BungeeSuite plugin;
 	private final Database database;
 
-	public ChatPersistence(BungeeSuite plugin, Database database, boolean enabled) {
+	public ChatPersistence(BungeeSuite plugin, Database database) {
 		this.plugin = plugin;
 		this.database = database;
 	}
