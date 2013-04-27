@@ -62,6 +62,7 @@ import com.mcdimensions.BungeeSuite.warps.WarpCommand;
 import com.mcdimensions.BungeeSuite.warps.WarpSpawnCommand;
 import com.mcdimensions.BungeeSuite.warps.persistence.WarpPersistence;
 
+import net.buddat.bungeesuite.channels.ChannelCommunication;
 import net.buddat.bungeesuite.database.Database;
 import net.buddat.bungeesuite.database.DatabaseDependencyException;
 import net.md_5.bungee.api.ChatColor;
@@ -456,8 +457,8 @@ public class BungeeSuite extends Plugin {
 
 	private void registerListeners() {
 		proxy.getPluginManager().registerListener(this, new PluginMessageListener(this));
-		proxy.registerChannel("BungeeSuite");
-		proxy.registerChannel("BungeeSuiteMC");
+		proxy.registerChannel(ChannelCommunication.SERVER_TO_PROXY_CHANNEL);
+		proxy.registerChannel(ChannelCommunication.PROXY_TO_SERVER_CHANNEL);
 
 		proxy.getPluginManager().registerListener(this, new ServerLoginLogout(this));
 

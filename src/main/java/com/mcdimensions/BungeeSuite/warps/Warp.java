@@ -6,11 +6,13 @@ import java.io.IOException;
 
 import com.mcdimensions.BungeeSuite.BungeeSuite;
 
+import net.buddat.bungeesuite.channels.ChannelCommunication;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class Warp {
+	public static final String MESSAGE_NAME = "Warp";
 	WarpLocation wl;
 	boolean visable;
 
@@ -30,18 +32,18 @@ public class Warp {
 			DataOutputStream o = new DataOutputStream(b);
 
 			try {
-				o.writeUTF("Warp");
+				o.writeUTF(MESSAGE_NAME);
 				o.writeUTF(player.getName());
 				o.writeUTF(wl.serialize()); // Target Server
 			} catch (IOException e) {
 				// Can never happen
 			}
-			player.getServer().sendData("BungeeSuiteMC", b.toByteArray());
+			player.getServer().sendData(ChannelCommunication.PROXY_TO_SERVER_CHANNEL, b.toByteArray());
 			return true;
 		} else {
 			// teleport player to right server then send location once loaded
 			BungeeSuite plugin = (BungeeSuite) ProxyServer.getInstance()
-					.getPluginManager().getPlugin("BungeeSuite");
+					.getPluginManager().getPlugin(BungeeSuite.PLUGIN_NAME);
 			plugin.warped.put(player.getName(), this);
 			player.connect(TargetServer);
 			return false;

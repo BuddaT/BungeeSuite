@@ -44,7 +44,7 @@ public class ChatChannel {
 		this.owner = owner;
 		this.members = new HashSet<String>();
 		
-		plugin = (BungeeSuite) ProxyServer.getInstance().getPluginManager() .getPlugin("BungeeSuite");
+		plugin = (BungeeSuite) ProxyServer.getInstance().getPluginManager() .getPlugin(BungeeSuite.PLUGIN_NAME);
 		
 		invites = new HashSet<String>();
 	}

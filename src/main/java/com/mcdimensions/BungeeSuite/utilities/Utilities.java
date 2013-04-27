@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import net.buddat.bungeesuite.channels.ChannelCommunication;
 import net.buddat.bungeesuite.database.Database;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -83,7 +84,7 @@ public class Utilities {
 				// Can never happen
 			}
 			
-			originalPlayer.getServer().sendData("BungeeSuiteMC",
+			originalPlayer.getServer().sendData(ChannelCommunication.PROXY_TO_SERVER_CHANNEL,
 					b.toByteArray());
 			
 			String tmsg = plugin.TELEPORTED_PLAYER_TO_TARGET;

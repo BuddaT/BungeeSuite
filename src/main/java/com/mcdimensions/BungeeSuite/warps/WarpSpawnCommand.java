@@ -12,6 +12,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
 public class WarpSpawnCommand extends Command {
+	private static final String WARP_SPAWN = "Spawn";
 
 	BungeeSuite plugin;
 	private static final String[] PERMISSION_NODES = { "bungeesuite.warp.spawn", "bungeesuite.warp.*",
@@ -29,17 +30,17 @@ public class WarpSpawnCommand extends Command {
 			return;
 		}
 		
-		if (plugin.warpList.containsKey("Spawn")) {
+		if (plugin.warpList.containsKey(WARP_SPAWN)) {
 			try {
-				plugin.warpList.get("Spawn").warpPlayer((ProxiedPlayer) sender);
+				plugin.warpList.get(WARP_SPAWN).warpPlayer((ProxiedPlayer) sender);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		} else {
 			try {
 				WarpPersistence warpPersistence = plugin.getWarpPersistence();
-				if (warpPersistence.warpExists("Spawn")) {
-					Warp warp = warpPersistence.loadWarp("Spawn");
+				if (warpPersistence.warpExists(WARP_SPAWN)) {
+					Warp warp = warpPersistence.loadWarp(WARP_SPAWN);
 					warp.warpPlayer((ProxiedPlayer) sender);
 				} else {
 					sender.sendMessage(plugin.WARP_SPAWN_NOT_EXIST);

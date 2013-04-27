@@ -49,7 +49,7 @@ public class ChatPlayer {
 		this.mute = mute;
 		this.channelsOwned = channelsOwned;
 		
-		plugin = (BungeeSuite) ProxyServer.getInstance().getPluginManager().getPlugin("BungeeSuite");
+		plugin = (BungeeSuite) ProxyServer.getInstance().getPluginManager().getPlugin(BungeeSuite.PLUGIN_NAME);
 		
 		channels = new ArrayList<String>();
 		channels.add("Global");

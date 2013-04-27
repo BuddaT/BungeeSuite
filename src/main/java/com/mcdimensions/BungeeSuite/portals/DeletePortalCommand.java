@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import com.mcdimensions.BungeeSuite.BungeeSuite;
 import com.mcdimensions.BungeeSuite.utilities.CommandUtil;
 
+import net.buddat.bungeesuite.channels.ChannelCommunication;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.config.ServerInfo;
@@ -44,7 +45,7 @@ public class DeletePortalCommand extends Command {
 				
 				out.writeUTF("DeletePortal");
 				out.writeUTF(arg1[0]);
-				server.sendData("BungeeSuiteMC", b.toByteArray());
+				server.sendData(ChannelCommunication.PROXY_TO_SERVER_CHANNEL, b.toByteArray());
 				
 				sender.sendMessage(plugin.PORTAL_DELETE_CONFIRM);
 			} else {

@@ -7,6 +7,7 @@ import java.io.IOException;
 import com.mcdimensions.BungeeSuite.BungeeSuite;
 import com.mcdimensions.BungeeSuite.utilities.CommandUtil;
 
+import net.buddat.bungeesuite.channels.ChannelCommunication;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -63,7 +64,7 @@ public class SetWarpCommand extends Command {
 			}
 		}
 		
-		player.getServer().sendData("BungeeSuiteMC", b.toByteArray());
+		player.getServer().sendData(ChannelCommunication.PROXY_TO_SERVER_CHANNEL, b.toByteArray());
 	}
 
 }
