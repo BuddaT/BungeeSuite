@@ -44,7 +44,7 @@ public class Utilities {
 		try (Connection connection = database.getConnection()) {
 			if(!database.doesTableExist(connection, "BungeeWarps")){
 				System.out.println("Table 'BungeeWarps' does not exist! Creating table...");
-				database.sqlQuery("CREATE TABLE BungeeWarps (W_ID int NOT NULL AUTO_INCREMENT,Name VARCHAR(50) NOT NULL UNIQUE, Server VARCHAR(50) NOT NULL, World VARCHAR(50) NOT NULL, X double NOT NULL,  Y double NOT NULL, Z double NOT NULL, Yaw float NOT NULL, Pitch float NOT NULL, Visible boolean NOT NULL, FOREIGN KEY(Server) REFERENCES BungeeServers(ServerName) ON DELETE CASCADE, PRIMARY KEY (W_ID))ENGINE=INNODB;", connection);
+				database.query(connection, "CREATE TABLE BungeeWarps (W_ID int NOT NULL AUTO_INCREMENT,Name VARCHAR(50) NOT NULL UNIQUE, Server VARCHAR(50) NOT NULL, World VARCHAR(50) NOT NULL, X double NOT NULL,  Y double NOT NULL, Z double NOT NULL, Yaw float NOT NULL, Pitch float NOT NULL, Visible boolean NOT NULL, FOREIGN KEY(Server) REFERENCES BungeeServers(ServerName) ON DELETE CASCADE, PRIMARY KEY (W_ID))ENGINE=INNODB;");
 				System.out.println("Table 'BungeeWarps' created!");
 			}
 		}
@@ -58,10 +58,10 @@ public class Utilities {
 		try (Connection connection = database.getConnection()) {
 			if(!database.doesTableExist(connection, "BungeeWarps")){
 			    System.out.println("Table 'BungeeWarps' does not exist! Creating table...");
-			    database.sqlQuery("CREATE TABLE BungeeWarps (W_ID int NOT NULL AUTO_INCREMENT,Name VARCHAR(50) NOT NULL UNIQUE, Server VARCHAR(50) NOT NULL, World VARCHAR(50) NOT NULL, X double NOT NULL,  Y double NOT NULL, Z double NOT NULL, Yaw float NOT NULL, Pitch float NOT NULL, FOREIGN KEY(Server) REFERENCES BungeeServers(ServerName) ON DELETE CASCADE, PRIMARY KEY (W_ID))ENGINE=INNODB;", connection);
+			    database.query(connection, "CREATE TABLE BungeeWarps (W_ID int NOT NULL AUTO_INCREMENT,Name VARCHAR(50) NOT NULL UNIQUE, Server VARCHAR(50) NOT NULL, World VARCHAR(50) NOT NULL, X double NOT NULL,  Y double NOT NULL, Z double NOT NULL, Yaw float NOT NULL, Pitch float NOT NULL, FOREIGN KEY(Server) REFERENCES BungeeServers(ServerName) ON DELETE CASCADE, PRIMARY KEY (W_ID))ENGINE=INNODB;");
 			    System.out.println("Table 'BungeeWarps' created!");
 			}
-			try (ResultSet res = database.sqlQuery("SELECT * FROM BungeeWarps", connection)) {
+			try (ResultSet res = database.query(connection, "SELECT * FROM BungeeWarps")) {
 				while(res.next()){
 					String name = res.getString("Name");
 					warps.put(name, new Warp(name, new WarpLocation(res.getString("Server"), res.getString("World"), res.getDouble("X"), res.getDouble("Y"), res.getDouble("Z"), res.getFloat("Yaw"), res.getFloat("Pitch")),res.getBoolean("Visable")));
@@ -85,7 +85,7 @@ public class Utilities {
 			if (!database.doesTableExist(connection, "BungeeServers")) {
 				System.out
 						.println("Table 'BungeeServers' does not exist! Creating table...");
-				database.sqlQuery("CREATE TABLE BungeeServers (S_ID int NOT NULL AUTO_INCREMENT, ServerName VARCHAR(50) NOT NULL UNIQUE, PlayersOnline int DEFAULT 0, MaxPlayers int,MOTD VARCHAR(60), Online BOOLEAN DEFAULT FALSE, PRIMARY KEY (S_Id))ENGINE=INNODB;", connection);
+				database.query(connection, "CREATE TABLE BungeeServers (S_ID int NOT NULL AUTO_INCREMENT, ServerName VARCHAR(50) NOT NULL UNIQUE, PlayersOnline int DEFAULT 0, MaxPlayers int,MOTD VARCHAR(60), Online BOOLEAN DEFAULT FALSE, PRIMARY KEY (S_Id))ENGINE=INNODB;");
 				System.out.println("Table 'BungeeServers' created!");
 			}
 		}
@@ -94,24 +94,24 @@ public class Utilities {
 		try (Connection connection = database.getConnection()) {
 			if(!database.doesTableExist(connection, "BungeeSignType")){
 				System.out.println("Table 'BungeeSignType' does not exist! Creating table...");
-				database.sqlQuery("CREATE TABLE BungeeSignType (T_ID int NOT NULL AUTO_INCREMENT, Type VARCHAR(50) NOT NULL UNIQUE, PRIMARY KEY (T_Id))ENGINE=INNODB;", connection);
-				database.sqlQuery("INSERT INTO BungeeSignType (Type) VALUES('PlayerList');", connection);
-				database.sqlQuery("INSERT INTO BungeeSignType (Type) VALUES('MOTD');", connection);
+				database.query(connection, "CREATE TABLE BungeeSignType (T_ID int NOT NULL AUTO_INCREMENT, Type VARCHAR(50) NOT NULL UNIQUE, PRIMARY KEY (T_Id))ENGINE=INNODB;");
+				database.query(connection, "INSERT INTO BungeeSignType (Type) VALUES('PlayerList');");
+				database.query(connection, "INSERT INTO BungeeSignType (Type) VALUES('MOTD');");
 				System.out.println("Table 'BungeeSignType' created!");
 			}
-			try (ResultSet rs = database.sqlQuery("SELECT Type FROM BungeeSignType WHERE Type ='Portal'", connection)) {
+			try (ResultSet rs = database.query(connection, "SELECT Type FROM BungeeSignType WHERE Type ='Portal'")) {
 				if(!rs.next()){ 
-					database.sqlQuery("INSERT INTO BungeeSignType (Type) VALUES('Portal');", connection);
+					database.query(connection, "INSERT INTO BungeeSignType (Type) VALUES('Portal');");
 				}
 			}
 			if(!database.doesTableExist(connection, "BungeeSignLocations")){
 				System.out.println("Table 'BungeeSignLocations' does not exist! Creating table...");
-				database.sqlQuery("CREATE TABLE BungeeSignLocations (L_ID int NOT NULL AUTO_INCREMENT, Type VARCHAR(50) NOT NULL, Server VARCHAR(50) NOT NULL, TargetServer VARCHAR(50) NOT NULL, World VARCHAR(50) NOT NULL, X int NOT NULL,  Y int NOT NULL, Z int NOT NULL, FOREIGN KEY(Type) REFERENCES BungeeSignType(Type) ON DELETE CASCADE, FOREIGN KEY(Server) REFERENCES BungeeServers(ServerName) ON DELETE CASCADE,  FOREIGN KEY(TargetServer) REFERENCES BungeeServers(ServerName) ON DELETE CASCADE, PRIMARY KEY (L_ID))ENGINE=INNODB;", connection);
+				database.query(connection, "CREATE TABLE BungeeSignLocations (L_ID int NOT NULL AUTO_INCREMENT, Type VARCHAR(50) NOT NULL, Server VARCHAR(50) NOT NULL, TargetServer VARCHAR(50) NOT NULL, World VARCHAR(50) NOT NULL, X int NOT NULL,  Y int NOT NULL, Z int NOT NULL, FOREIGN KEY(Type) REFERENCES BungeeSignType(Type) ON DELETE CASCADE, FOREIGN KEY(Server) REFERENCES BungeeServers(ServerName) ON DELETE CASCADE,  FOREIGN KEY(TargetServer) REFERENCES BungeeServers(ServerName) ON DELETE CASCADE, PRIMARY KEY (L_ID))ENGINE=INNODB;");
 				System.out.println("Table 'BungeeSignLocations' created!");
 			}
 			if(!database.doesTableExist(connection, "BungeeSignFormats")){
 				System.out.println("Table 'BungeeSignFormats' does not exist! Creating table...");
-				database.sqlQuery("CREATE TABLE BungeeSignFormats (F_ID Int NOT NULL AUTO_INCREMENT,ColoredMOTD Boolean NOT NULL, MOTDOnline VARCHAR(50) NOT NULL, MOTDOffline VARCHAR(50) NOT NULL, PlayerCountOnline VARCHAR(50) NOT NULL,  PlayerCountOnlineClick VARCHAR(50) NOT NULL, PlayerCountOffline VARCHAR(50) NOT NULL, PlayerCountOfflineClick VARCHAR(50) NOT NULL, PortalFormatOnline VARCHAR(50) NOT NULL, PortalFormatOffline VARCHAR(50) NOT NULL, PortalFormatOfflineClick VARCHAR(50) NOT NULL,PRIMARY KEY (F_ID))ENGINE=INNODB;", connection);
+				database.query(connection, "CREATE TABLE BungeeSignFormats (F_ID Int NOT NULL AUTO_INCREMENT,ColoredMOTD Boolean NOT NULL, MOTDOnline VARCHAR(50) NOT NULL, MOTDOffline VARCHAR(50) NOT NULL, PlayerCountOnline VARCHAR(50) NOT NULL,  PlayerCountOnlineClick VARCHAR(50) NOT NULL, PlayerCountOffline VARCHAR(50) NOT NULL, PlayerCountOfflineClick VARCHAR(50) NOT NULL, PortalFormatOnline VARCHAR(50) NOT NULL, PortalFormatOffline VARCHAR(50) NOT NULL, PortalFormatOfflineClick VARCHAR(50) NOT NULL,PRIMARY KEY (F_ID))ENGINE=INNODB;");
 				System.out.println("Table 'BungeeSignFormats' created!");
 			}
 		}
@@ -120,8 +120,8 @@ public class Utilities {
 		try (Connection connection = database.getConnection()) {
 			if(!database.doesTableExist(connection, "BungeePortals")){
 				System.out.println("Table 'BungeePortals' does not exist! Creating table...");
-			    database.sqlQuery("CREATE TABLE BungeePortals (P_ID int NOT NULL AUTO_INCREMENT,Name VARCHAR(50) NOT NULL, Server VARCHAR(50) NOT NULL, ToServer VARCHAR(50) NOT NULL, Warp VARCHAR(50), World VARCHAR(50) NOT NULL, XMax int NOT NULL, XMin int NOT NULL, YMax int NOT NULL, Ymin int NOT NULL, ZMax int NOT NULL, Zmin int NOT NULL, FOREIGN KEY(Server) REFERENCES BungeeServers(ServerName) ON DELETE CASCADE, FOREIGN KEY(ToServer) REFERENCES BungeeServers(ServerName) ON DELETE CASCADE,  FOREIGN KEY(Warp) REFERENCES BungeeWarps(Name) ON DELETE CASCADE, PRIMARY KEY (P_ID))ENGINE=INNODB;", connection);
-			    System.out.println("Table 'BungeePortals' created!");
+				database.query(connection, "CREATE TABLE BungeePortals (P_ID int NOT NULL AUTO_INCREMENT,Name VARCHAR(50) NOT NULL, Server VARCHAR(50) NOT NULL, ToServer VARCHAR(50) NOT NULL, Warp VARCHAR(50), World VARCHAR(50) NOT NULL, XMax int NOT NULL, XMin int NOT NULL, YMax int NOT NULL, Ymin int NOT NULL, ZMax int NOT NULL, Zmin int NOT NULL, FOREIGN KEY(Server) REFERENCES BungeeServers(ServerName) ON DELETE CASCADE, FOREIGN KEY(ToServer) REFERENCES BungeeServers(ServerName) ON DELETE CASCADE,  FOREIGN KEY(Warp) REFERENCES BungeeWarps(Name) ON DELETE CASCADE, PRIMARY KEY (P_ID))ENGINE=INNODB;");
+				System.out.println("Table 'BungeePortals' created!");
 			}
 		}
 	}
@@ -131,7 +131,7 @@ public class Utilities {
 
 	public Warp loadWarp(String string) throws SQLException {
 		try (Connection connection = database.getConnection();
-				ResultSet res = database.sqlQuery("SELECT * FROM BungeeWarps WHERE Name='"+string+"'", connection)) {
+				ResultSet res = database.query(connection, "SELECT * FROM BungeeWarps WHERE Name='"+string+"'")) {
 			Warp warp = null;
 			while(res.next()){
 				String name = res.getString("Name");
@@ -149,7 +149,7 @@ public class Utilities {
 		list[0]=ChatColor.AQUA+"Warp List: ";
 		list[1]=ChatColor.BLUE+"Private warps: ";
 		try (Connection connection = database.getConnection();
-				ResultSet res = database.sqlQuery("SELECT Name,Visible FROM BungeeWarps", connection)) {
+				ResultSet res = database.query(connection, "SELECT Name,Visible FROM BungeeWarps")) {
 			while(res.next()){
 				String name = res.getString("Name");
 				boolean visible = res.getBoolean("Visible");
@@ -217,27 +217,27 @@ public class Utilities {
 		try (Connection connection = database.getConnection()) {
 			if(!database.doesTableExist(connection, "BungeeChannels")){
 				System.out.println("Table 'BungeeChannels' does not exist! Creating table...");
-				database.sqlQuery("CREATE TABLE BungeeChannels (C_ID int NOT NULL AUTO_INCREMENT, ChannelName VARCHAR(50) NOT NULL UNIQUE, ChannelFormat VARCHAR(250) NOT NULL, isServerChannel BOOLEAN DEFAULT FALSE, Owner VARCHAR(50), CreatedDate DATE, PRIMARY KEY (C_ID))ENGINE=INNODB;", connection);
+				database.query(connection, "CREATE TABLE BungeeChannels (C_ID int NOT NULL AUTO_INCREMENT, ChannelName VARCHAR(50) NOT NULL UNIQUE, ChannelFormat VARCHAR(250) NOT NULL, isServerChannel BOOLEAN DEFAULT FALSE, Owner VARCHAR(50), CreatedDate DATE, PRIMARY KEY (C_ID))ENGINE=INNODB;");
 				System.out.println("Table 'BungeeChannels' created!");
 			}
 			if(!database.doesTableExist(connection, "BungeePlayers")){
 				System.out.println("Table 'BungeePlayers' does not exist! Creating table...");
-				database.sqlQuery("CREATE TABLE BungeePlayers (P_ID int NOT NULL AUTO_INCREMENT, PlayerName VARCHAR(50) NOT NULL UNIQUE, DisplayName VARCHAR(50), Current VARCHAR(50), ChannelsOwned int NOT NULL DEFAULT 0, LastOnline DATE NOT NULL, ChatSpy BOOLEAN DEFAULT FALSE, SendServer BOOLEAN DEFAULT true, SendPrefix BOOLEAN DEFAULT true,SendSuffix BOOLEAN DEFAULT true, Mute BOOLEAN DEFAULT FALSE,IPAddress VARCHAR(50), FOREIGN KEY(Current) REFERENCES BungeeChannels(ChannelName) ON DELETE CASCADE, PRIMARY KEY (P_Id))ENGINE=INNODB;", connection);
+				database.query(connection, "CREATE TABLE BungeePlayers (P_ID int NOT NULL AUTO_INCREMENT, PlayerName VARCHAR(50) NOT NULL UNIQUE, DisplayName VARCHAR(50), Current VARCHAR(50), ChannelsOwned int NOT NULL DEFAULT 0, LastOnline DATE NOT NULL, ChatSpy BOOLEAN DEFAULT FALSE, SendServer BOOLEAN DEFAULT true, SendPrefix BOOLEAN DEFAULT true,SendSuffix BOOLEAN DEFAULT true, Mute BOOLEAN DEFAULT FALSE,IPAddress VARCHAR(50), FOREIGN KEY(Current) REFERENCES BungeeChannels(ChannelName) ON DELETE CASCADE, PRIMARY KEY (P_Id))ENGINE=INNODB;");
 				System.out.println("Table 'ChatPlayers' created!");
 			}
 			if(!database.doesTableExist(connection, "BungeeInvites")){
 				System.out.println("Table 'BungeeInvites' does not exist! Creating table...");
-				database.sqlQuery("CREATE TABLE BungeeInvites (I_ID int NOT NULL AUTO_INCREMENT, PlayerName VARCHAR(50) NOT NULL, ChannelName VARCHAR(50) NOT NULL, FOREIGN KEY(PlayerName) REFERENCES BungeePlayers(PlayerName) ON DELETE CASCADE, FOREIGN KEY (ChannelName) REFERENCES BungeeChannels(ChannelName) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (I_ID))ENGINE=INNODB;", connection);
+				database.query(connection, "CREATE TABLE BungeeInvites (I_ID int NOT NULL AUTO_INCREMENT, PlayerName VARCHAR(50) NOT NULL, ChannelName VARCHAR(50) NOT NULL, FOREIGN KEY(PlayerName) REFERENCES BungeePlayers(PlayerName) ON DELETE CASCADE, FOREIGN KEY (ChannelName) REFERENCES BungeeChannels(ChannelName) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (I_ID))ENGINE=INNODB;");
 				System.out.println("Table 'BungeeInvites' created!");
 			}
 			if(!database.doesTableExist(connection, "BungeeMembers")){
 				System.out.println("Table 'BungeeMembers' does not exist! Creating table...");
-				database.sqlQuery("CREATE TABLE BungeeMembers (ChannelName VARCHAR(50) NOT NULL, PlayerName VARCHAR(50) NOT NULL, FOREIGN KEY (ChannelName) REFERENCES BungeeChannels(ChannelName) ON DELETE CASCADE ON UPDATE CASCADE,FOREIGN KEY (PlayerName) REFERENCES BungeePlayers(PlayerName) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=INNODB", connection);
+				database.query(connection, "CREATE TABLE BungeeMembers (ChannelName VARCHAR(50) NOT NULL, PlayerName VARCHAR(50) NOT NULL, FOREIGN KEY (ChannelName) REFERENCES BungeeChannels(ChannelName) ON DELETE CASCADE ON UPDATE CASCADE,FOREIGN KEY (PlayerName) REFERENCES BungeePlayers(PlayerName) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=INNODB");
 				System.out.println("Table 'BungeeMembers' created!");
 			} 
 			if(!database.doesTableExist(connection, "BungeeIgnores")){
 				System.out.println("Table 'BungeeIgnores' does not exist! Creating table...");
-				database.sqlQuery("CREATE TABLE BungeeIgnores (PlayerName VARCHAR(50) NOT NULL, Ignoring VARCHAR(50) NOT NULL, FOREIGN KEY (Ignoring) REFERENCES BungeePlayers(PlayerName) ON DELETE CASCADE ON UPDATE CASCADE,FOREIGN KEY (PlayerName) REFERENCES BungeePlayers(PlayerName) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=INNODB", connection);
+				database.query(connection, "CREATE TABLE BungeeIgnores (PlayerName VARCHAR(50) NOT NULL, Ignoring VARCHAR(50) NOT NULL, FOREIGN KEY (Ignoring) REFERENCES BungeePlayers(PlayerName) ON DELETE CASCADE ON UPDATE CASCADE,FOREIGN KEY (PlayerName) REFERENCES BungeePlayers(PlayerName) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=INNODB");
 				System.out.println("Table 'BungeeIgnores' created!");
 			} 
 		}
@@ -245,13 +245,13 @@ public class Utilities {
 	
 	public void createStandardChannels() throws SQLException{
 		try (Connection connection = database.getConnection()) {
-			try (ResultSet rs = database.sqlQuery("SELECT ChannelName FROM BungeeChannels WHERE ChannelName = 'Global';", connection)) {
+			try (ResultSet rs = database.query(connection, "SELECT ChannelName FROM BungeeChannels WHERE ChannelName = 'Global';")) {
 				if(!rs.next()){
 					database.update(connection, "INSERT INTO BungeeChannels(ChannelName, ChannelFormat, isServerChannel) VALUES('Global', '"+plugin.defaultServerChannelFormat+"', TRUE);");
 				}
 			}
 			for(String data: plugin.getProxy().getServers().keySet()){
-				ResultSet rs = database.sqlQuery("SELECT ChannelName FROM BungeeChannels WHERE ChannelName = '"+data+"';", connection);
+				ResultSet rs = database.query(connection, "SELECT ChannelName FROM BungeeChannels WHERE ChannelName = '"+data+"';");
 				if(!rs.next()){
 					database.update(connection, "INSERT INTO BungeeChannels(ChannelName, ChannelFormat, isServerChannel) VALUES('"+data+"', '"+plugin.defaultServerChannelFormat+"', TRUE);");
 				}
@@ -292,7 +292,7 @@ public class Utilities {
 	}
 	public String getIP(String player) throws SQLException{
 		try (Connection connection = database.getConnection();
-				ResultSet res = database.sqlQuery("SELECT IPAddress FROM BungeePlayers WHERE PlayerName = '"+player+"'", connection)) {
+				ResultSet res = database.query(connection, "SELECT IPAddress FROM BungeePlayers WHERE PlayerName = '"+player+"'")) {
 			String ip = null;
 			while(res.next()){
 				ip = res.getString("IPAddress");
@@ -304,9 +304,9 @@ public class Utilities {
 	public ChatPlayer getChatPlayer(String player) throws SQLException {
 		plugin.cl.cLog("Loading "+ player);
 		try (Connection connection = database.getConnection();
-				ResultSet players = database.sqlQuery("SELECT * FROM BungeePlayers WHERE PlayerName = '"+player+"'", connection);
-				ResultSet members = database.sqlQuery("SELECT * FROM BungeeMembers WHERE PlayerName = '"+player+"'", connection);
-				ResultSet ignored = database.sqlQuery("SELECT Ignoring FROM BungeeIgnores WHERE PlayerName = '"+player+"'", connection)) {
+				ResultSet players = database.query(connection, "SELECT * FROM BungeePlayers WHERE PlayerName = '"+player+"'");
+				ResultSet members = database.query(connection, "SELECT * FROM BungeeMembers WHERE PlayerName = '"+player+"'");
+				ResultSet ignored = database.query(connection, "SELECT Ignoring FROM BungeeIgnores WHERE PlayerName = '"+player+"'")) {
 			ChatPlayer cp = null;
 			while(players.next()){
 				ChatChannel channel = plugin.chatChannels.get(players.getString("Current"));
@@ -330,8 +330,8 @@ public class Utilities {
 
 	public void loadChannels() throws SQLException {
 		try (Connection connection = database.getConnection();
-				ResultSet channels = database.sqlQuery("SELECT * FROM BungeeChannels", connection);
-				ResultSet invites = database.sqlQuery("SELECT * FROM BungeeInvites", connection)) {
+				ResultSet channels = database.query(connection, "SELECT * FROM BungeeChannels");
+				ResultSet invites = database.query(connection, "SELECT * FROM BungeeInvites")) {
 			while(channels.next()){
 				ChatChannel newchan = new ChatChannel(channels.getString("ChannelName"), channels.getString("ChannelFormat"),channels.getString("Owner"), channels.getBoolean("isServerChannel"));
 				plugin.chatChannels.put(newchan.getName(), newchan);
@@ -351,12 +351,12 @@ public class Utilities {
 		try (Connection connection = database.getConnection()) {
 			if(!database.doesTableExist(connection, "BungeeBans")){
 				System.out.println("Table 'BungeeBans' does not exist! Creating table...");
-				database.sqlQuery("CREATE TABLE BungeeBans (PlayerName VARCHAR(50) NOT NULL, TempBan BOOLEAN NOT NULL, TempBanEndDate DATETIME,FOREIGN KEY (PlayerName) REFERENCES BungeePlayers(PlayerName) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=INNODB", connection);
+				database.query(connection, "CREATE TABLE BungeeBans (PlayerName VARCHAR(50) NOT NULL, TempBan BOOLEAN NOT NULL, TempBanEndDate DATETIME,FOREIGN KEY (PlayerName) REFERENCES BungeePlayers(PlayerName) ON DELETE CASCADE ON UPDATE CASCADE)ENGINE=INNODB");
 				System.out.println("Table 'BungeeBans' created!");
 			} 
 			if(!database.doesTableExist(connection, "BungeeBannedIPs")){
 				System.out.println("Table 'BungeeBannedIPs' does not exist! Creating table...");
-				database.sqlQuery("CREATE TABLE BungeeBannedIPs (IPAddress VARCHAR(50))ENGINE=INNODB", connection);
+				database.query(connection, "CREATE TABLE BungeeBannedIPs (IPAddress VARCHAR(50))ENGINE=INNODB");
 				System.out.println("Table 'BungeeBannedIPs' created!");
 			}
 		}
@@ -364,8 +364,8 @@ public class Utilities {
 
 	public void loadBans() throws SQLException {
 		try (Connection connection = database.getConnection();
-				ResultSet tempBans = database.sqlQuery("SELECT * FROM BungeeBans", connection);
-				ResultSet ips = database.sqlQuery("SELECT * FROM BungeeBannedIPs", connection)) {
+				ResultSet tempBans = database.query(connection, "SELECT * FROM BungeeBans");
+				ResultSet ips = database.query(connection, "SELECT * FROM BungeeBannedIPs")) {
 			database.update(connection, "DELETE FROM BungeeBans WHERE (NOW()- TempBanEndDate)>=0");
 			while (tempBans.next()){
 				Timestamp date = tempBans.getTimestamp("TempBanEndDate");
@@ -459,7 +459,7 @@ public class Utilities {
 		try (Connection connection = database.getConnection()) {
 			//set offline to stop them being deleted
 			database.update(connection, "UPDATE BungeePlayers SET Current=NULL WHERE Current = '"+channel+"'");
-			database.sqlQuery("DELETE FROM BungeeChannels WHERE ChannelName = '"+channel+"'", connection);
+			database.query(connection, "DELETE FROM BungeeChannels WHERE ChannelName = '"+channel+"'");
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -474,23 +474,23 @@ public class Utilities {
 		// into migration class if that is its purpose
 		try (Connection connection = database.getConnection()) {
 			try {
-				database.sqlQuery("ALTER TABLE BungeePlayers DROP COLUMN Broadcast", connection);
+				database.query(connection, "ALTER TABLE BungeePlayers DROP COLUMN Broadcast");
 			} catch (SQLException e) {
 			}
 			try {
-				database.sqlQuery("ALTER TABLE BungeePlayers DROP COLUMN SendRank", connection);
+				database.query(connection, "ALTER TABLE BungeePlayers DROP COLUMN SendRank");
 			} catch (SQLException e) {
 			}
 			try {
-				database.sqlQuery("ALTER TABLE BungeePlayers ADD SendSuffix BOOLEAN DEFAULT TRUE", connection);
+				database.query(connection, "ALTER TABLE BungeePlayers ADD SendSuffix BOOLEAN DEFAULT TRUE");
 			} catch (SQLException e) {
 			}
 			try {
-				database.sqlQuery("ALTER TABLE BungeePlayers ADD SendPrefix BOOLEAN DEFAULT TRUE", connection);
+				database.query(connection, "ALTER TABLE BungeePlayers ADD SendPrefix BOOLEAN DEFAULT TRUE");
 			} catch (SQLException e) {
 			}
 			try {
-				database.sqlQuery("ALTER TABLE BungeeChannels MODIFY ChannelFormat VARCHAR(250)", connection);
+				database.query(connection, "ALTER TABLE BungeeChannels MODIFY ChannelFormat VARCHAR(250)");
 			} catch (SQLException e) {
 			}
 		} catch (SQLException e) {
@@ -500,7 +500,7 @@ public class Utilities {
 
 	public void UpdateSignFormats() throws SQLException {
 		try (Connection connection = database.getConnection();
-				ResultSet signFormats = database.sqlQuery("SELECT F_ID FROM BungeeSignFormats Where F_ID = 1", connection)) {
+				ResultSet signFormats = database.query(connection, "SELECT F_ID FROM BungeeSignFormats Where F_ID = 1")) {
 			if(signFormats.next()){
 				database.update(connection, "UPDATE BungeeSignFormats SET ColoredMOTD="+plugin.motdColored+",MOTDOnline ='"+plugin.motdFormatOnline+"',MOTDOffline= '"+plugin.motdFormatOffline+"',PlayerCountOnline= '"+plugin.playerCountFormatOnline+"', PlayerCountOnlineClick='"+plugin.playerCountFormatOnlineClick+"',PlayerCountOffline= '"+plugin.playerCountFormatOffline+"', PlayerCountOfflineClick='"+plugin.playerCountFormatOfflineClick+"', PortalFormatOnline='"+plugin.portalFormatOnline+"',PortalFormatOffline= '"+plugin.portalFormatOffline+"',PortalFormatOfflineClick= '"+plugin.portalFormatOfflineClick+"' WHERE F_ID = 1");
 			} else {
@@ -511,7 +511,7 @@ public class Utilities {
 
 	public void selectDatabase() throws SQLException {
 		try (Connection connection = database.getConnection()) {
-			database.sqlQuery("USE "+plugin.databaseHost, connection);
+			database.query(connection, "USE "+plugin.databaseHost);
 		};
 	}
 
@@ -548,7 +548,7 @@ public class Utilities {
 	public ArrayList<String> getPortals() throws SQLException {
 		ArrayList<String>portals = new ArrayList<String>();
 		try (Connection connection = database.getConnection();
-				ResultSet res = database.sqlQuery("SELECT Name FROM BungeePortals", connection)) {
+				ResultSet res = database.query(connection, "SELECT Name FROM BungeePortals")) {
 			while(res.next()){
 				portals.add(res.getString("Name"));
 			}
@@ -623,7 +623,7 @@ public class Utilities {
 	public ArrayList<ChatChannel> getPlayersChannels(String name) throws SQLException {
 		ArrayList<ChatChannel> channels = new ArrayList<ChatChannel>();
 		try (Connection connection = database.getConnection();
-				ResultSet res = database.sqlQuery("SELECT ChannelName FROM BungeeMembers WHERE PlayerName = '"+name+"'", connection)) {
+				ResultSet res = database.query(connection, "SELECT ChannelName FROM BungeeMembers WHERE PlayerName = '"+name+"'")) {
 			while(res.next()){
 				channels.add(plugin.getChannel(res.getString("ChannelName")));
 			}
@@ -682,7 +682,7 @@ public class Utilities {
 	public HashSet<String> getIgnores(String player){
 		HashSet<String> ignorelist =  new HashSet<String>();
 		try (Connection connection = database.getConnection();
-				ResultSet res = database.sqlQuery("SELECT Ignoring FROM BungeeIgnores WHERE PlayerName = '"+player+"'", connection)) {
+				ResultSet res = database.query(connection, "SELECT Ignoring FROM BungeeIgnores WHERE PlayerName = '"+player+"'")) {
 			while(res.next()){
 				ignorelist.add(res.getString("Ignoring"));
 			}
