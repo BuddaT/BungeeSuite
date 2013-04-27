@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashSet;
 
 import net.buddat.bungeesuite.database.Database;
 import net.md_5.bungee.api.ChatColor;
@@ -273,23 +272,6 @@ public class Utilities {
 		};
 	}
 
-	public void mutePlayer(String name) {
-		try {
-			database.update("UPDATE BungeePlayers SET Mute =TRUE WHERE PlayerName = ?", name);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	public void unMutePlayer(String name){
-		try {
-			database.update("UPDATE BungeePlayers SET Mute =FALSE WHERE PlayerName = ?", name);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 	public boolean portalExists(String string) throws SQLException {
 		return database.existenceQuery("SELECT Name FROM BungeePortals Where Name = '"+string+"' ");
 	}
@@ -333,37 +315,6 @@ public class Utilities {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	public HashSet<String> getIgnores(String player){
-		HashSet<String> ignorelist =  new HashSet<String>();
-		try (Connection connection = database.getConnection();
-				ResultSet res = database.query(connection, "SELECT Ignoring FROM BungeeIgnores WHERE PlayerName = '"+player+"'")) {
-			while(res.next()){
-				ignorelist.add(res.getString("Ignoring"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return ignorelist;
-	}
-
-	public void unignorePlayer(String name, String name2) {
-		try {
-			database.update("DELETE FROM BungeeIgnores WHERE PlayerName= ? AND Ignoring = ?", name, name2);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		plugin.getChatPlayer(name).removeIgnore(name2);
-	}
-
-	public void ignorePlayer(String name, String name2) {
-		try {
-			database.update("INSERT INTO BungeeIgnores (PlayerName, Ignoring) VALUES (?, ?)", name, name2);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		plugin.getChatPlayer(name).addIgnore(name2);	
 	}
 
 	public String colorSub(String str) {

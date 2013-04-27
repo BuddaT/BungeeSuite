@@ -36,10 +36,10 @@ public class IgnoreCommand extends Command {
 			ChatPlayer cp = plugin.getChatPlayer(sender.getName());
 
 			if (cp.ignoringPlayer(player.getName())) {
-				plugin.getUtilities().unignorePlayer(sender.getName(), player.getName());
+				plugin.getChatPersistence().unignorePlayer(sender.getName(), player.getName());
 				sender.sendMessage(plugin.PLAYER_UNIGNORED);
 			} else {
-				plugin.getUtilities().ignorePlayer(sender.getName(), player.getName());
+				plugin.getChatPersistence().ignorePlayer(sender.getName(), player.getName());
 				sender.sendMessage(plugin.PLAYER_IGNORED);
 			}
 		} else {

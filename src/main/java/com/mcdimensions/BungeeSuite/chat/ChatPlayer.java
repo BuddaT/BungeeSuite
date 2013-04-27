@@ -212,13 +212,12 @@ public class ChatPlayer {
 	public boolean toggleMute() {
 		if (isMuted()) {
 			mute = false;
-			plugin.getUtilities().unMutePlayer(name);
-			return false;
+			plugin.getChatPersistence().unMutePlayer(name);
 		} else {
 			mute = true;
-			plugin.getUtilities().mutePlayer(name);
-			return true;
+			plugin.getChatPersistence().mutePlayer(name);
 		}
+		return mute;
 	}
 
 	public ProxiedPlayer getPlayer() {
