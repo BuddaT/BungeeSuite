@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import com.mcdimensions.BungeeSuite.BungeeSuite;
 import com.mcdimensions.BungeeSuite.utilities.CommandUtil;
+import com.mcdimensions.BungeeSuite.warps.persistence.WarpPersistence;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
@@ -40,8 +41,9 @@ public class WarpCommand extends Command {
 			}
 		} else {
 			try {
-				if (plugin.getUtilities().warpExists(arg1[0])) {
-					Warp warp = plugin.getUtilities().loadWarp(arg1[0]);
+				WarpPersistence warpPersistence = plugin.getWarpPersistence();
+				if (warpPersistence.warpExists(arg1[0])) {
+					Warp warp = warpPersistence.loadWarp(arg1[0]);
 					warp.warpPlayer((ProxiedPlayer) sender);
 				} else {
 					sender.sendMessage(plugin.WARP_NOT_EXIST);

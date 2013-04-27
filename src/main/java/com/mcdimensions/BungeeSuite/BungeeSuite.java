@@ -12,11 +12,11 @@ import com.mcdimensions.BungeeSuite.banning.KickAllCommand;
 import com.mcdimensions.BungeeSuite.banning.TempBanCommand;
 import com.mcdimensions.BungeeSuite.banning.UnbanCommand;
 import com.mcdimensions.BungeeSuite.banning.UnbanIPCommand;
-import com.mcdimensions.BungeeSuite.chat.ChatChannel;
-import com.mcdimensions.BungeeSuite.chat.ChatPlayer;
 import com.mcdimensions.BungeeSuite.chat.AcceptCommand;
 import com.mcdimensions.BungeeSuite.chat.BroadcastCommand;
 import com.mcdimensions.BungeeSuite.chat.ChannelCommand;
+import com.mcdimensions.BungeeSuite.chat.ChatChannel;
+import com.mcdimensions.BungeeSuite.chat.ChatPlayer;
 import com.mcdimensions.BungeeSuite.chat.ChatSpyCommand;
 import com.mcdimensions.BungeeSuite.chat.CreateChannelCommand;
 import com.mcdimensions.BungeeSuite.chat.DeleteChannelCommand;
@@ -29,12 +29,12 @@ import com.mcdimensions.BungeeSuite.chat.JoinCommand;
 import com.mcdimensions.BungeeSuite.chat.LeaveChannelCommand;
 import com.mcdimensions.BungeeSuite.chat.ListChannelsCommand;
 import com.mcdimensions.BungeeSuite.chat.MessageCommand;
-import com.mcdimensions.BungeeSuite.chat.MuteCommand;
 import com.mcdimensions.BungeeSuite.chat.MuteAllCommand;
+import com.mcdimensions.BungeeSuite.chat.MuteCommand;
 import com.mcdimensions.BungeeSuite.chat.NicknameCommand;
 import com.mcdimensions.BungeeSuite.chat.ReplyCommand;
-import com.mcdimensions.BungeeSuite.chat.ToggleCommand;
 import com.mcdimensions.BungeeSuite.chat.ServerCommand;
+import com.mcdimensions.BungeeSuite.chat.ToggleCommand;
 import com.mcdimensions.BungeeSuite.config.Config;
 import com.mcdimensions.BungeeSuite.listeners.BanListener;
 import com.mcdimensions.BungeeSuite.listeners.ChatListener;
@@ -44,20 +44,21 @@ import com.mcdimensions.BungeeSuite.listeners.ServerLoginLogout;
 import com.mcdimensions.BungeeSuite.portals.DeletePortalCommand;
 import com.mcdimensions.BungeeSuite.portals.ListPortalsCommand;
 import com.mcdimensions.BungeeSuite.portals.SetPortalCommand;
-import com.mcdimensions.BungeeSuite.teleports.TPCommand;
 import com.mcdimensions.BungeeSuite.teleports.TPACommand;
-import com.mcdimensions.BungeeSuite.teleports.TPAcceptCommand;
 import com.mcdimensions.BungeeSuite.teleports.TPAHereCommand;
+import com.mcdimensions.BungeeSuite.teleports.TPAcceptCommand;
 import com.mcdimensions.BungeeSuite.teleports.TPAllCommand;
+import com.mcdimensions.BungeeSuite.teleports.TPCommand;
 import com.mcdimensions.BungeeSuite.teleports.TPDenyCommand;
 import com.mcdimensions.BungeeSuite.utilities.ColorLog;
 import com.mcdimensions.BungeeSuite.utilities.Utilities;
+import com.mcdimensions.BungeeSuite.warps.DeleteWarpCommand;
+import com.mcdimensions.BungeeSuite.warps.ListWarpsCommand;
+import com.mcdimensions.BungeeSuite.warps.SetWarpCommand;
 import com.mcdimensions.BungeeSuite.warps.Warp;
 import com.mcdimensions.BungeeSuite.warps.WarpCommand;
-import com.mcdimensions.BungeeSuite.warps.DeleteWarpCommand;
-import com.mcdimensions.BungeeSuite.warps.SetWarpCommand;
 import com.mcdimensions.BungeeSuite.warps.WarpSpawnCommand;
-import com.mcdimensions.BungeeSuite.warps.ListWarpsCommand;
+import com.mcdimensions.BungeeSuite.warps.persistence.WarpPersistence;
 
 import net.buddat.bungeesuite.database.Database;
 import net.buddat.bungeesuite.database.DatabaseDependencyException;
@@ -151,6 +152,7 @@ public class BungeeSuite extends Plugin {
 
 	private ProxyServer proxy;
 	private Database database;
+	private WarpPersistence warpPersistence;
 
 	public void onLoad() {
 		this.instance = this;
@@ -380,7 +382,7 @@ public class BungeeSuite extends Plugin {
 		utils.createSQLServerTable();
 		utils.CreateSignSQLTables();
 		utils.UpdateSignFormats();
-		utils.CreateWarpSQLTables();
+		warpPersistence.createTables();
 		utils.CreatePortalSQLTables();
 		utils.createStandardChannels();
 		utils.updateTables();
@@ -398,7 +400,7 @@ public class BungeeSuite extends Plugin {
 		if (warpsEnabled) {
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new ListWarpsCommand(this));
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new SetWarpCommand(this));
-			ProxyServer.getInstance().getPluginManager().registerCommand(this, new DeleteWarpCommand(this));
+			ProxyServer.getInstance().getPluginManager().registerCommand(this, new DeleteWarpCommand(this, warpPersistence));
 			ProxyServer.getInstance().getPluginManager().registerCommand(this, new WarpCommand(this));
 			if (spawnWarpEnabled)
 				ProxyServer.getInstance().getPluginManager().registerCommand(this, new WarpSpawnCommand(this));
@@ -478,6 +480,7 @@ public class BungeeSuite extends Plugin {
 	private void loadVariables() throws SQLException, DatabaseDependencyException {
 		proxy = ProxyServer.getInstance();
 		database = new Database(url, databaseHost, port, username, password);
+		warpPersistence = new WarpPersistence(this, database, false);
 		utils = new Utilities(this);
 		this.allMuted = false;
 	}
@@ -669,6 +672,10 @@ public class BungeeSuite extends Plugin {
 	public ChatChannel getChannel(String string) {
 		return this.chatChannels.get(string);
 
+	}
+	
+	public WarpPersistence getWarpPersistence() {
+		return warpPersistence;
 	}
 
 	public void reload() {

@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import com.google.common.eventbus.Subscribe;
 import com.mcdimensions.BungeeSuite.BungeeSuite;
 import com.mcdimensions.BungeeSuite.chat.ChatPlayer;
+import com.mcdimensions.BungeeSuite.warps.persistence.WarpPersistence;
 
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PluginMessageEvent;
@@ -15,9 +16,11 @@ import net.md_5.bungee.api.plugin.Listener;
 
 public class PluginMessageListener implements Listener {
 	BungeeSuite plugin;
+	WarpPersistence warpPersistence;
 
 	public PluginMessageListener(BungeeSuite bungeePocketKnife) {
 		this.plugin = bungeePocketKnife;
+		this.warpPersistence = plugin.getWarpPersistence();
 	}
 
 	@Subscribe
@@ -41,8 +44,8 @@ public class PluginMessageListener implements Listener {
 				return;
 			}
 			
-			if (plugin.getUtilities().warpExists(warpname)) {
-				plugin.getUtilities().loadWarp(warpname).warpPlayer(plugin.getProxy().getPlayer(playername));
+			if (warpPersistence.warpExists(warpname)) {
+				warpPersistence.loadWarp(warpname).warpPlayer(plugin.getProxy().getPlayer(playername));
 				return;
 			}
 			

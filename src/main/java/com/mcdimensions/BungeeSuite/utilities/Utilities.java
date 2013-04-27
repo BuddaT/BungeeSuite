@@ -10,12 +10,10 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.HashSet;
 
 import net.buddat.bungeesuite.database.Database;
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 
@@ -24,8 +22,6 @@ import com.mcdimensions.BungeeSuite.BungeeSuite;
 import com.mcdimensions.BungeeSuite.chat.ChatChannel;
 import com.mcdimensions.BungeeSuite.chat.ChatPlayer;
 import com.mcdimensions.BungeeSuite.teleports.TPCommand;
-import com.mcdimensions.BungeeSuite.warps.Warp;
-import com.mcdimensions.BungeeSuite.warps.WarpLocation;
 
 
 public class Utilities {
@@ -40,37 +36,11 @@ public class Utilities {
 	public void createServer(String name) throws SQLException{
 		database.update("INSERT INTO BungeeServers(ServerName, Online) VALUES(?, FALSE)", name);
 	}
-	public void CreateWarpSQLTables() throws SQLException {
-		try (Connection connection = database.getConnection()) {
-			if(!database.doesTableExist(connection, "BungeeWarps")){
-				System.out.println("Table 'BungeeWarps' does not exist! Creating table...");
-				database.query(connection, "CREATE TABLE BungeeWarps (W_ID int NOT NULL AUTO_INCREMENT,Name VARCHAR(50) NOT NULL UNIQUE, Server VARCHAR(50) NOT NULL, World VARCHAR(50) NOT NULL, X double NOT NULL,  Y double NOT NULL, Z double NOT NULL, Yaw float NOT NULL, Pitch float NOT NULL, Visible boolean NOT NULL, FOREIGN KEY(Server) REFERENCES BungeeServers(ServerName) ON DELETE CASCADE, PRIMARY KEY (W_ID))ENGINE=INNODB;");
-				System.out.println("Table 'BungeeWarps' created!");
-			}
-		}
-	}
+
 	public boolean serverExists(String name) throws SQLException{
 		return database.existenceQuery("SELECT ServerName FROM BungeeServers WHERE ServerName = '"+name+"'");
 	}
 	
-	public HashMap<String,Warp> loadWarps() throws SQLException {
-		HashMap<String,Warp> warps = new HashMap<String,Warp>();
-		try (Connection connection = database.getConnection()) {
-			if(!database.doesTableExist(connection, "BungeeWarps")){
-			    System.out.println("Table 'BungeeWarps' does not exist! Creating table...");
-			    database.query(connection, "CREATE TABLE BungeeWarps (W_ID int NOT NULL AUTO_INCREMENT,Name VARCHAR(50) NOT NULL UNIQUE, Server VARCHAR(50) NOT NULL, World VARCHAR(50) NOT NULL, X double NOT NULL,  Y double NOT NULL, Z double NOT NULL, Yaw float NOT NULL, Pitch float NOT NULL, FOREIGN KEY(Server) REFERENCES BungeeServers(ServerName) ON DELETE CASCADE, PRIMARY KEY (W_ID))ENGINE=INNODB;");
-			    System.out.println("Table 'BungeeWarps' created!");
-			}
-			try (ResultSet res = database.query(connection, "SELECT * FROM BungeeWarps")) {
-				while(res.next()){
-					String name = res.getString("Name");
-					warps.put(name, new Warp(name, new WarpLocation(res.getString("Server"), res.getString("World"), res.getDouble("X"), res.getDouble("Y"), res.getDouble("Z"), res.getFloat("Yaw"), res.getFloat("Pitch")),res.getBoolean("Visable")));
-				}
-			}
-			return warps;
-		}
-	}
-
 	public ProxiedPlayer getClosestPlayer(String player) {
 		String name = player.toLowerCase();
 		for (ProxiedPlayer data : plugin.getProxy().getPlayers())
@@ -123,43 +93,6 @@ public class Utilities {
 				database.query(connection, "CREATE TABLE BungeePortals (P_ID int NOT NULL AUTO_INCREMENT,Name VARCHAR(50) NOT NULL, Server VARCHAR(50) NOT NULL, ToServer VARCHAR(50) NOT NULL, Warp VARCHAR(50), World VARCHAR(50) NOT NULL, XMax int NOT NULL, XMin int NOT NULL, YMax int NOT NULL, Ymin int NOT NULL, ZMax int NOT NULL, Zmin int NOT NULL, FOREIGN KEY(Server) REFERENCES BungeeServers(ServerName) ON DELETE CASCADE, FOREIGN KEY(ToServer) REFERENCES BungeeServers(ServerName) ON DELETE CASCADE,  FOREIGN KEY(Warp) REFERENCES BungeeWarps(Name) ON DELETE CASCADE, PRIMARY KEY (P_ID))ENGINE=INNODB;");
 				System.out.println("Table 'BungeePortals' created!");
 			}
-		}
-	}
-	public boolean warpExists(String name) throws SQLException{
-		return database.existenceQuery("SELECT Name FROM BungeeWarps WHERE Name = '"+name+"'");
-	}
-
-	public Warp loadWarp(String string) throws SQLException {
-		try (Connection connection = database.getConnection();
-				ResultSet res = database.query(connection, "SELECT * FROM BungeeWarps WHERE Name='"+string+"'")) {
-			Warp warp = null;
-			while(res.next()){
-				String name = res.getString("Name");
-				WarpLocation wl = new WarpLocation(res.getString("Server"), res.getString("World"), res.getDouble("X"), res.getDouble("Y"), res.getDouble("Z"), res.getFloat("Yaw"), res.getFloat("Pitch"));
-				warp = new Warp(name, wl, res.getBoolean("Visible"));
-				plugin.warpList.put(name, warp);
-			}
-			return warp;
-		}
-	}
-
-	public String[] getWarpList(CommandSender arg0) throws SQLException {
-		
-		String[] list= new String[2];
-		list[0]=ChatColor.AQUA+"Warp List: ";
-		list[1]=ChatColor.BLUE+"Private warps: ";
-		try (Connection connection = database.getConnection();
-				ResultSet res = database.query(connection, "SELECT Name,Visible FROM BungeeWarps")) {
-			while(res.next()){
-				String name = res.getString("Name");
-				boolean visible = res.getBoolean("Visible");
-				if(visible){
-					list[0]+=name+ ", ";
-				}else{
-					list[1]+=name+ ", ";
-				}
-			}
-			return list;
 		}
 	}
 

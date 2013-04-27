@@ -32,7 +32,7 @@ public class ListWarpsCommand extends Command {
 		String[] list = null;
 		
 		try {
-			list = plugin.getUtilities().getWarpList(sender);
+			list = plugin.getWarpPersistence().getWarpList(sender);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
